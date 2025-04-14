@@ -154,6 +154,14 @@
         {
             "name": "StrainNavigator",
             "url": "https://www.strainnavigator.com/"
+        },
+        {
+            "name": "SitePackages",
+            "url": "https://www.sitepackages.net/"
+        },
+        {
+            "name": "Scale Forged Manufacturing",
+            "url": "https://www.sitepackages.net/PUB/SCALEFORGED/"
         }
     ],
     "advanced": {

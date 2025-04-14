@@ -157,7 +157,6 @@
                 "status": "available",
                 "image": "product3.jpg",
                 "additionalImages": [
-                    "product3-detail1.jpg",
                     "product3-detail2.jpg",
                     "product3-detail3.jpg"
                 ],
@@ -185,13 +184,8 @@
                 "name": "Hydrometer Jar Lid (WIDE)",
                 "type": "Signature Series",
                 "status": "available",
-                "image": "product3.jpg",
-                "additionalImages": [
-                    "product3-detail1.jpg",
-                    "product4-detail2.jpg",
-                    "product3-detail3.jpg",
-                    "product3-detail2.jpg"
-                ],
+                "image": "product4.jpg",
+                "additionalImages": [],
                 "description": "Fits \"WIDE\" mouth sized canning jars.\n\n",
                 "variety": "3D-Printed",
                 "rating": "4.8/5",

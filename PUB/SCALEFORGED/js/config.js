@@ -7,11 +7,11 @@
         "tagline": "Making Dreams Come True",
         "logo": "logo.jpg",
         "heroBackground": "hero-bg.jpg",
-        "email": "contact@example.com",
+        "email": "scaleforged@sitepackages.net",
         "socialLinks": {
-            "discord": "https://discord.gg/yourcollective",
-            "youtube": "https://youtube.com/@yourchannel",
-            "tiktok": "https://tiktok.com/@yourhandle"
+            "discord": "https://discord.gg/28nnN5BpS7",
+            "youtube": "https://www.youtube.com/@ScaleForged3D",
+            "tiktok": ""
         },
         "copyright": "© 2025 Scale Forged. All rights reserved."
     },

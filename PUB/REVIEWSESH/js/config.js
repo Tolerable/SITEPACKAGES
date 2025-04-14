@@ -7,11 +7,10 @@
         "tagline": "Sharing Honest Reviews Online",
         "logo": "img/logo.jpg",
         "heroBackground": "hero-bg.jpg",
-        "email": "contact@example.com",
+        "email": "reviewsesh@sitepackages.net",
         "socialLinks": {
             "discord": "https://discord.gg/yourcollective",
-            "youtube": "https://www.youtube.com/@ReviewSesh",
-            "tiktok": "https://tiktok.com/@yourhandle"
+            "youtube": "https://www.youtube.com/@ReviewSesh"
         },
         "copyright": "© 2025 Review Sesh. All rights reserved."
     },
@@ -88,7 +87,7 @@
                 "name": "REVIEW SESH [YOUTUBE]",
                 "type": "Premium Collection",
                 "status": "available",
-                "delivery": "physical",
+                "delivery": "digital",
                 "digitalContent": "https://www.youtube.com/@ReviewSesh",
                 "image": "digital1.jpg",
                 "additionalImages": [],
@@ -105,7 +104,7 @@
                 "name": "REVIEW SESH [INSTAGRAM]",
                 "type": "Premium Collection",
                 "status": "available",
-                "delivery": "physical",
+                "delivery": "digital",
                 "digitalContent": "https://www.instagram.com/review.sesh/",
                 "image": "digital2.jpg",
                 "additionalImages": [],
@@ -122,7 +121,7 @@
                 "name": "REVIEW SESH DISCOUNTS!",
                 "type": "Premium Collection",
                 "status": "available",
-                "delivery": "physical",
+                "delivery": "digital",
                 "digitalContent": "https://campsite.bio/reviewsesh",
                 "image": "digital3.jpg",
                 "additionalImages": [],

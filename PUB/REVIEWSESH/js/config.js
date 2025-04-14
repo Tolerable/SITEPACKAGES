@@ -9,7 +9,7 @@
         "heroBackground": "hero-bg.jpg",
         "email": "reviewsesh@sitepackages.net",
         "socialLinks": {
-            "discord": "https://discord.gg/yourcollective",
+            "discord": "https://discord.gg/28nnN5BpS7",
             "youtube": "https://www.youtube.com/@ReviewSesh"
         },
         "copyright": "© 2025 Review Sesh. All rights reserved."

@@ -261,6 +261,10 @@
     },
     "navigation": [
         {
+            "name": "Home",
+            "url": "https://tolerable.github.io/scaleforged/"
+        },
+        {
             "name": "Our Products",
             "url": "#products"
         },
@@ -277,6 +281,10 @@
         {
             "name": "StrainNavigator",
             "url": "https://www.strainnavigator.com/"
+        },
+        {
+            "name": "AI-Ministries",
+            "url": "https://www.ai-ministries.com/"
         }
     ],
     "advanced": {

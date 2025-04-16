@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets Integration Tester</title>
+    <style>
+        :root {
+            --primary-color: #003B6F;
+            --secondary-color: #00FF9F;
+            --tertiary-color: #6A0DAD;
+            --background-color: #0A0E17;
+            --text-color: #FFFFFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 2px solid var(--tertiary-color);
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        input[type="text"],
+        input[type="url"],
+        select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(10, 14, 23, 0.8);
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--tertiary-color));
+            color: var(--text-color);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .help-text {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .status-success {
+            background-color: rgba(0, 128, 0, 0.2);
+            border: 1px solid #00ff9f;
+        }
+        
+        .status-error {
+            background-color: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff5722;
+        }
+        
+        .status-loading {
+            background-color: rgba(0, 0, 255, 0.2);
+            border: 1px solid #003b6f;
+        }
+        
+        #preview-container {
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        
+        th, td {
+            padding: 5px;
+            text-align: left;
+            border-bottom: 1px solid var(--primary-color);
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        #output {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        #output-content {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Google Sheets Integration Tester</h1>
+        <p>Test importing products from Google Sheets.</p>
+        
+        <div class="form-group">
+            <label for="sheets-url">Google Sheets URL</label>
+            <input type="url" id="sheets-url" placeholder="https://docs.google.com/spreadsheets/d/...">
+            <p class="help-text">Paste your published Google Sheets URL here</p>
+        </div>
+        
+        <h3>Required Spreadsheet Format</h3>
+        <p>Your spreadsheet's first row should contain these column headers:</p>
+        <p class="help-text">id, name, type, status, image, additionalImages, description, price, salePrice, packSize, variety, rating, origin, notes</p>
+        <p class="help-text"><strong>id</strong>, <strong>name</strong>, and <strong>type</strong> are required; others are optional.</p>
+        
+        <div class="form-group">
+            <label for="publish-instructions">Important: You must publish your sheet</label>
+            <div id="publish-instructions" style="padding: 10px; background: rgba(255, 0, 0, 0.1); border-radius: 5px; margin-top: 5px;">
+                <ol style="margin-left: 20px;">
+                    <li>Open your Google Sheet</li>
+                    <li>Click on <strong>File</strong> in the menu</li>
+                    <li>Select <strong>Share</strong> → <strong>Publish to web</strong></li>
+                    <li>Under "Link", select "Entire Document" and "Web page"</li>
+                    <li>Click <strong>Publish</strong> button</li>
+                    <li>Copy the URL from your browser's address bar</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button type="button" class="btn btn-primary" id="test-btn">Load & Preview Spreadsheet</button>
+        </div>
+        
+        <div id="status">
+            <h3 id="status-title">Status</h3>
+            <div id="status-message"></div>
+        </div>
+        
+        <div id="preview-container">
+            <h4>Preview of Products</h4>
+            <div id="preview"></div>
+        </div>
+        
+        <div id="output">
+            <h3>Generated Products</h3>
+            <p>This is what would be saved to inventory.js:</p>
+            <pre id="output-content"></pre>
+            <div class="button-group">
+                <button type="button" class="btn btn-primary" id="save-btn">Download inventory.js</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM loaded, setting up event listeners");
+            
+            // Set up event listeners
+            const testBtn = document.getElementById('test-btn');
+            const saveBtn = document.getElementById('save-btn');
+            
+            if (testBtn) {
+                testBtn.addEventListener('click', function() {
+                    console.log("Test button clicked");
+                    loadGoogleSheet();
+                });
+            } else {
+                console.error("Test button not found");
+            }
+            
+            if (saveBtn) {
+                saveBtn.addEventListener('click', function() {
+                    console.log("Save button clicked");
+                    saveInventoryFile();
+                });
+            } else {
+                console.error("Save button not found");
+            }
+        });
+        
+        // Load Google Sheet
+        async function loadGoogleSheet() {
+            const sheetsUrl = document.getElementById('sheets-url').value.trim();
+            
+            if (!sheetsUrl) {
+                showStatus('Error', 'Please enter a Google Sheets URL', 'error');
+                return;
+            }
+            
+            try {
+                showStatus('Loading...', 'Connecting to Google Sheets...', 'loading');
+                
+                // Extract the spreadsheet ID from the URL
+                let spreadsheetId = extractSpreadsheetId(sheetsUrl);
+                
+                if (!spreadsheetId) {
+                    throw new Error('Invalid Google Sheets URL. Please make sure you copy the URL from your browser address bar.');
+                }
+                
+                // Fetch using the Google Visualization API
+                await loadSheet(spreadsheetId);
+                
+            } catch (error) {
+                showStatus('Connection Failed', `Error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Extract spreadsheet ID from URL
+        function extractSpreadsheetId(url) {
+            let spreadsheetId = '';
+            
+            // Match Google Sheets URL patterns
+            if (url.includes('/spreadsheets/d/')) {
+                const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+                if (match && match[1]) {
+                    spreadsheetId = match[1];
+                }
+            } else if (url.includes('key=')) {
+                const match = url.match(/key=([a-zA-Z0-9-_]+)/);
+                if (match && match[1]) {
+                    spreadsheetId = match[1];
+                }
+            }
+            
+            return spreadsheetId;
+        }
+        
+        // Load the sheet using Google Visualization API
+        function loadSheet(spreadsheetId) {
+            return new Promise((resolve, reject) => {
+                // Create a new script element
+                const script = document.createElement('script');
+                const callbackName = 'onDataLoaded' + Date.now(); // Create a unique callback name
+                
+                // Define the callback function
+                window[callbackName] = function(response) {
+                    try {
+                        if (response.error) {
+                            reject(new Error(response.error.message));
+                            return;
+                        }
+                        
+                        // Parse the data
+                        const data = [];
+                        
+                        // Get header row
+                        if (response.table.rows.length > 0) {
+                            const headerRow = [];
+                            for (let j = 0; j < response.table.cols.length; j++) {
+                                headerRow.push(response.table.cols[j].label);
+                            }
+                            data.push(headerRow);
+                            
+                            // Get data rows
+                            for (let i = 0; i < response.table.rows.length; i++) {
+                                const row = [];
+                                for (let j = 0; j < response.table.cols.length; j++) {
+                                    const cellValue = response.table.rows[i].c[j] ? 
+                                        (response.table.rows[i].c[j].v !== null ? response.table.rows[i].c[j].v : '') : '';
+                                    row.push(cellValue);
+                                }
+                                data.push(row);
+                            }
+                            
+                            processSheetData(data);
+                            resolve(data);
+                        } else {
+                            reject(new Error('Spreadsheet is empty or not accessible. Make sure it is published to the web.'));
+                        }
+                    } catch (error) {
+                        reject(new Error(`Failed to process spreadsheet data: ${error.message}`));
+                    } finally {
+                        // Clean up the global callback
+                        delete window[callbackName];
+                        // Remove the script element
+                        document.body.removeChild(script);
+                    }
+                };
+                
+                // Set up the script URL
+                const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json&callback=${callbackName}`;
+                script.src = url;
+                
+                // Handle load error
+                script.onerror = () => {
+                    delete window[callbackName];
+                    document.body.removeChild(script);
+                    reject(new Error('Failed to load spreadsheet. Make sure it is published to the web and accessible.'));
+                };
+                
+                // Add the script to the document
+                document.body.appendChild(script);
+            });
+        }
+        
+        // Process the sheet data
+        function processSheetData(data) {
+            if (data.length < 2) {
+                showStatus('Error', 'Spreadsheet must have at least a header row and one data row', 'error');
+                return;
+            }
+            
+            // Check for required headers
+            const headers = data[0];
+            const requiredHeaders = ['id', 'name', 'type'];
+            const missingHeaders = requiredHeaders.filter(header => 
+                !headers.some(h => h.trim().toLowerCase() === header.toLowerCase())
+            );
+            
+            if (missingHeaders.length > 0) {
+                showStatus('Error', `Missing required column headers: ${missingHeaders.join(', ')}. The first row of your spreadsheet must include these column names.`, 'error');
+                return;
+            }
+            
+            // Convert to products
+            const products = convertToProducts(data);
+            
+            // Show success and preview products
+            showStatus('Import Successful', `Found ${products.length} products in the spreadsheet.`, 'success');
+            previewProducts(products);
+            
+            // Create products object
+            const productsObj = {};
+            products.forEach(product => {
+                productsObj[product.id] = product;
+            });
+            
+            // Generate inventory.js content
+            const inventoryJs = `// Seed Collective - Inventory File
+// Generated on ${new Date().toLocaleString()}
+// This file contains just the product inventory and can be updated independently
+// from your main configuration file (config.js)
+
+window.siteInventory = ${JSON.stringify(productsObj, null, 2)};
+
+// If this inventory file is loaded after config.js, update the site config
+if (window.siteConfig && window.siteConfig.products) {
+    window.siteConfig.products.items = window.siteInventory;
+    console.log("Inventory loaded and applied to site configuration");
+}`;
+            
+            document.getElementById('output-content').textContent = inventoryJs;
+            document.getElementById('output').style.display = 'block';
+        }
+        
+        // Convert data to products
+        function convertToProducts(data) {
+            const headers = data[0].map(h => h.toLowerCase().trim());
+            const products = [];
+            
+            // Get column indices from headers
+            const columnIndices = {
+                id: headers.indexOf('id'),
+                name: headers.indexOf('name'),
+                type: headers.indexOf('type'),
+                status: headers.indexOf('status'),
+                image: headers.indexOf('image'),
+                additionalImages: headers.indexOf('additionalimages'),
+                description: headers.indexOf('description'),
+                price: headers.indexOf('price'),
+                salePrice: headers.indexOf('saleprice'),
+                packSize: headers.indexOf('packsize'),
+                variety: headers.indexOf('variety'),
+                rating: headers.indexOf('rating'),
+                origin: headers.indexOf('origin'),
+                notes: headers.indexOf('notes')
+            };
+            
+            // Process each data row
+            for (let i = 1; i < data.length; i++) {
+                const row = data[i];
+                if (!row || row.length === 0) continue;
+                
+                // Skip if id is missing
+                if (columnIndices.id === -1 || !row[columnIndices.id] || String(row[columnIndices.id]).trim() === '') {
+                    console.warn(`Skipping row ${i + 1} due to missing ID`);
+                    continue;
+                }
+                
+                // Create product object
+                const product = {
+                    id: String(row[columnIndices.id]).trim(),
+                    name: columnIndices.name !== -1 && row[columnIndices.name] ? String(row[columnIndices.name]).trim() : `Product ${i}`,
+                    type: columnIndices.type !== -1 && row[columnIndices.type] ? String(row[columnIndices.type]).trim() : 'Premium Collection',
+                    status: columnIndices.status !== -1 && row[columnIndices.status] ? String(row[columnIndices.status]).trim() : 'available',
+                    image: columnIndices.image !== -1 && row[columnIndices.image] ? String(row[columnIndices.image]).trim() : '',
+                    additionalImages: [],
+                    description: columnIndices.description !== -1 && row[columnIndices.description] ? String(row[columnIndices.description]).trim() : '',
+                    variety: columnIndices.variety !== -1 && row[columnIndices.variety] ? String(row[columnIndices.variety]).trim() : '',
+                    rating: columnIndices.rating !== -1 && row[columnIndices.rating] ? String(row[columnIndices.rating]).trim() : '',
+                    origin: columnIndices.origin !== -1 && row[columnIndices.origin] ? String(row[columnIndices.origin]).trim() : '',
+                    details: '',
+                    notes: columnIndices.notes !== -1 && row[columnIndices.notes] ? String(row[columnIndices.notes]).trim() : '',
+                    packOptions: []
+                };
+                
+                // Handle additional images
+                if (columnIndices.additionalImages !== -1 && row[columnIndices.additionalImages]) {
+                    product.additionalImages = String(row[columnIndices.additionalImages])
+                        .split(',')
+                        .map(img => img.trim())
+                        .filter(img => img !== '');
+                }
+                
+                // Handle pack options
+                const packSize = columnIndices.packSize !== -1 && row[columnIndices.packSize] ? String(row[columnIndices.packSize]).trim() : 'Single';
+                let regularPrice = 35;
+                let salePrice = 30;
+                
+                if (columnIndices.price !== -1 && row[columnIndices.price] !== null && row[columnIndices.price] !== undefined) {
+                    const parsedPrice = parseFloat(row[columnIndices.price]);
+                    if (!isNaN(parsedPrice)) {
+                        regularPrice = parsedPrice;
+                    }
+                }
+                
+                if (columnIndices.salePrice !== -1 && row[columnIndices.salePrice] !== null && row[columnIndices.salePrice] !== undefined) {
+                    const parsedSalePrice = parseFloat(row[columnIndices.salePrice]);
+                    if (!isNaN(parsedSalePrice)) {
+                        salePrice = parsedSalePrice;
+                    } else {
+                        salePrice = regularPrice;
+                    }
+                } else {
+                    salePrice = regularPrice;
+                }
+                
+                product.packOptions.push({
+                    size: packSize,
+                    regularPrice: regularPrice,
+                    salePrice: salePrice
+                });
+                
+                products.push(product);
+            }
+            
+            return products;
+        }
+        
+        // Preview products
+        function previewProducts(products) {
+            const previewContainer = document.getElementById('preview-container');
+            const previewElement = document.getElementById('preview');
+            
+            if (products.length === 0) {
+                previewContainer.style.display = 'none';
+                return;
+            }
+            
+            // Create preview HTML
+            let previewHTML = '<table>';
+            
+            // Add header row
+            previewHTML += '<tr>';
+            previewHTML += '<th>ID</th>';
+            previewHTML += '<th>Name</th>';
+            previewHTML += '<th>Type</th>';
+            previewHTML += '<th>Status</th>';
+            previewHTML += '<th>Price</th>';
+            previewHTML += '</tr>';
+            
+            // Add product rows
+            for (let i = 0; i < Math.min(products.length, 10); i++) {
+                const product = products[i];
+                const price = product.packOptions.length > 0 ? product.packOptions[0].regularPrice : '';
+                
+                previewHTML += `<tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.type}</td>
+                    <td>${product.status}</td>
+                    <td>${price}</td>
+                </tr>`;
+            }
+            
+            previewHTML += '</table>';
+            
+            if (products.length > 10) {
+                previewHTML += `<p style="margin-top: 10px; font-style: italic;">${products.length - 10} more products not shown in preview</p>`;
+            }
+            
+            // Show full preview
+            previewElement.innerHTML = previewHTML;
+            previewContainer.style.display = 'block';
+        }
+        
+        // Save inventory to a file
+        function saveInventoryFile() {
+            try {
+                const outputContent = document.getElementById('output-content').textContent;
+                if (!outputContent) {
+                    alert('No product data to save. Please load products from Google Sheets first.');
+                    return;
+                }
+                
+                // Create download link
+                const blob = new Blob([outputContent], { type: 'text/javascript' });
+                const url = URL.createObjectURL(blob);
+                const downloadLink = document.createElement('a');
+                downloadLink.href = url;
+                downloadLink.download = 'inventory.js';
+                downloadLink.click();
+                
+                // Clean up
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                alert(`Error saving inventory: ${error.message}`);
+            }
+        }
+        
+        // Show status message
+        function showStatus(title, message, type = 'info') {
+            const statusContainer = document.getElementById('status');
+            const statusTitle = document.getElementById('status-title');
+            const statusMessage = document.getElementById('status-message');
+            
+            statusContainer.style.display = 'block';
+            statusTitle.textContent = title;
+            statusMessage.textContent = message;
+            
+            // Reset classes
+            statusContainer.className = '';
+            statusContainer.id = 'status';
+            
+            // Add appropriate class based on type
+            switch (type) {
+                case 'success':
+                    statusContainer.classList.add('status-success');
+                    break;
+                case 'error':
+                    statusContainer.classList.add('status-error');
+                    document.getElementById('preview-container').style.display = 'none';
+                    document.getElementById('output').style.display = 'none';
+                    break;
+                case 'loading':
+                    statusContainer.classList.add('status-loading');
+                    document.getElementById('preview-container').style.display = 'none';
+                    document.getElementById('output').style.display = 'none';
+                    break;
+                default:
+                    // No additional class needed
+            }
+        }
+    </script>
+</body>
+</html>

@@ -8,21 +8,12 @@
         "logo": "logo.jpg",
         "heroBackground": "hero-bg.jpg",
         "email": "scaleforged@sitepackages.net",
-        "socialLinks": [
-            {
-                "platform": "Discord",
-                "url": "https://linktr.ee/scaleforged"
-            },
-            {
-                "platform": "YouTube",
-                "url": "https://www.youtube.com/@ScaleForged3D"
-            },
-            {
-                "platform": "Facebook",
-                "url": "https://www.facebook.com/profile.php?id=61557130035520"
-            }
-        ],
-        "copyright": "© 2025"
+        "socialLinks": {
+            "discord": "https://linktr.ee/scaleforged",
+            "youtube": "https://www.youtube.com/@ScaleForged3D",
+            "tiktok": ""
+        },
+        "copyright": "© 2025 Scale Forged. All rights reserved."
     },
     "colors": {
         "primary": "#0277bd",

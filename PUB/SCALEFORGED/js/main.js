@@ -175,6 +175,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 300);
 });
 
+// Function to load real-time inventory data
+function loadRealtimeInventory() {
+    console.log('Checking for local real-time inventory data...');
+    
+    // Only try to load from local JSON file - NO Google Sheets connection
+    return fetch('realtime-inventory.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Real-time inventory file not found');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Loaded real-time inventory data');
+            // Update products with data from JSON file
+            if (data && Object.keys(data).length > 0) {
+                window.products = data;
+                renderProductCards();
+            }
+        })
+        .catch(error => {
+            console.warn('Could not load real-time inventory:', error.message);
+        });
+}
+
 // Function to initialize the About section
 function initializeAboutSection() {
     const aboutConfig = window.siteConfig.about;
@@ -377,16 +402,31 @@ function initializeSite() {
     // Initialize cart
     initializeCart();
 	
-	  initializeFriendLinks();
+    initializeFriendLinks();
     
-    // Render product cards
-    renderProductCards();
-    
-    // Set up event listeners
-    setupEventListeners();
-    
-    // Add digital product styles 
-    addDigitalProductStyles();
+    // Load real-time inventory data before rendering products
+    loadRealtimeInventory()
+        .then(() => {
+            // Render product cards after real-time inventory is loaded
+            renderProductCards();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Add digital product styles 
+            addDigitalProductStyles();
+        })
+        .catch(error => {
+            console.warn('Real-time inventory load failed:', error);
+            // Continue with normal rendering if real-time inventory fails
+            renderProductCards();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Add digital product styles 
+            addDigitalProductStyles();
+        });
 }
 
 function addDigitalProductStyles() {

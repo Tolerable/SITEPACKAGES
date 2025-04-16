@@ -8,12 +8,21 @@
         "logo": "logo.jpg",
         "heroBackground": "hero-bg.jpg",
         "email": "scaleforged@sitepackages.net",
-        "socialLinks": {
-            "discord": "https://discord.gg/28nnN5BpS7",
-            "youtube": "https://www.youtube.com/@ScaleForged3D",
-            "tiktok": ""
-        },
-        "copyright": "© 2025 Scale Forged. All rights reserved."
+        "socialLinks": [
+            {
+                "platform": "Discord",
+                "url": "https://linktr.ee/scaleforged"
+            },
+            {
+                "platform": "YouTube",
+                "url": "https://www.youtube.com/@ScaleForged3D"
+            },
+            {
+                "platform": "Facebook",
+                "url": "https://www.facebook.com/profile.php?id=61557130035520"
+            }
+        ],
+        "copyright": "© 2025"
     },
     "colors": {
         "primary": "#0277bd",
@@ -236,6 +245,8 @@
                 "name": "Seed Shipper Bullion (LG)",
                 "type": "Hybrid Collection",
                 "status": "available",
+                "delivery": "physical",
+                "digitalContent": "",
                 "image": "product6.jpg",
                 "additionalImages": [],
                 "description": "2 Piece tiny containers that hold seeds and can be mailed in a standard USPS envelope.",

@@ -63,27 +63,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Handle navigation clicks
-    document.getElementById('main-navigation').addEventListener('click', function(e) {
-        if (e.target.tagName === 'A') {
-            e.preventDefault();
-            const targetSection = e.target.getAttribute('href');
-            
-            // Hide all sections first
-            document.querySelectorAll('section').forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            // Show the target section
-            if (targetSection === '#about') {
-                document.getElementById('about').style.display = 'block';
-            } else if (targetSection === '#products') {
-                document.getElementById('products').style.display = 'block';
-            } else {
-                // Handle other sections...
-            }
-        }
-    });
+	// Handle navigation clicks
+	document.getElementById('main-navigation').addEventListener('click', function(e) {
+		if (e.target.tagName === 'A') {
+			const targetHref = e.target.getAttribute('href');
+			
+			// Only handle internal links that start with #
+			if (targetHref && targetHref.startsWith('#')) {
+				e.preventDefault();
+				
+				// Hide all sections first
+				document.querySelectorAll('section').forEach(section => {
+					section.style.display = 'none';
+				});
+				
+				// Show the target section
+				if (targetHref === '#about') {
+					document.getElementById('about').style.display = 'block';
+				} else if (targetHref === '#products') {
+					document.getElementById('products').style.display = 'block';
+				} else {
+					// Handle other sections...
+				}
+			}
+			// External links (http://, https://) will work normally
+		}
+	});
     
     // Function to check if config exists - ONLY RUN if not in preview mode
     function checkConfig() {

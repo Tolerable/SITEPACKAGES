@@ -1,36 +1,36 @@
 {
   "product-00007": {
     "id": "product-00007",
-    "name": "Orange Purple Grinder",
+    "name": "Blue & Purple - 001",
     "type": "Premium Collection",
-    "status": "available",
-    "image": "product-00007.jpg",
+    "status": "Available",
+    "image": "Blue & Purple - 001.png",
     "additionalImages": [],
-    "description": "",
+    "description": "UNIQUE LIMITED GRINDER",
     "variety": "",
     "rating": "",
-    "origin": "",
+    "origin": "INHOUSE",
     "details": "",
     "notes": "",
     "packOptions": [
       {
         "size": "3 Pack",
-        "regularPrice": 35,
-        "salePrice": 30
+        "regularPrice": 29.99,
+        "salePrice": 24.99
       }
     ]
   },
   "product-00008": {
     "id": "product-00008",
-    "name": "Blue Green Grinder",
+    "name": "Blue & Yellow - 001",
     "type": "Premium Collection",
-    "status": "available",
-    "image": "product-00008.jpg",
+    "status": "Available",
+    "image": "Blue & Yellow - 001.png",
     "additionalImages": [],
     "description": "",
     "variety": "",
     "rating": "",
-    "origin": "",
+    "origin": "INHOUSE",
     "details": "",
     "notes": "",
     "packOptions": [
@@ -43,15 +43,15 @@
   },
   "product-00009": {
     "id": "product-00009",
-    "name": "Sparkling Grinder #1",
-    "type": "Signature Series",
-    "status": "available",
-    "image": "",
+    "name": "Blue Glow - 001",
+    "type": "Premium Collection",
+    "status": "Available",
+    "image": "Blue Glow - 001.png",
     "additionalImages": [],
     "description": "",
     "variety": "",
     "rating": "",
-    "origin": "",
+    "origin": "INHOUSE",
     "details": "",
     "notes": "",
     "packOptions": [
@@ -64,15 +64,99 @@
   },
   "product-00010": {
     "id": "product-00010",
-    "name": "Star Grinder #4",
-    "type": "Classic Collection",
-    "status": "available",
-    "image": "",
+    "name": "Crystal Rainbow -  001",
+    "type": "Premium Collection",
+    "status": "Available",
+    "image": "Crystal Rainbow -  001.png",
     "additionalImages": [],
     "description": "",
     "variety": "",
     "rating": "",
-    "origin": "",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "",
+    "packOptions": [
+      {
+        "size": "3 Pack",
+        "regularPrice": 35,
+        "salePrice": 30
+      }
+    ]
+  },
+  "product-00011": {
+    "id": "product-00011",
+    "name": "Gold & Silver - 001",
+    "type": "Premium Collection",
+    "status": "Available",
+    "image": "Gold & Silver - 001.png",
+    "additionalImages": [],
+    "description": "",
+    "variety": "",
+    "rating": "",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "",
+    "packOptions": [
+      {
+        "size": "3 Pack",
+        "regularPrice": 35,
+        "salePrice": 30
+      }
+    ]
+  },
+  "product-00012": {
+    "id": "product-00012",
+    "name": "Green & Purple - 001",
+    "type": "Premium Collection",
+    "status": "Available",
+    "image": "Green & Purple - 001.png",
+    "additionalImages": [],
+    "description": "",
+    "variety": "",
+    "rating": "",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "",
+    "packOptions": [
+      {
+        "size": "3 Pack",
+        "regularPrice": 35,
+        "salePrice": 30
+      }
+    ]
+  },
+  "product-00013": {
+    "id": "product-00013",
+    "name": "Green Glow - 001",
+    "type": "Premium Collection",
+    "status": "Available",
+    "image": "Green Glow - 001.png",
+    "additionalImages": [],
+    "description": "",
+    "variety": "",
+    "rating": "",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "",
+    "packOptions": [
+      {
+        "size": "3 Pack",
+        "regularPrice": 35,
+        "salePrice": 30
+      }
+    ]
+  },
+  "product-00014": {
+    "id": "product-00014",
+    "name": "Yellow & Purple - 001",
+    "type": "Premium Collection",
+    "status": "Available",
+    "image": "Yellow & Purple - 001.png",
+    "additionalImages": [],
+    "description": "",
+    "variety": "",
+    "rating": "",
+    "origin": "INHOUSE",
     "details": "",
     "notes": "",
     "packOptions": [

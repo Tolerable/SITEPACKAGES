@@ -199,9 +199,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to load real-time inventory data
 function loadRealtimeInventory() {
+    // Check if we're in preview mode (local testing)
+    const isPreviewMode = window.location.search.includes('preview=true');
+    
+    if (isPreviewMode) {
+        console.log('In preview mode - skipping realtime inventory loading');
+        return Promise.resolve(); // Return resolved promise to continue the chain
+    }
+    
     console.log('Checking for local real-time inventory data...');
     
-    // Only try to load from local JSON file
     return fetch('realtime-inventory.json')
         .then(response => {
             if (!response.ok) {
@@ -211,22 +218,17 @@ function loadRealtimeInventory() {
         })
         .then(data => {
             console.log('Loaded real-time inventory data');
-            // Update products with data from JSON file - MERGE instead of replace
             if (data && Object.keys(data).length > 0) {
-                // Get existing products first
+                // Get existing products
                 let existingProducts = {};
-                
-                // Check if products exist in config first
                 if (window.siteConfig && window.siteConfig.products && window.siteConfig.products.items) {
                     existingProducts = window.siteConfig.products.items;
                 } else if (window.products) {
                     existingProducts = window.products;
                 }
                 
-                // Merge the products instead of replacing
+                // Merge products
                 window.products = { ...existingProducts, ...data };
-                
-                console.log('Combined product count:', Object.keys(window.products).length);
                 renderProductCards();
             }
         })
@@ -409,10 +411,10 @@ function formatTextWithParagraphs(text) {
 }
 
 function initializeSite() {
-    // Check if siteConfig exists in the window object
+    // Check if siteConfig exists
     if (!window.siteConfig) {
         console.error('Error: siteConfig is not defined');
-        // Display error message and stop initialization
+        // Display error and return
         return;
     }
     
@@ -427,13 +429,30 @@ function initializeSite() {
     
     // Initialize cart
     initializeCart();
-    
+	
     initializeFriendLinks();
     
-    // Load real-time inventory data ONCE
-    if (!window.inventoryLoaded) {
+    // Check if we're in preview mode
+    const isPreviewMode = window.location.search.includes('preview=true');
+    
+    if (isPreviewMode) {
+        console.log('Preview mode detected - using config products only');
+        
+        // In preview mode, explicitly set window.products to config products
+        if (window.siteConfig && window.siteConfig.products && window.siteConfig.products.items) {
+            window.products = window.siteConfig.products.items;
+            console.log('Set window.products from config with', Object.keys(window.products).length, 'items');
+        }
+        
+        // Render product cards
+        renderProductCards();
+        setupEventListeners();
+        addDigitalProductStyles();
+    } else {
+        // Load real-time inventory if NOT in preview mode
         loadRealtimeInventory()
             .then(() => {
+                renderProductCards();
                 setupEventListeners();
                 addDigitalProductStyles();
             })
@@ -443,11 +462,6 @@ function initializeSite() {
                 setupEventListeners();
                 addDigitalProductStyles();
             });
-    } else {
-        // If inventory is already loaded, just render the cards
-        renderProductCards();
-        setupEventListeners();
-        addDigitalProductStyles();
     }
 }
 
@@ -904,38 +918,41 @@ function renderProductCards() {
     const productGrid = document.getElementById('product-grid');
     productGrid.innerHTML = '';
     
-    // Use a single source of truth for products, prioritizing realtime inventory
-    let productSource = window.products;
+    // Check if we're in preview mode
+    const isPreviewMode = window.location.search.includes('preview=true');
     
-    // If no products loaded from realtime, try config
-    if (!productSource || Object.keys(productSource).length === 0) {
-        console.log('No products in window.products, checking config...');
+    // Define source priority depending on mode
+    let products = null;
+    
+    if (isPreviewMode) {
+        // In preview mode, only use products from config
+        console.log('Using products from config (preview mode)');
         if (siteConfig && siteConfig.products && siteConfig.products.items) {
-            console.log('Loading products from config...');
-            productSource = siteConfig.products.items;
-            window.products = productSource; // Store for future reference
-        } else {
-            // Try localStorage as last resort
-            const savedProducts = localStorage.getItem('siteProducts');
-            if (savedProducts) {
-                console.log('Loading products from localStorage...');
-                productSource = JSON.parse(savedProducts);
-                window.products = productSource; // Store for future reference
-            }
+            products = siteConfig.products.items;
+            console.log('Found', Object.keys(products).length, 'products in config');
+        }
+    } else {
+        // Normal mode - use window.products (which may include realtime inventory)
+        if (window.products && Object.keys(window.products).length > 0) {
+            products = window.products;
+            console.log('Using merged products from window.products');
+        } else if (siteConfig && siteConfig.products && siteConfig.products.items) {
+            products = siteConfig.products.items;
+            console.log('Using products from config');
         }
     }
     
     // Check if we have any products to display
-    if (!productSource || Object.keys(productSource).length === 0) {
-        console.log('No product data found.');
+    if (!products || Object.keys(products).length === 0) {
+        console.log('No product data found in any source');
         productGrid.innerHTML = `<div class="no-products-message">No ${siteConfig.terminology.productPluralTerm} found. Add some products in the configuration tool.</div>`;
         return;
     }
     
-    console.log('Products loaded:', Object.keys(productSource).length);
+    console.log('Rendering', Object.keys(products).length, 'products');
     
     // Create card for each product
-    Object.values(productSource).forEach(product => {
+    Object.values(products).forEach(product => {
         const card = createProductCard(product);
         productGrid.appendChild(card);
     });

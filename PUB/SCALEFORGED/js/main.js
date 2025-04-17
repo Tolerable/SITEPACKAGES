@@ -211,9 +211,22 @@ function loadRealtimeInventory() {
         })
         .then(data => {
             console.log('Loaded real-time inventory data');
-            // Only update products if we actually got data
+            // Update products with data from JSON file - MERGE instead of replace
             if (data && Object.keys(data).length > 0) {
-                window.products = data;
+                // Get existing products first
+                let existingProducts = {};
+                
+                // Check if products exist in config first
+                if (window.siteConfig && window.siteConfig.products && window.siteConfig.products.items) {
+                    existingProducts = window.siteConfig.products.items;
+                } else if (window.products) {
+                    existingProducts = window.products;
+                }
+                
+                // Merge the products instead of replacing
+                window.products = { ...existingProducts, ...data };
+                
+                console.log('Combined product count:', Object.keys(window.products).length);
                 renderProductCards();
             }
         })

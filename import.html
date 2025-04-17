@@ -463,111 +463,115 @@
             return result;
         }
         
-        // Convert parsed data to product objects
-        function convertToProducts(data) {
-            if (data.length < 2) {
-                throw new Error('Spreadsheet must have at least a header row and one data row');
-            }
-            
-            const headers = data[0];
-            const products = [];
-            
-            // Get column indices from headers
-            const columnIndices = {
-                id: headers.findIndex(header => header.trim().toLowerCase() === 'id'),
-                name: headers.findIndex(header => header.trim().toLowerCase() === 'name'),
-                type: headers.findIndex(header => header.trim().toLowerCase() === 'type'),
-                status: headers.findIndex(header => header.trim().toLowerCase() === 'status'),
-                image: headers.findIndex(header => header.trim().toLowerCase() === 'image'),
-                additionalImages: headers.findIndex(header => header.trim().toLowerCase() === 'additionalimages'),
-                description: headers.findIndex(header => header.trim().toLowerCase() === 'description'),
-                price: headers.findIndex(header => header.trim().toLowerCase() === 'price'),
-                salePrice: headers.findIndex(header => header.trim().toLowerCase() === 'saleprice'),
-                packSize: headers.findIndex(header => header.trim().toLowerCase() === 'packsize'),
-                variety: headers.findIndex(header => header.trim().toLowerCase() === 'variety'),
-                rating: headers.findIndex(header => header.trim().toLowerCase() === 'rating'),
-                origin: headers.findIndex(header => header.trim().toLowerCase() === 'origin'),
-                notes: headers.findIndex(header => header.trim().toLowerCase() === 'notes'),
-                delivery: headers.findIndex(header => header.trim().toLowerCase() === 'delivery'),
-                digitalContent: headers.findIndex(header => header.trim().toLowerCase() === 'digitalcontent')
-            };
-            
-            // Validate required columns
-            if (columnIndices.id === -1) {
-                throw new Error('Required column "id" not found in spreadsheet');
-            }
-            if (columnIndices.name === -1) {
-                throw new Error('Required column "name" not found in spreadsheet');
-            }
-            if (columnIndices.type === -1) {
-                throw new Error('Required column "type" not found in spreadsheet');
-            }
-            
-            // Process each data row
-            for (let i = 1; i < data.length; i++) {
-                const row = data[i];
-                if (!row || row.length === 0) continue;
-                
-                // Skip if id is missing
-                if (columnIndices.id === -1 || !row[columnIndices.id] || row[columnIndices.id].trim() === '') {
-                    console.warn(`Skipping row ${i + 1} due to missing ID`);
-                    continue;
-                }
-                
-                // Create product object
-                const product = {
-                    id: row[columnIndices.id]?.trim(),
-                    name: columnIndices.name !== -1 && row[columnIndices.name] ? row[columnIndices.name].trim() : `Product ${i}`,
-                    type: columnIndices.type !== -1 && row[columnIndices.type] ? row[columnIndices.type].trim() : 'Premium Collection',
-                    status: columnIndices.status !== -1 && row[columnIndices.status] ? row[columnIndices.status].trim() : 'available',
-                    image: columnIndices.image !== -1 && row[columnIndices.image] ? row[columnIndices.image].trim() : '',
-                    additionalImages: [],
-                    description: columnIndices.description !== -1 && row[columnIndices.description] ? row[columnIndices.description].trim() : '',
-                    variety: columnIndices.variety !== -1 && row[columnIndices.variety] ? row[columnIndices.variety].trim() : '',
-                    rating: columnIndices.rating !== -1 && row[columnIndices.rating] ? row[columnIndices.rating].trim() : '',
-                    origin: columnIndices.origin !== -1 && row[columnIndices.origin] ? row[columnIndices.origin].trim() : '',
-                    details: '',
-                    notes: columnIndices.notes !== -1 && row[columnIndices.notes] ? row[columnIndices.notes].trim() : '',
-                    packOptions: []
-                };
-                
-                // Add delivery type if available
-                if (columnIndices.delivery !== -1 && row[columnIndices.delivery]) {
-                    product.delivery = row[columnIndices.delivery].trim();
-                }
-                
-                // Add digital content URL if available
-                if (columnIndices.digitalContent !== -1 && row[columnIndices.digitalContent]) {
-                    product.digitalContent = row[columnIndices.digitalContent].trim();
-                }
-                
-                // Handle additional images
-                if (columnIndices.additionalImages !== -1 && row[columnIndices.additionalImages]) {
-                    product.additionalImages = row[columnIndices.additionalImages]
-                        .split(',')
-                        .map(img => img.trim())
-                        .filter(img => img !== '');
-                }
-                
-                // Handle pack options
-                const packSize = columnIndices.packSize !== -1 && row[columnIndices.packSize] ? row[columnIndices.packSize].trim() : '3 Pack';
-                const regularPrice = columnIndices.price !== -1 && row[columnIndices.price] ? parseFloat(row[columnIndices.price]) : 35;
-                const salePrice = columnIndices.salePrice !== -1 && row[columnIndices.salePrice] ? parseFloat(row[columnIndices.salePrice]) : 30;
-                
-                // Only add pack options for physical products or if delivery type isn't specified
-                if (!isNaN(regularPrice) && (!product.delivery || product.delivery !== 'digital')) {
-                    product.packOptions.push({
-                        size: packSize,
-                        regularPrice: regularPrice,
-                        salePrice: isNaN(salePrice) ? regularPrice : salePrice
-                    });
-                }
-                
-                products.push(product);
-            }
-            
-            return products;
-        }
+		// Convert parsed data to product objects
+		function convertToProducts(data) {
+			if (data.length < 2) {
+				throw new Error('Spreadsheet must have at least a header row and one data row');
+			}
+			
+			// Get column indices from headers
+			const headers = data[0];
+			const columnIndices = {
+				id: headers.findIndex(header => header.trim().toLowerCase() === 'id'),
+				name: headers.findIndex(header => header.trim().toLowerCase() === 'name'),
+				type: headers.findIndex(header => header.trim().toLowerCase() === 'type'),
+				status: headers.findIndex(header => header.trim().toLowerCase() === 'status'),
+				image: headers.findIndex(header => header.trim().toLowerCase() === 'image'),
+				additionalImages: headers.findIndex(header => header.trim().toLowerCase() === 'additionalimages'),
+				description: headers.findIndex(header => header.trim().toLowerCase() === 'description'),
+				price: headers.findIndex(header => header.trim().toLowerCase() === 'price'),
+				salePrice: headers.findIndex(header => header.trim().toLowerCase() === 'saleprice'),
+				packSize: headers.findIndex(header => header.trim().toLowerCase() === 'packsize'),
+				variety: headers.findIndex(header => header.trim().toLowerCase() === 'variety'),
+				rating: headers.findIndex(header => header.trim().toLowerCase() === 'rating'),
+				origin: headers.findIndex(header => header.trim().toLowerCase() === 'origin'),
+				details: headers.findIndex(header => header.trim().toLowerCase() === 'details'),
+				notes: headers.findIndex(header => header.trim().toLowerCase() === 'notes'),
+				delivery: headers.findIndex(header => header.trim().toLowerCase() === 'delivery'),
+				digitalContent: headers.findIndex(header => header.trim().toLowerCase() === 'digitalcontent')
+			};
+			
+			// Validate required columns
+			if (columnIndices.id === -1) {
+				throw new Error('Required column "id" not found in spreadsheet');
+			}
+			if (columnIndices.name === -1) {
+				throw new Error('Required column "name" not found in spreadsheet');
+			}
+			if (columnIndices.type === -1) {
+				throw new Error('Required column "type" not found in spreadsheet');
+			}
+			
+			const products = [];
+			
+			// Process each data row
+			for (let i = 1; i < data.length; i++) {
+				const row = data[i];
+				if (!row || row.length === 0) continue;
+				
+				// Skip if id is missing
+				if (columnIndices.id === -1 || !row[columnIndices.id] || row[columnIndices.id].trim() === '') {
+					console.warn(`Skipping row ${i + 1} due to missing ID`);
+					continue;
+				}
+				
+				// Create product object
+				const product = {
+					id: row[columnIndices.id]?.trim(),
+					name: columnIndices.name !== -1 && row[columnIndices.name] ? row[columnIndices.name].trim() : `Product ${i}`,
+					type: columnIndices.type !== -1 && row[columnIndices.type] ? row[columnIndices.type].trim() : 'Premium Collection',
+					status: columnIndices.status !== -1 && row[columnIndices.status] ? row[columnIndices.status].trim() : 'available',
+					image: columnIndices.image !== -1 && row[columnIndices.image] ? row[columnIndices.image].trim() : '',
+					additionalImages: [],
+					description: columnIndices.description !== -1 && row[columnIndices.description] ? row[columnIndices.description].trim() : '',
+					variety: columnIndices.variety !== -1 && row[columnIndices.variety] ? row[columnIndices.variety].trim() : '',
+					rating: columnIndices.rating !== -1 && row[columnIndices.rating] ? row[columnIndices.rating].trim() : '',
+					origin: columnIndices.origin !== -1 && row[columnIndices.origin] ? row[columnIndices.origin].trim() : '',
+					details: columnIndices.details !== -1 && row[columnIndices.details] ? row[columnIndices.details].trim() : '',
+					notes: columnIndices.notes !== -1 && row[columnIndices.notes] ? row[columnIndices.notes].trim() : '',
+					packOptions: []
+				};
+				
+				// Add delivery type if available
+				if (columnIndices.delivery !== -1 && row[columnIndices.delivery]) {
+					product.delivery = row[columnIndices.delivery].trim();
+				}
+				
+				// Add digital content URL if available
+				if (columnIndices.digitalContent !== -1 && row[columnIndices.digitalContent]) {
+					product.digitalContent = row[columnIndices.digitalContent].trim();
+				}
+				
+				// Handle additional images
+				if (columnIndices.additionalImages !== -1 && row[columnIndices.additionalImages]) {
+					product.additionalImages = row[columnIndices.additionalImages]
+						.split(',')
+						.map(img => img.trim())
+						.filter(img => img !== '');
+				}
+				
+				// Handle pack options - FIX: Default to 1 pack for grinders instead of 3
+				// Check if packSize specifically contains "grinder" or is simply "1"
+				const packSize = columnIndices.packSize !== -1 && row[columnIndices.packSize] ? row[columnIndices.packSize].trim() : '3 Pack';
+				const defaultPackSize = packSize.toLowerCase().includes('grinder') || packSize === '1' ? '1' : '3 Pack';
+				
+				const regularPrice = columnIndices.price !== -1 && row[columnIndices.price] ? parseFloat(row[columnIndices.price]) : 35;
+				const salePrice = columnIndices.salePrice !== -1 && row[columnIndices.salePrice] ? parseFloat(row[columnIndices.salePrice]) : 30;
+				
+				// Only add pack options for physical products or if delivery type isn't specified
+				if (!isNaN(regularPrice) && (!product.delivery || product.delivery !== 'digital')) {
+					product.packOptions.push({
+						size: defaultPackSize,
+						regularPrice: regularPrice,
+						salePrice: isNaN(salePrice) ? regularPrice : salePrice
+					});
+				}
+				
+				products.push(product);
+			}
+			
+			return products;
+		}
         
         // Show status message
         function showStatus(title, message, type = 'info') {

@@ -89,6 +89,28 @@ document.addEventListener('DOMContentLoaded', function() {
 			// External links (http://, https://) will work normally
 		}
 	});
+
+	function logError(message, error) {
+		console.error(message, error);
+		
+		// Create a visible error log for users if in debug mode
+		if (window.location.search.includes('debug=true')) {
+			const errorLog = document.getElementById('error-log') || createErrorLog();
+			const errorItem = document.createElement('div');
+			errorItem.className = 'error-item';
+			errorItem.innerHTML = `<strong>${message}</strong>: ${error.message || error}`;
+			errorLog.appendChild(errorItem);
+		}
+	}
+
+	function createErrorLog() {
+		const errorLog = document.createElement('div');
+		errorLog.id = 'error-log';
+		errorLog.style.cssText = 'position: fixed; bottom: 0; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: rgba(255,0,0,0.8); color: white; padding: 10px; z-index: 9999; font-family: monospace;';
+		errorLog.innerHTML = '<h3>Error Log</h3>';
+		document.body.appendChild(errorLog);
+		return errorLog;
+	}
     
     // Function to check if config exists - ONLY RUN if not in preview mode
     function checkConfig() {
@@ -179,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function loadRealtimeInventory() {
     console.log('Checking for local real-time inventory data...');
     
-    // Only try to load from local JSON file - NO Google Sheets connection
+    // Only try to load from local JSON file
     return fetch('realtime-inventory.json')
         .then(response => {
             if (!response.ok) {
@@ -189,7 +211,7 @@ function loadRealtimeInventory() {
         })
         .then(data => {
             console.log('Loaded real-time inventory data');
-            // Update products with data from JSON file
+            // Only update products if we actually got data
             if (data && Object.keys(data).length > 0) {
                 window.products = data;
                 renderProductCards();
@@ -377,17 +399,8 @@ function initializeSite() {
     // Check if siteConfig exists in the window object
     if (!window.siteConfig) {
         console.error('Error: siteConfig is not defined');
-        
-        // Display error message on the page
-        const errorMsg = document.createElement('div');
-        errorMsg.style.cssText = 'background:#f44336;color:white;padding:15px;margin:20px;border-radius:5px;';
-        errorMsg.innerHTML = `
-            <h3>Configuration Error</h3>
-            <p>The site configuration could not be loaded. Please check that config.js exists and is properly formatted.</p>
-            <p>Error: siteConfig is undefined</p>
-        `;
-        document.body.insertBefore(errorMsg, document.body.firstChild);
-        return; // Stop initialization if config is missing
+        // Display error message and stop initialization
+        return;
     }
     
     // Apply site configuration
@@ -401,32 +414,28 @@ function initializeSite() {
     
     // Initialize cart
     initializeCart();
-	
+    
     initializeFriendLinks();
     
-    // Load real-time inventory data before rendering products
-    loadRealtimeInventory()
-        .then(() => {
-            // Render product cards after real-time inventory is loaded
-            renderProductCards();
-            
-            // Set up event listeners
-            setupEventListeners();
-            
-            // Add digital product styles 
-            addDigitalProductStyles();
-        })
-        .catch(error => {
-            console.warn('Real-time inventory load failed:', error);
-            // Continue with normal rendering if real-time inventory fails
-            renderProductCards();
-            
-            // Set up event listeners
-            setupEventListeners();
-            
-            // Add digital product styles 
-            addDigitalProductStyles();
-        });
+    // Load real-time inventory data ONCE
+    if (!window.inventoryLoaded) {
+        loadRealtimeInventory()
+            .then(() => {
+                setupEventListeners();
+                addDigitalProductStyles();
+            })
+            .catch(error => {
+                console.warn('Real-time inventory load failed:', error);
+                renderProductCards();
+                setupEventListeners();
+                addDigitalProductStyles();
+            });
+    } else {
+        // If inventory is already loaded, just render the cards
+        renderProductCards();
+        setupEventListeners();
+        addDigitalProductStyles();
+    }
 }
 
 function addDigitalProductStyles() {
@@ -882,36 +891,38 @@ function renderProductCards() {
     const productGrid = document.getElementById('product-grid');
     productGrid.innerHTML = '';
     
-    // First check if products are in the config
-    if (siteConfig && siteConfig.products && siteConfig.products.items) {
-        console.log('Loading products from config...');
-        window.products = siteConfig.products.items;
-    } else {
-        // Try to load from localStorage
-        const savedProducts = localStorage.getItem('siteProducts');
-        
-        if (savedProducts) {
-            console.log('Loading products from localStorage...');
-            window.products = JSON.parse(savedProducts);
+    // Use a single source of truth for products, prioritizing realtime inventory
+    let productSource = window.products;
+    
+    // If no products loaded from realtime, try config
+    if (!productSource || Object.keys(productSource).length === 0) {
+        console.log('No products in window.products, checking config...');
+        if (siteConfig && siteConfig.products && siteConfig.products.items) {
+            console.log('Loading products from config...');
+            productSource = siteConfig.products.items;
+            window.products = productSource; // Store for future reference
         } else {
-            // If still no products, show empty message
-            console.log('No product data found.');
-            productGrid.innerHTML = `<div class="no-products-message">No ${siteConfig.terminology.productPluralTerm} found. Add some products in the configuration tool.</div>`;
-            return;
+            // Try localStorage as last resort
+            const savedProducts = localStorage.getItem('siteProducts');
+            if (savedProducts) {
+                console.log('Loading products from localStorage...');
+                productSource = JSON.parse(savedProducts);
+                window.products = productSource; // Store for future reference
+            }
         }
     }
     
-    // Check if products object is empty
-    if (!window.products || Object.keys(window.products).length === 0) {
-        console.log('Products object is empty.');
+    // Check if we have any products to display
+    if (!productSource || Object.keys(productSource).length === 0) {
+        console.log('No product data found.');
         productGrid.innerHTML = `<div class="no-products-message">No ${siteConfig.terminology.productPluralTerm} found. Add some products in the configuration tool.</div>`;
         return;
     }
     
-    console.log('Products loaded:', Object.keys(window.products).length);
+    console.log('Products loaded:', Object.keys(productSource).length);
     
     // Create card for each product
-    Object.values(window.products).forEach(product => {
+    Object.values(productSource).forEach(product => {
         const card = createProductCard(product);
         productGrid.appendChild(card);
     });

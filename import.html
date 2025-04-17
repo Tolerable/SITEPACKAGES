@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Integration Tester</title>
+    <title>Real-Time Inventory Manager</title>
     <style>
         :root {
             --primary-color: #003B6F;
@@ -147,8 +147,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Google Sheets Integration Tester</h1>
-        <p>Test importing products from Google Sheets.</p>
+        <h1>Real-Time Inventory Manager</h1>
+        <p>Import products from Google Sheets and generate a JSON file for real-time inventory management.</p>
         
         <div class="form-group">
             <label for="sheets-url">Google Sheets URL</label>
@@ -164,8 +164,10 @@
         
         <h3>Required Spreadsheet Format</h3>
         <p>Your spreadsheet's first row should contain these column headers:</p>
-        <p class="help-text">id, name, type, status, image, additionalImages, description, price, salePrice, packSize, variety, rating, origin, notes</p>
+        <p class="help-text">id, name, type, status, image, additionalImages, description, price, salePrice, packSize, variety, rating, origin, notes, delivery, digitalContent</p>
         <p class="help-text"><strong>id</strong>, <strong>name</strong>, and <strong>type</strong> are required; others are optional.</p>
+        <p class="help-text"><strong>status</strong> field is important for real-time inventory management (available, sold-out, coming-soon)</p>
+        <p class="help-text"><strong>delivery</strong> can be "physical" or "digital"; <strong>digitalContent</strong> contains the URL for digital products</p>
         
         <div class="button-group">
             <button type="button" class="btn btn-primary" id="test-btn">Test Connection</button>
@@ -183,12 +185,26 @@
         </div>
         
         <div id="output" style="margin-top: 20px; display: none;">
-            <h3>Generated Products</h3>
-            <p>This is what would be saved to inventory.js:</p>
+            <h3>Generated Inventory Data</h3>
+            <p>This is what will be saved to realtime-inventory.json:</p>
             <pre id="output-content" style="background: rgba(0, 0, 0, 0.2); padding: 10px; border-radius: 5px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; margin-top: 10px;"></pre>
             <div class="button-group">
-                <button type="button" class="btn btn-primary" id="save-btn">Download inventory.js</button>
+                <button type="button" class="btn btn-primary" id="save-btn">Download realtime-inventory.json</button>
             </div>
+        </div>
+        
+        <div id="instructions" style="margin-top: 30px; padding: 15px; border: 1px dashed var(--secondary-color); border-radius: 5px;">
+            <h3>How To Use This Tool</h3>
+            <ol style="margin-left: 20px;">
+                <li>Create a Google Sheet with your inventory data</li>
+                <li>Make sure the sheet has the required columns (id, name, type, status, etc.)</li>
+                <li>Publish the sheet to the web (File → Share → Publish to web)</li>
+                <li>Copy the published URL and paste it above</li>
+                <li>Test the connection to ensure your sheet is accessible</li>
+                <li>Load the products and download the JSON file</li>
+                <li>Upload the JSON file to your website's root directory</li>
+            </ol>
+            <p style="margin-top: 10px;"><strong>Note:</strong> To update your inventory in real-time, simply update your Google Sheet, then use this tool to generate and upload a new JSON file.</p>
         </div>
     </div>
 
@@ -331,20 +347,10 @@
                     productsObj[product.id] = product;
                 });
                 
-                const inventoryJs = `// Seed Collective - Inventory File
-// Generated on ${new Date().toLocaleString()}
-// This file contains just the product inventory and can be updated independently
-// from your main configuration file (config.js)
-
-window.siteInventory = ${JSON.stringify(productsObj, null, 2)};
-
-// If this inventory file is loaded after config.js, update the site config
-if (window.siteConfig && window.siteConfig.products) {
-    window.siteConfig.products.items = window.siteInventory;
-    console.log("Inventory loaded and applied to site configuration");
-}`;
+                // Just output the JSON - no JavaScript wrapping
+                const jsonData = JSON.stringify(productsObj, null, 2);
                 
-                document.getElementById('output-content').textContent = inventoryJs;
+                document.getElementById('output-content').textContent = jsonData;
                 document.getElementById('output').style.display = 'block';
             } catch (error) {
                 showStatus('Import Failed', `Error: ${error.message}`, 'error');
@@ -361,15 +367,17 @@ if (window.siteConfig && window.siteConfig.products) {
                 }
                 
                 // Create download link
-                const blob = new Blob([outputContent], { type: 'text/javascript' });
+                const blob = new Blob([outputContent], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const downloadLink = document.createElement('a');
                 downloadLink.href = url;
-                downloadLink.download = 'inventory.js';
+                downloadLink.download = 'realtime-inventory.json';
                 downloadLink.click();
                 
                 // Clean up
                 URL.revokeObjectURL(url);
+                
+                showStatus('Download Complete', 'The realtime-inventory.json file has been saved to your downloads folder. Upload this file to your website to update your inventory.', 'success');
             } catch (error) {
                 alert(`Error saving inventory: ${error.message}`);
             }
@@ -479,7 +487,9 @@ if (window.siteConfig && window.siteConfig.products) {
                 variety: headers.findIndex(header => header.trim().toLowerCase() === 'variety'),
                 rating: headers.findIndex(header => header.trim().toLowerCase() === 'rating'),
                 origin: headers.findIndex(header => header.trim().toLowerCase() === 'origin'),
-                notes: headers.findIndex(header => header.trim().toLowerCase() === 'notes')
+                notes: headers.findIndex(header => header.trim().toLowerCase() === 'notes'),
+                delivery: headers.findIndex(header => header.trim().toLowerCase() === 'delivery'),
+                digitalContent: headers.findIndex(header => header.trim().toLowerCase() === 'digitalcontent')
             };
             
             // Validate required columns
@@ -521,6 +531,16 @@ if (window.siteConfig && window.siteConfig.products) {
                     packOptions: []
                 };
                 
+                // Add delivery type if available
+                if (columnIndices.delivery !== -1 && row[columnIndices.delivery]) {
+                    product.delivery = row[columnIndices.delivery].trim();
+                }
+                
+                // Add digital content URL if available
+                if (columnIndices.digitalContent !== -1 && row[columnIndices.digitalContent]) {
+                    product.digitalContent = row[columnIndices.digitalContent].trim();
+                }
+                
                 // Handle additional images
                 if (columnIndices.additionalImages !== -1 && row[columnIndices.additionalImages]) {
                     product.additionalImages = row[columnIndices.additionalImages]
@@ -534,7 +554,8 @@ if (window.siteConfig && window.siteConfig.products) {
                 const regularPrice = columnIndices.price !== -1 && row[columnIndices.price] ? parseFloat(row[columnIndices.price]) : 35;
                 const salePrice = columnIndices.salePrice !== -1 && row[columnIndices.salePrice] ? parseFloat(row[columnIndices.salePrice]) : 30;
                 
-                if (!isNaN(regularPrice)) {
+                // Only add pack options for physical products or if delivery type isn't specified
+                if (!isNaN(regularPrice) && (!product.delivery || product.delivery !== 'digital')) {
                     product.packOptions.push({
                         size: packSize,
                         regularPrice: regularPrice,

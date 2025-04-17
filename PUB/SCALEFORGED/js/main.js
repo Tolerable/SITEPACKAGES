@@ -199,14 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to load real-time inventory data
 function loadRealtimeInventory() {
-    // Check if we're in preview mode (local testing)
-    const isPreviewMode = window.location.search.includes('preview=true');
-    
-    if (isPreviewMode) {
-        console.log('In preview mode - skipping realtime inventory loading');
-        return Promise.resolve(); // Return resolved promise to continue the chain
-    }
-    
     console.log('Checking for local real-time inventory data...');
     
     return fetch('realtime-inventory.json')
@@ -218,17 +210,30 @@ function loadRealtimeInventory() {
         })
         .then(data => {
             console.log('Loaded real-time inventory data');
+            // Update products with data from JSON file
             if (data && Object.keys(data).length > 0) {
-                // Get existing products
+                // Create a deep copy of the existing products first
                 let existingProducts = {};
+                
+                // Use config products if available
                 if (window.siteConfig && window.siteConfig.products && window.siteConfig.products.items) {
-                    existingProducts = window.siteConfig.products.items;
-                } else if (window.products) {
-                    existingProducts = window.products;
+                    // Create a deep copy to avoid reference issues
+                    existingProducts = JSON.parse(JSON.stringify(window.siteConfig.products.items));
                 }
                 
-                // Merge products
+                // Explicitly ensure status fields are properly formatted
+                for (const id in data) {
+                    if (data[id] && typeof data[id] === 'object') {
+                        // Normalize status field to lowercase
+                        if (data[id].status) {
+                            data[id].status = data[id].status.toString().toLowerCase().trim();
+                        }
+                    }
+                }
+                
+                // Merge with existing products
                 window.products = { ...existingProducts, ...data };
+                console.log('Combined products:', Object.keys(window.products).length);
                 renderProductCards();
             }
         })

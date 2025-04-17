@@ -992,25 +992,19 @@ function createProductCard(product) {
         });
     }
     
-    // ALWAYS prepend "img/" to the image path if it doesn't already have it
-    let imagePath = product.image;
-    if (!imagePath && product.additionalImages && product.additionalImages.length > 0) {
-        // Use first additional image if main image is empty
-        imagePath = product.additionalImages[0];
-    }
-    
-    // Ensure the path starts with img/
+    // Simply prepend "img/" if needed and let browser handle missing images
+    let imagePath = product.image || '';
     if (imagePath && !imagePath.startsWith('img/') && !imagePath.startsWith('/') && !imagePath.startsWith('http')) {
         imagePath = 'img/' + imagePath;
     }
     
     // Create the card content
     card.innerHTML += `
-        <img src="${imagePath}" alt="${product.name}" class="product-img">
+        <img src="${imagePath}" alt="${product.name}" class="product-img" onerror="this.style.display='none'">
         <div class="card-content">
             <h3 class="card-title">${product.name}</h3>
             <span class="product-type">${product.type}</span>
-            <p class="card-description">${product.description.substring(0, 150)}...</p>
+            <p class="card-description">${product.description || ''}</p>
             <div class="product-details">
                 <div class="detail-item">${product.delivery === 'digital' ? 'Digital' : siteConfig.terminology.productTerm}</div>
                 <div class="detail-item">${product.variety || 'Premium'}</div>

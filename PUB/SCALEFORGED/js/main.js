@@ -199,9 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to load real-time inventory data
 function loadRealtimeInventory() {
-    console.log('Checking for local real-time inventory data...');
-    
-    return fetch('realtime-inventory.json')
+    // Add timestamp or version number to prevent caching
+    const cacheBuster = new Date().getTime();
+    return fetch(`realtime-inventory.json?v=${cacheBuster}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Real-time inventory file not found');

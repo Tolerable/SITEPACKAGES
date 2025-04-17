@@ -789,15 +789,11 @@ function loadScript(src, callback) {
     script.onload = callback;
     script.onerror = function() {
         console.warn(`Failed to load script: ${src}`);
-        // Try to load from remote repository if local file failed
-        const remoteSrc = `https://yourremoterepo.com/effects/${src}`;
-        const remoteScript = document.createElement('script');
-        remoteScript.src = remoteSrc;
-        remoteScript.onload = callback;
-        remoteScript.onerror = function() {
-            console.error(`Failed to load script from remote: ${remoteSrc}`);
-        };
-        document.head.appendChild(remoteScript);
+        // Just log the error without trying to load from a remote repository
+        if (callback) {
+            // Call the callback anyway so the site continues to function
+            callback();
+        }
     };
     document.head.appendChild(script);
 }

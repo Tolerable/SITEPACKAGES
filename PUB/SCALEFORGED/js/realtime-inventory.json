@@ -1,0 +1,86 @@
+{
+  "product-00007": {
+    "id": "product-00007",
+    "name": "Orange Purple Grinder",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "",
+    "additionalImages": [],
+    "description": "",
+    "variety": "",
+    "rating": "",
+    "origin": "",
+    "details": "",
+    "notes": "",
+    "packOptions": [
+      {
+        "size": "3 Pack",
+        "regularPrice": 35,
+        "salePrice": 30
+      }
+    ]
+  },
+  "product-00008": {
+    "id": "product-00008",
+    "name": "Blue Green Grinder",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "",
+    "additionalImages": [],
+    "description": "",
+    "variety": "",
+    "rating": "",
+    "origin": "",
+    "details": "",
+    "notes": "",
+    "packOptions": [
+      {
+        "size": "3 Pack",
+        "regularPrice": 35,
+        "salePrice": 30
+      }
+    ]
+  },
+  "product-00009": {
+    "id": "product-00009",
+    "name": "Sparkling Grinder #1",
+    "type": "Signature Series",
+    "status": "available",
+    "image": "",
+    "additionalImages": [],
+    "description": "",
+    "variety": "",
+    "rating": "",
+    "origin": "",
+    "details": "",
+    "notes": "",
+    "packOptions": [
+      {
+        "size": "3 Pack",
+        "regularPrice": 35,
+        "salePrice": 30
+      }
+    ]
+  },
+  "product-00010": {
+    "id": "product-00010",
+    "name": "Star Grinder #4",
+    "type": "Classic Collection",
+    "status": "available",
+    "image": "",
+    "additionalImages": [],
+    "description": "",
+    "variety": "",
+    "rating": "",
+    "origin": "",
+    "details": "",
+    "notes": "",
+    "packOptions": [
+      {
+        "size": "3 Pack",
+        "regularPrice": 35,
+        "salePrice": 30
+      }
+    ]
+  }
+}

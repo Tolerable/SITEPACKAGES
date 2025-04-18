@@ -601,7 +601,7 @@ function applySiteConfig() {
 		heroSection.classList.remove('full-image');
 		
 		// Apply background with dimming overlay
-		heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
+		heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,1), rgba(0,0,0,1)), url('${heroImagePath}')`;
 	}
    
    // Set cart terminology

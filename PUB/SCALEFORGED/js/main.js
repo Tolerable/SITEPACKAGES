@@ -575,24 +575,18 @@ function applySiteConfig() {
 		heroTitle.style.display = 'none';
 		heroDescription.style.display = 'none';
 		
-		// Apply background image without dimming
+		// Apply full-image class
+		heroSection.classList.add('full-image');
+		
+		// Set the background image directly
 		if (siteConfig.site.heroBackground) {
 			let heroImagePath = siteConfig.site.heroBackground;
 			if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
 				heroImagePath = 'img/' + heroImagePath;
 			}
 			
-			// Apply without overlay gradient and adjust the height
+			// Set the background image without any overlay
 			heroSection.style.backgroundImage = `url('${heroImagePath}')`;
-			heroSection.style.height = '500px'; // Set fixed height to match image
-			heroSection.style.backgroundSize = 'cover';
-			heroSection.style.backgroundPosition = 'center';
-			
-			// This is important - disable the pseudo-element overlay
-			const styleTag = document.createElement('style');
-			styleTag.id = 'hero-overlay-disable';
-			styleTag.textContent = `.hero-section::before { display: none !important; }`;
-			document.head.appendChild(styleTag);
 		}
 	} else {
 		// Default behavior - show text with dimmed background

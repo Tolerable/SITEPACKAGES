@@ -587,8 +587,9 @@ function applySiteConfig() {
 		// Add full-image class
 		heroSection.classList.add('full-image');
 		
-		// IMPORTANT: Set direct background image WITHOUT gradient
-		heroSection.style.backgroundImage = `url('${heroImagePath}')`;
+		// CRITICAL FIX: Override the CSS !important rule with inline style
+		// Set direct background image WITHOUT gradient but with !important
+		heroSection.style.cssText = `background-image: url('${heroImagePath}') !important; height: 500px !important; padding: 0 !important;`;
 	} else {
 		// Default behavior - show text with dimmed background
 		heroTitle.style.display = '';

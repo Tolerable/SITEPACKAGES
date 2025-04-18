@@ -186,9 +186,6 @@ nav a:hover::before {
     padding: 0 !important; /* Remove padding that might affect size */
     border: none !important; /* Remove borders that might affect appearance */
     box-shadow: none !important; /* Remove shadows */
-    background: radial-gradient(circle at center, rgba(0, 255, 159, 0.3) 0%, transparent 70%);
-    z-index: 0;
-    animation: pulseGlow 5s ease-in-out infinite;	
 }
 
 .hero-section.full-image::before {

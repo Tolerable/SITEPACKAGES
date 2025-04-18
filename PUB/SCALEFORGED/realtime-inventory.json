@@ -166,5 +166,320 @@
         "salePrice": 24.99
       }
     ]
+  },
+  "product-00015": {
+    "id": "product-00015",
+    "name": "Volcano - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Volcano - 0001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00016": {
+    "id": "product-00016",
+    "name": "Purple -001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Purple -001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00017": {
+    "id": "product-00017",
+    "name": "Pink & Lavender - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Pink & Lavender - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00018": {
+    "id": "product-00018",
+    "name": "Teal & Yellow - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Teal & Yellow - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00019": {
+    "id": "product-00019",
+    "name": "Teal - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Teal - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00020": {
+    "id": "product-00020",
+    "name": "Teal & Lavender - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Teal & Lavender - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00021": {
+    "id": "product-00021",
+    "name": "Pink & Cream - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Pink & Cream - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00022": {
+    "id": "product-00022",
+    "name": "Pink & Yellow - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Pink & Yellow - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00023": {
+    "id": "product-00023",
+    "name": "Fire Engine Red - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Fire Engine Red - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00024": {
+    "id": "product-00024",
+    "name": "Orange - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Orange - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00025": {
+    "id": "product-00025",
+    "name": "Periwinkle - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Periwinkle - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00026": {
+    "id": "product-00026",
+    "name": "Green & Purple Silk - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Green & Purple Silk - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00027": {
+    "id": "product-00027",
+    "name": "Green & Yellow - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Green & Yellow - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00028": {
+    "id": "product-00028",
+    "name": "Pink & Yellow - 002",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Pink & Yellow - 002.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
+  },
+  "product-00029": {
+    "id": "product-00029",
+    "name": "Black & White - 001",
+    "type": "Premium Collection",
+    "status": "available",
+    "image": "Black & White - 001.png",
+    "additionalImages": [],
+    "description": "UNIQUE LIMITED GRINDER",
+    "variety": "Premium",
+    "rating": "5/5",
+    "origin": "INHOUSE",
+    "details": "",
+    "notes": "UNIQUE ITEM",
+    "packOptions": [
+      {
+        "size": "1",
+        "regularPrice": 29.99,
+        "salePrice": 24.99
+      }
+    ]
   }
 }

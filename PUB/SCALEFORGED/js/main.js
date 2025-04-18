@@ -582,14 +582,17 @@ function applySiteConfig() {
 				heroImagePath = 'img/' + heroImagePath;
 			}
 			
-			// Apply without overlay gradient and adjust the height to show full image
+			// Apply without overlay gradient and adjust the height
 			heroSection.style.backgroundImage = `url('${heroImagePath}')`;
 			heroSection.style.height = '500px'; // Set fixed height to match image
-			heroSection.style.maxWidth = '100%'; // Ensure full width
-			heroSection.style.backgroundSize = 'cover'; // Ensure image covers the entire area
-			heroSection.style.backgroundPosition = 'center center'; // Center the image
-			heroSection.style.opacity = '1'; // Ensure full opacity
-			heroSection.style.padding = '0'; // Remove padding that might affect size
+			heroSection.style.backgroundSize = 'cover';
+			heroSection.style.backgroundPosition = 'center';
+			
+			// This is important - disable the pseudo-element overlay
+			const styleTag = document.createElement('style');
+			styleTag.id = 'hero-overlay-disable';
+			styleTag.textContent = `.hero-section::before { display: none !important; }`;
+			document.head.appendChild(styleTag);
 		}
 	} else {
 		// Default behavior - show text with dimmed background
@@ -598,11 +601,11 @@ function applySiteConfig() {
 		heroTitle.textContent = `Explore Our ${siteConfig.terminology.productPluralTerm}`;
 		heroDescription.textContent = siteConfig.site.tagline;
 		
-		// Reset custom styles if they were previously set
-		heroSection.style.height = ''; // Let default CSS handle this
-		heroSection.style.maxWidth = '';
-		heroSection.style.padding = '';
-		heroSection.style.opacity = '';
+		// Remove the overlay disabling style if it exists
+		const existingStyle = document.getElementById('hero-overlay-disable');
+		if (existingStyle) {
+			existingStyle.remove();
+		}
 		
 		// Apply background with dimming overlay
 		if (siteConfig.site.heroBackground) {
@@ -612,6 +615,7 @@ function applySiteConfig() {
 			}
 			
 			heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
+			heroSection.style.height = ''; // Reset height to CSS default
 		}
 	}
    

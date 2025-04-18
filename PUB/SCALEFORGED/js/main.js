@@ -569,25 +569,26 @@ function applySiteConfig() {
 	const heroTitle = document.getElementById('hero-title');
 	const heroDescription = document.getElementById('hero-description');
 
-	// In the applySiteConfig function where we handle the hero section:
+	// Get the hero background path
+	let heroImagePath = '';
+	if (siteConfig.site.heroBackground) {
+		heroImagePath = siteConfig.site.heroBackground;
+		if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
+			heroImagePath = 'img/' + heroImagePath;
+		}
+	}
+
+	// Check if showHeroText is explicitly set to false
 	if (siteConfig.site.showHeroText === false) {
 		// Hide text elements
 		heroTitle.style.display = 'none';
 		heroDescription.style.display = 'none';
 		
-		// Apply full-image class
+		// Add full-image class
 		heroSection.classList.add('full-image');
 		
-		// Set the background image directly
-		if (siteConfig.site.heroBackground) {
-			let heroImagePath = siteConfig.site.heroBackground;
-			if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
-				heroImagePath = 'img/' + heroImagePath;
-			}
-			
-			// Set the background image without any overlay
-			heroSection.style.backgroundImage = `url('${heroImagePath}')`;
-		}
+		// IMPORTANT: Set direct background image WITHOUT gradient
+		heroSection.style.backgroundImage = `url('${heroImagePath}')`;
 	} else {
 		// Default behavior - show text with dimmed background
 		heroTitle.style.display = '';
@@ -595,22 +596,11 @@ function applySiteConfig() {
 		heroTitle.textContent = `Explore Our ${siteConfig.terminology.productPluralTerm}`;
 		heroDescription.textContent = siteConfig.site.tagline;
 		
-		// Remove the overlay disabling style if it exists
-		const existingStyle = document.getElementById('hero-overlay-disable');
-		if (existingStyle) {
-			existingStyle.remove();
-		}
+		// Remove full-image class
+		heroSection.classList.remove('full-image');
 		
 		// Apply background with dimming overlay
-		if (siteConfig.site.heroBackground) {
-			let heroImagePath = siteConfig.site.heroBackground;
-			if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
-				heroImagePath = 'img/' + heroImagePath;
-			}
-			
-			heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
-			heroSection.style.height = ''; // Reset height to CSS default
-		}
+		heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
 	}
    
    // Set cart terminology

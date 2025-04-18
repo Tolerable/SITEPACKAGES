@@ -564,22 +564,44 @@ function applySiteConfig() {
    document.getElementById('footerSiteName').textContent = siteConfig.site.name;
    document.getElementById('copyright-text').textContent = siteConfig.site.copyright;
    
-   // Set hero content
-   document.getElementById('hero-title').textContent = `Explore Our ${siteConfig.terminology.productPluralTerm}`;
-   document.getElementById('hero-description').textContent = siteConfig.site.tagline;
-   
-   // Set hero background if provided in config
-   if (siteConfig.site.heroBackground) {
-       let heroImagePath = siteConfig.site.heroBackground;
-       // Add img/ prefix if needed
-       if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
-           heroImagePath = 'img/' + heroImagePath;
-       }
-       
-       // Apply the background image with the overlay gradient
-       const heroSection = document.querySelector('.hero-section');
-       heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
-   }
+	// Set hero content based on showHeroText setting
+	const heroSection = document.querySelector('.hero-section');
+	const heroTitle = document.getElementById('hero-title');
+	const heroDescription = document.getElementById('hero-description');
+
+	// Check if showHeroText is explicitly set to false
+	if (siteConfig.site.showHeroText === false) {
+		// Hide text elements
+		heroTitle.style.display = 'none';
+		heroDescription.style.display = 'none';
+		
+		// Apply background image without dimming
+		if (siteConfig.site.heroBackground) {
+			let heroImagePath = siteConfig.site.heroBackground;
+			if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
+				heroImagePath = 'img/' + heroImagePath;
+			}
+			
+			// Apply without overlay gradient
+			heroSection.style.backgroundImage = `url('${heroImagePath}')`;
+		}
+	} else {
+		// Default behavior - show text with dimmed background
+		heroTitle.style.display = '';
+		heroDescription.style.display = '';
+		heroTitle.textContent = `Explore Our ${siteConfig.terminology.productPluralTerm}`;
+		heroDescription.textContent = siteConfig.site.tagline;
+		
+		// Apply background with dimming overlay
+		if (siteConfig.site.heroBackground) {
+			let heroImagePath = siteConfig.site.heroBackground;
+			if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
+				heroImagePath = 'img/' + heroImagePath;
+			}
+			
+			heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
+		}
+	}
    
    // Set cart terminology
    document.getElementById('cartTitle').textContent = `Your ${siteConfig.terminology.cartTerm}`;

@@ -181,6 +181,18 @@ nav a:hover::before {
     animation: pulseGlow 5s ease-in-out infinite;
 }
 
+.hero-section.full-image {
+    background-image: none !important; /* Override the gradient */
+    height: 500px !important; /* Fixed height to match 1920x500 aspect ratio */
+    padding: 0 !important; /* Remove padding that might affect size */
+    border: none !important; /* Remove borders that might affect appearance */
+    box-shadow: none !important; /* Remove shadows */
+}
+
+.hero-section.full-image::before {
+    display: none !important; /* Hide the pulsing glow overlay */
+}
+
 @keyframes pulseGlow {
     0% { opacity: 0.3; }
     50% { opacity: 0.7; }

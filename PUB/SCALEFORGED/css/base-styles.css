@@ -182,7 +182,6 @@ nav a:hover::before {
 }
 
 .hero-section.full-image {
-    background-image: none !important; /* Override the gradient */
     height: 500px !important; /* Fixed height to match 1920x500 aspect ratio */
     padding: 0 !important; /* Remove padding that might affect size */
     border: none !important; /* Remove borders that might affect appearance */

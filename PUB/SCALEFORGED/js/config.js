@@ -7,7 +7,7 @@
         "tagline": "Making Dreams Come True",
         "logo": "logo.jpg",
         "heroBackground": "hero-bg.jpg",
-        "showHeroText": true,
+        "showHeroText": false,
         "email": "scaleforged@sitepackages.net",
         "socialLinks": {
             "discord": "https://linktr.ee/scaleforged",

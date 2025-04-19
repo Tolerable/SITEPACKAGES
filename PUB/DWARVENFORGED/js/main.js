@@ -900,61 +900,63 @@ function updateFilterButtons() {
 
 // Apply custom styles from config
 function applyCustomStyles() {
-	
-	// Apply background image if configured
-	if (siteConfig.background && siteConfig.background.image) {
-		const bgImage = siteConfig.background.image;
-		let bgPath = bgImage.startsWith('http') ? bgImage : `img/${bgImage}`;
-		
-		document.body.style.backgroundImage = `url('${bgPath}')`;
-		document.body.style.backgroundSize = 'cover';
-		document.body.style.backgroundAttachment = 'fixed';
-	}
+    // Make sure siteConfig exists before trying to use it
+    const siteConfig = window.siteConfig || {};
+    
+    // Apply background image if configured
+    if (siteConfig.background && siteConfig.background.image) {
+        const bgImage = siteConfig.background.image;
+        let bgPath = bgImage.startsWith('http') ? bgImage : `img/${bgImage}`;
+        
+        document.body.style.backgroundImage = `url('${bgPath}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundAttachment = 'fixed';
+    }
 
-	// Apply section divider images if configured
-	if (siteConfig.background && siteConfig.background.sectionImage) {
-		const sectionImage = siteConfig.background.sectionImage;
-		let sectionPath = sectionImage.startsWith('http') ? sectionImage : `img/${sectionImage}`;
-		
-		const style = document.createElement('style');
-		style.textContent = `
-			section {
-				position: relative;
-			}
-			section::before, section::after {
-				content: '';
-				position: absolute;
-				left: 0;
-				width: 100%;
-				height: 10px;
-				background-image: url('${sectionPath}');
-				background-size: cover;
-			}
-			section::before {
-				top: 0;
-			}
-			section::after {
-				bottom: 0;
-			}
-		`;
-		document.head.appendChild(style);
-	}
-	
-    const siteConfig = window.siteConfig;
+    // Apply section divider images if configured
+    if (siteConfig.background && siteConfig.background.sectionImage) {
+        const sectionImage = siteConfig.background.sectionImage;
+        let sectionPath = sectionImage.startsWith('http') ? sectionImage : `img/${sectionImage}`;
+        
+        const style = document.createElement('style');
+        style.textContent = `
+            section {
+                position: relative;
+            }
+            section::before, section::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 10px;
+                background-image: url('${sectionPath}');
+                background-size: cover;
+            }
+            section::before {
+                top: 0;
+            }
+            section::after {
+                bottom: 0;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
     const dynamicStyles = document.getElementById('dynamic-styles');
+    if (!dynamicStyles) return;
     
     dynamicStyles.textContent = `
         :root {
-            --primary-color: ${siteConfig.colors.primary};
-            --secondary-color: ${siteConfig.colors.secondary};
-            --tertiary-color: ${siteConfig.colors.tertiary};
-            --highlight-color: ${siteConfig.colors.highlight};
-            --alert-color: ${siteConfig.colors.alert};
-            --background-color: ${siteConfig.colors.background};
-            --text-color: ${siteConfig.colors.text};
+            --primary-color: ${siteConfig.colors?.primary || '#003B6F'};
+            --secondary-color: ${siteConfig.colors?.secondary || '#00FF9F'};
+            --tertiary-color: ${siteConfig.colors?.tertiary || '#6A0DAD'};
+            --highlight-color: ${siteConfig.colors?.highlight || '#FFD700'};
+            --alert-color: ${siteConfig.colors?.alert || '#FF5722'};
+            --background-color: ${siteConfig.colors?.background || '#0A0E17'};
+            --text-color: ${siteConfig.colors?.text || '#FFFFFF'};
             
-            --font-heading: ${siteConfig.fonts.heading};
-            --font-body: ${siteConfig.fonts.body};
+            --font-heading: ${siteConfig.fonts?.heading || "'Orbitron', sans-serif"};
+            --font-body: ${siteConfig.fonts?.body || "'Exo 2', sans-serif"};
         }
         
         .modal-thumbnail-gallery {

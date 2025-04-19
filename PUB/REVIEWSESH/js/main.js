@@ -1150,9 +1150,9 @@ function createProductCard(product) {
 		card.addEventListener('click', function() {
 			if (shopEnabled) {
 				openProductModal(product);
-			} else if (product.delivery === 'digital' && product.digitalContent) {
-				// For digital products when shop is disabled, directly open the digital content
-				window.open(product.digitalContent, '_blank');
+			else if (product.delivery === 'digital' && product.digitalContent) {
+				// For digital products when shop is disabled, show the modal with the digital content link
+				openProductModalReadOnly(product);
 			} else {
 				// For physical products when shop is disabled, just show product details
 				// without the ability to add to cart

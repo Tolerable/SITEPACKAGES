@@ -114,34 +114,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
 	// Function to check if config exists - ONLY RUN if not in preview mode
 	function checkConfig() {
-		// If config already exists, don't try to load it again
-		if (typeof window.siteConfig !== 'undefined') {
-			console.log('Config already loaded, using existing configuration');
-			return true;
-		}
-
-		// Try to load from current path
-		const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
-		console.log('Looking for config at specific path:', basePath + 'js/config.js');
-		
-		const configScript = document.createElement('script');
-		configScript.src = basePath + 'js/config.js';
-		configScript.onload = function() {
-			console.log('Successfully loaded config.js from current directory:', basePath + 'js/config.js');
-			initializeSite();
-		};
-		configScript.onerror = function() {
-			console.error('Failed to load config.js from current directory');
-			
-			// Only try the fallback if the first load failed
-			const fallbackScript = document.createElement('script');
-			fallbackScript.src = 'js/config.js';
-			fallbackScript.onload = function() {
-				console.log('Successfully loaded config.js from /js/ folder');
+		if (typeof window.siteConfig === 'undefined') {
+			// Try to load from /js/ folder if not already loaded
+			const configScript = document.createElement('script');
+			// Build path based on current location to support subfolder deployments
+			const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
+			configScript.src = basePath + 'js/config.js';
+			configScript.onload = function() {
+				console.log('Successfully loaded config.js from ' + basePath + 'js/ folder');
 				initializeSite();
 			};
-			fallbackScript.onerror = function() {
-				console.error('Failed to load config.js from /js/ folder');
+			configScript.onerror = function() {
+				console.error('Failed to load config.js from ' + basePath + 'js/ folder');
 				// Create fallback config
 				window.siteConfig = {
 					// Default config values (unchanged)
@@ -200,15 +184,19 @@ document.addEventListener('DOMContentLoaded', function() {
 				document.body.insertBefore(errorMsg, document.body.firstChild);
 				initializeSite();
 			};
-			document.head.appendChild(fallbackScript);
-		};
-		document.head.appendChild(configScript);
-		return false;
+			document.head.appendChild(configScript);
+			return false;
+		}
+		return true;
 	}
     
     // For normal mode, check if config exists and then initialize
-    // This will only run once
-    checkConfig();
+    // This will only run if not in preview mode or if preview config failed to load
+    setTimeout(function() {
+        if (checkConfig()) {
+            initializeSite();
+        }
+    }, 300);
 });
 
 // Function to load real-time inventory data

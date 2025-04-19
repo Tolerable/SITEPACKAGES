@@ -438,6 +438,9 @@ function initializeSite() {
     initializeCart();
 	
     initializeFriendLinks();
+	
+	// Initialize strain tree
+    initializeStrainTree();
     
     // Check if we're in preview mode
     const isPreviewMode = window.location.search.includes('preview=true');
@@ -1054,6 +1057,58 @@ function applyCustomStyles() {
             padding-bottom: 20px;
         }
     `;
+}
+
+function initializeStrainTree() {
+    // Check if strain tree is enabled in config
+    if (!window.siteConfig?.strainTree?.enabled) {
+        return;
+    }
+    
+    // Get the strain tree section
+    const treeSection = document.getElementById('strain-tree-section');
+    if (!treeSection) {
+        console.error('Strain tree section not found in the DOM');
+        return;
+    }
+    
+    // Show the section
+    treeSection.style.display = 'block';
+    
+    // Set title and description from config
+    const titleEl = document.getElementById('strain-tree-title');
+    const descriptionEl = document.getElementById('strain-tree-description');
+    
+    if (titleEl && window.siteConfig.strainTree.title) {
+        titleEl.textContent = window.siteConfig.strainTree.title;
+    }
+    
+    if (descriptionEl && window.siteConfig.strainTree.description) {
+        descriptionEl.textContent = window.siteConfig.strainTree.description;
+    }
+    
+    // Initialize tree visualization if GeneticsTreeVisualizer is available
+    if (typeof GeneticsTreeVisualizer === 'function') {
+        const strainDataPath = window.siteConfig.strainTree.dataPath || 'data/straindata.json';
+        
+        try {
+            window.strainVisualizer = new GeneticsTreeVisualizer({
+                treeElementId: 'genetics-tree',
+                strainDescriptionId: 'strain-description',
+                expandAllId: 'expand-all',
+                collapseAllId: 'collapse-all',
+                dataUrl: strainDataPath
+            });
+        } catch (error) {
+            console.error('Error initializing strain tree:', error);
+            document.getElementById('genetics-tree').innerHTML = 
+                '<p class="error-message">Error initializing strain tree visualization.</p>';
+        }
+    } else {
+        console.error('GeneticsTreeVisualizer not found. Make sure navigator.js is loaded.');
+        document.getElementById('genetics-tree').innerHTML = 
+            '<p class="error-message">Strain tree visualizer not loaded properly.</p>';
+    }
 }
 
 // Initialize visual effects

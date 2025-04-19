@@ -7,10 +7,12 @@
         "tagline": "Sharing Honest Reviews Online",
         "logo": "img/logo.jpg",
         "heroBackground": "hero-bg.jpg",
+        "showHeroText": true,
         "email": "reviewsesh@sitepackages.net",
         "socialLinks": {
-            "discord": "https://discord.gg/28nnN5BpS7",
-            "youtube": "https://www.youtube.com/@ReviewSesh"
+            "discord": "https://discord.gg/",
+            "youtube": "https://www.youtube.com/@ReviewSesh",
+            "tiktok": ""
         },
         "copyright": "© 2025 Review Sesh. All rights reserved."
     },
@@ -181,9 +183,11 @@
         }
     ],
     "advanced": {
+        "enableShop": false,
         "enableLocalStorage": true,
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
-        "analyticsId": ""
+        "analyticsId": "",
+        "orderEmail": "reviewshesh@sitepackages.net"
     }
 };

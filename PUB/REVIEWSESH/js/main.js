@@ -63,27 +63,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Handle navigation clicks
-    document.getElementById('main-navigation').addEventListener('click', function(e) {
-        if (e.target.tagName === 'A') {
-            e.preventDefault();
-            const targetSection = e.target.getAttribute('href');
-            
-            // Hide all sections first
-            document.querySelectorAll('section').forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            // Show the target section
-            if (targetSection === '#about') {
-                document.getElementById('about').style.display = 'block';
-            } else if (targetSection === '#products') {
-                document.getElementById('products').style.display = 'block';
-            } else {
-                // Handle other sections...
-            }
-        }
-    });
+	// Handle navigation clicks
+	document.getElementById('main-navigation').addEventListener('click', function(e) {
+		if (e.target.tagName === 'A') {
+			const targetHref = e.target.getAttribute('href');
+			
+			// Only handle internal links that start with #
+			if (targetHref && targetHref.startsWith('#')) {
+				e.preventDefault();
+				
+				// Hide all sections first
+				document.querySelectorAll('section').forEach(section => {
+					section.style.display = 'none';
+				});
+				
+				// Show the target section
+				if (targetHref === '#about') {
+					document.getElementById('about').style.display = 'block';
+				} else if (targetHref === '#products') {
+					document.getElementById('products').style.display = 'block';
+				} else {
+					// Handle other sections...
+				}
+			}
+			// External links (http://, https://) will work normally
+		}
+	});
+
+	function logError(message, error) {
+		console.error(message, error);
+		
+		// Create a visible error log for users if in debug mode
+		if (window.location.search.includes('debug=true')) {
+			const errorLog = document.getElementById('error-log') || createErrorLog();
+			const errorItem = document.createElement('div');
+			errorItem.className = 'error-item';
+			errorItem.innerHTML = `<strong>${message}</strong>: ${error.message || error}`;
+			errorLog.appendChild(errorItem);
+		}
+	}
+
+	function createErrorLog() {
+		const errorLog = document.createElement('div');
+		errorLog.id = 'error-log';
+		errorLog.style.cssText = 'position: fixed; bottom: 0; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: rgba(255,0,0,0.8); color: white; padding: 10px; z-index: 9999; font-family: monospace;';
+		errorLog.innerHTML = '<h3>Error Log</h3>';
+		document.body.appendChild(errorLog);
+		return errorLog;
+	}
     
     // Function to check if config exists - ONLY RUN if not in preview mode
     function checkConfig() {
@@ -169,6 +196,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 300);
 });
+
+// Function to load real-time inventory data
+function loadRealtimeInventory() {
+    // Add timestamp or version number to prevent caching
+    const cacheBuster = new Date().getTime();
+    return fetch(`realtime-inventory.json?v=${cacheBuster}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Real-time inventory file not found');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Loaded real-time inventory data');
+            // Update products with data from JSON file
+            if (data && Object.keys(data).length > 0) {
+                // Create a deep copy of the existing products first
+                let existingProducts = {};
+                
+                // Use config products if available
+                if (window.siteConfig && window.siteConfig.products && window.siteConfig.products.items) {
+                    // Create a deep copy to avoid reference issues
+                    existingProducts = JSON.parse(JSON.stringify(window.siteConfig.products.items));
+                }
+                
+                // Explicitly ensure status fields are properly formatted
+                for (const id in data) {
+                    if (data[id] && typeof data[id] === 'object') {
+                        // Normalize status field to lowercase
+                        if (data[id].status) {
+                            data[id].status = data[id].status.toString().toLowerCase().trim();
+                        }
+                    }
+                }
+                
+                // Merge with existing products
+                window.products = { ...existingProducts, ...data };
+                console.log('Combined products:', Object.keys(window.products).length);
+                renderProductCards();
+            }
+        })
+        .catch(error => {
+            console.warn('Could not load real-time inventory:', error.message);
+        });
+}
 
 // Function to initialize the About section
 function initializeAboutSection() {
@@ -344,20 +416,11 @@ function formatTextWithParagraphs(text) {
 }
 
 function initializeSite() {
-    // Check if siteConfig exists in the window object
+    // Check if siteConfig exists
     if (!window.siteConfig) {
         console.error('Error: siteConfig is not defined');
-        
-        // Display error message on the page
-        const errorMsg = document.createElement('div');
-        errorMsg.style.cssText = 'background:#f44336;color:white;padding:15px;margin:20px;border-radius:5px;';
-        errorMsg.innerHTML = `
-            <h3>Configuration Error</h3>
-            <p>The site configuration could not be loaded. Please check that config.js exists and is properly formatted.</p>
-            <p>Error: siteConfig is undefined</p>
-        `;
-        document.body.insertBefore(errorMsg, document.body.firstChild);
-        return; // Stop initialization if config is missing
+        // Display error and return
+        return;
     }
     
     // Apply site configuration
@@ -372,16 +435,39 @@ function initializeSite() {
     // Initialize cart
     initializeCart();
 	
-	  initializeFriendLinks();
+    initializeFriendLinks();
     
-    // Render product cards
-    renderProductCards();
+    // Check if we're in preview mode
+    const isPreviewMode = window.location.search.includes('preview=true');
     
-    // Set up event listeners
-    setupEventListeners();
-    
-    // Add digital product styles 
-    addDigitalProductStyles();
+    if (isPreviewMode) {
+        console.log('Preview mode detected - using config products only');
+        
+        // In preview mode, explicitly set window.products to config products
+        if (window.siteConfig && window.siteConfig.products && window.siteConfig.products.items) {
+            window.products = window.siteConfig.products.items;
+            console.log('Set window.products from config with', Object.keys(window.products).length, 'items');
+        }
+        
+        // Render product cards
+        renderProductCards();
+        setupEventListeners();
+        addDigitalProductStyles();
+    } else {
+        // Load real-time inventory if NOT in preview mode
+        loadRealtimeInventory()
+            .then(() => {
+                renderProductCards();
+                setupEventListeners();
+                addDigitalProductStyles();
+            })
+            .catch(error => {
+                console.warn('Real-time inventory load failed:', error);
+                renderProductCards();
+                setupEventListeners();
+                addDigitalProductStyles();
+            });
+    }
 }
 
 function addDigitalProductStyles() {
@@ -478,52 +564,21 @@ function applySiteConfig() {
    document.getElementById('footerSiteName').textContent = siteConfig.site.name;
    document.getElementById('copyright-text').textContent = siteConfig.site.copyright;
    
-   // Set hero content
-   document.getElementById('hero-title').textContent = `Explore Our ${siteConfig.terminology.productPluralTerm}`;
-   document.getElementById('hero-description').textContent = siteConfig.site.tagline;
+   // Handle hero section
+   setupHeroSection();
    
-   // Set hero background if provided in config
-   if (siteConfig.site.heroBackground) {
-       let heroImagePath = siteConfig.site.heroBackground;
-       // Add img/ prefix if needed
-       if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
-           heroImagePath = 'img/' + heroImagePath;
-       }
-       
-       // Apply the background image with the overlay gradient
-       const heroSection = document.querySelector('.hero-section');
-       heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
+   // Check if shopping cart is enabled
+   const shopEnabled = siteConfig.advanced && siteConfig.advanced.enableShop !== false; // Default to true if not set
+   
+   // Set cart terminology only if shop is enabled
+   if (shopEnabled) {
+       document.getElementById('cartTitle').textContent = `Your ${siteConfig.terminology.cartTerm}`;
+       document.getElementById('cartEmptyMessage').textContent = `Your ${siteConfig.terminology.cartTerm} is empty`;
    }
-   
-   // Set cart terminology
-   document.getElementById('cartTitle').textContent = `Your ${siteConfig.terminology.cartTerm}`;
-   document.getElementById('cartEmptyMessage').textContent = `Your ${siteConfig.terminology.cartTerm} is empty`;
    
    // Set navigation
    const mainNav = document.getElementById('main-navigation');
    mainNav.innerHTML = ''; // Clear existing navigation
-
-	// Set hero background if provided in config
-	if (siteConfig.site.heroBackground) {
-		let heroImagePath = siteConfig.site.heroBackground;
-		// Add img/ prefix if needed
-		if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
-			heroImagePath = 'img/' + heroImagePath;
-		}
-		
-		// Apply the background image with the overlay gradient
-		const heroSection = document.querySelector('.hero-section');
-		heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
-	}
-   
-   // Add cart link
-   const cartLi = document.createElement('li');
-   cartLi.innerHTML = `
-       <a href="#cart" id="cart-link">
-           <span>${siteConfig.terminology.cartTerm}</span>
-           <span id="cart-count" class="cart-badge">0</span>
-       </a>
-   `;
    
    // Add navigation items from config
    siteConfig.navigation.forEach(item => {
@@ -532,8 +587,18 @@ function applySiteConfig() {
        mainNav.appendChild(li);
    });
    
-   // Add cart as the last item
-   mainNav.appendChild(cartLi);
+   // Add cart link only if shop is enabled
+   if (shopEnabled) {
+       const cartLi = document.createElement('li');
+       cartLi.id = 'cart-nav-item';
+       cartLi.innerHTML = `
+           <a href="#cart" id="cart-link">
+               <span>${siteConfig.terminology.cartTerm}</span>
+               <span id="cart-count" class="cart-badge">0</span>
+           </a>
+       `;
+       mainNav.appendChild(cartLi);
+   }
    
    // Set contact links
    const contactLinks = document.getElementById('contact-links');
@@ -566,14 +631,173 @@ function applySiteConfig() {
    // Apply custom styles from config
    applyCustomStyles();
    
-   // Set pack options title
-   document.getElementById('packOptionsTitle').textContent = `Select ${siteConfig.terminology.packTerm} Size:`;
-   
-   // Set checkout button text
-   document.getElementById('checkoutBtn').textContent = `Checkout`;
+   // Set pack options and checkout button text only if shop is enabled
+   if (shopEnabled) {
+       document.getElementById('packOptionsTitle').textContent = `Select ${siteConfig.terminology.packTerm} Size:`;
+       document.getElementById('checkoutBtn').textContent = `Checkout`;
+   }
    
    // Update filter buttons
    updateFilterButtons();
+}
+
+// Open product modal in read-only mode (when shop is disabled)
+function openProductModalReadOnly(product) {
+    const modal = document.getElementById('productModal');
+    
+    document.getElementById('modalTitle').textContent = product.name;
+    
+    // Fix main image path
+    let mainImagePath = product.image;
+    if (!mainImagePath) {
+        // If main image is empty but there are additional images, use the first one
+        if (product.additionalImages && product.additionalImages.length > 0) {
+            mainImagePath = product.additionalImages[0];
+        } else {
+            // Fallback to a placeholder
+            mainImagePath = 'img/placeholder.jpg';
+        }
+    }
+    
+    // Add img/ prefix if it doesn't exist
+    if (mainImagePath && !mainImagePath.startsWith('img/') && !mainImagePath.startsWith('/') && !mainImagePath.startsWith('http')) {
+        mainImagePath = 'img/' + mainImagePath;
+    }
+    
+    document.getElementById('modalImage').src = mainImagePath;
+    document.getElementById('modalImage').alt = product.name;
+    document.getElementById('modalType').textContent = product.type;
+    document.getElementById('modalRating').textContent = product.rating || 'N/A';
+    document.getElementById('modalOrigin').textContent = product.origin || 'Various';
+    document.getElementById('modalRarity').textContent = product.rarity || 'Standard';
+    document.getElementById('modalVariety').textContent = product.variety || 'Premium';
+    document.getElementById('modalDescription').textContent = product.description;
+    document.getElementById('modalDetails').textContent = product.details || 'No additional details available.';
+    document.getElementById('modalNotes').textContent = product.notes || 'No special notes.';
+    
+    // Set up thumbnails gallery
+    const thumbnailsContainer = document.getElementById('modalThumbnails');
+    thumbnailsContainer.innerHTML = '';
+
+    // Add these lines to set the alignment directly
+    thumbnailsContainer.style.display = 'flex';
+    thumbnailsContainer.style.flexWrap = 'wrap';
+    thumbnailsContainer.style.gap = '10px';
+    thumbnailsContainer.style.justifyContent = 'flex-start'; // Left alignment
+    thumbnailsContainer.style.alignItems = 'center';
+    
+    // Add main product image as first thumbnail
+    const mainThumb = document.createElement('div');
+    mainThumb.className = 'modal-thumbnail active';
+    mainThumb.innerHTML = `<img src="${mainImagePath}" alt="Main">`;
+    mainThumb.addEventListener('click', function() {
+        document.getElementById('modalImage').src = mainImagePath;
+        document.querySelectorAll('.modal-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+        this.classList.add('active');
+    });
+    thumbnailsContainer.appendChild(mainThumb);
+    
+    // Add additional images if available
+    if (product.additionalImages && product.additionalImages.length > 0) {
+        product.additionalImages.forEach((imgSrc, index) => {
+            // Fix additional image path
+            let additionalImagePath = imgSrc;
+            if (additionalImagePath && !additionalImagePath.startsWith('img/') && !additionalImagePath.startsWith('/') && !additionalImagePath.startsWith('http')) {
+                additionalImagePath = 'img/' + additionalImagePath;
+            }
+            
+            const thumb = document.createElement('div');
+            thumb.className = 'modal-thumbnail';
+            thumb.innerHTML = `<img src="${additionalImagePath}" alt="Image ${index + 1}">`;
+            thumb.addEventListener('click', function() {
+                document.getElementById('modalImage').src = additionalImagePath;
+                document.querySelectorAll('.modal-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+                this.classList.add('active');
+            });
+            thumbnailsContainer.appendChild(thumb);
+        });
+    }
+    
+    // Hide the pack options section
+    const packOptionsSection = document.getElementById('packOptions');
+    if (packOptionsSection) {
+        packOptionsSection.style.display = 'none';
+    }
+    
+    // Add view-only message if this is a physical product
+    if (product.delivery !== 'digital') {
+        const viewOnlyMessage = document.createElement('div');
+        viewOnlyMessage.className = 'view-only-message';
+        viewOnlyMessage.innerHTML = `
+            <p>This product is displayed for informational purposes only.</p>
+            <p>Contact us for purchasing options.</p>
+        `;
+        viewOnlyMessage.style.marginTop = '20px';
+        viewOnlyMessage.style.padding = '10px';
+        viewOnlyMessage.style.backgroundColor = 'rgba(0,0,0,0.1)';
+        viewOnlyMessage.style.borderRadius = '5px';
+        viewOnlyMessage.style.textAlign = 'center';
+        
+        document.querySelector('.modal-info').appendChild(viewOnlyMessage);
+    }
+    
+    // Show modal
+    modal.style.display = 'block';
+}
+
+function setupHeroSection() {
+    const siteConfig = window.siteConfig;
+    const heroSection = document.querySelector('.hero-section');
+    const heroTitle = document.getElementById('hero-title');
+    const heroDescription = document.getElementById('hero-description');
+
+    // Get the hero background path with proper prefix handling
+    let heroImagePath = '';
+    if (siteConfig.site.heroBackground) {
+        heroImagePath = siteConfig.site.heroBackground;
+        if (!heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
+            heroImagePath = 'img/' + heroImagePath;
+        }
+    }
+
+    // Check if we should show text or full image
+    if (siteConfig.site.showHeroText === false) {
+        // Full image mode - no dimming, no text
+        
+        // First, add the full-image class
+        heroSection.classList.add('full-image');
+        
+        // Apply direct background image with no gradient
+        heroSection.style.backgroundImage = `url('${heroImagePath}')`;
+        
+        // Make sure no inline gradient is applied
+        heroSection.style.background = `url('${heroImagePath}')`;
+        heroSection.style.backgroundSize = 'cover';
+        heroSection.style.backgroundPosition = 'center';
+        
+        // Hide text elements (redundant with CSS but for extra certainty)
+        if (heroTitle) heroTitle.style.display = 'none';
+        if (heroDescription) heroDescription.style.display = 'none';
+    } else {
+        // Text mode with dimming
+        
+        // Remove full-image class
+        heroSection.classList.remove('full-image');
+        
+        // Apply background with dimming gradient
+        heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
+        
+        // Ensure text elements are visible
+        if (heroTitle) {
+            heroTitle.style.display = '';
+            heroTitle.textContent = `Explore Our ${siteConfig.terminology.productPluralTerm}`;
+        }
+        
+        if (heroDescription) {
+            heroDescription.style.display = '';
+            heroDescription.textContent = siteConfig.site.tagline;
+        }
+    }
 }
 
 function updateFilterButtons() {
@@ -744,15 +968,11 @@ function loadScript(src, callback) {
     script.onload = callback;
     script.onerror = function() {
         console.warn(`Failed to load script: ${src}`);
-        // Try to load from remote repository if local file failed
-        const remoteSrc = `https://yourremoterepo.com/effects/${src}`;
-        const remoteScript = document.createElement('script');
-        remoteScript.src = remoteSrc;
-        remoteScript.onload = callback;
-        remoteScript.onerror = function() {
-            console.error(`Failed to load script from remote: ${remoteSrc}`);
-        };
-        document.head.appendChild(remoteScript);
+        // Just log the error without trying to load from a remote repository
+        if (callback) {
+            // Call the callback anyway so the site continues to function
+            callback();
+        }
     };
     document.head.appendChild(script);
 }
@@ -841,36 +1061,41 @@ function renderProductCards() {
     const productGrid = document.getElementById('product-grid');
     productGrid.innerHTML = '';
     
-    // First check if products are in the config
-    if (siteConfig && siteConfig.products && siteConfig.products.items) {
-        console.log('Loading products from config...');
-        window.products = siteConfig.products.items;
+    // Check if we're in preview mode
+    const isPreviewMode = window.location.search.includes('preview=true');
+    
+    // Define source priority depending on mode
+    let products = null;
+    
+    if (isPreviewMode) {
+        // In preview mode, only use products from config
+        console.log('Using products from config (preview mode)');
+        if (siteConfig && siteConfig.products && siteConfig.products.items) {
+            products = siteConfig.products.items;
+            console.log('Found', Object.keys(products).length, 'products in config');
+        }
     } else {
-        // Try to load from localStorage
-        const savedProducts = localStorage.getItem('siteProducts');
-        
-        if (savedProducts) {
-            console.log('Loading products from localStorage...');
-            window.products = JSON.parse(savedProducts);
-        } else {
-            // If still no products, show empty message
-            console.log('No product data found.');
-            productGrid.innerHTML = `<div class="no-products-message">No ${siteConfig.terminology.productPluralTerm} found. Add some products in the configuration tool.</div>`;
-            return;
+        // Normal mode - use window.products (which may include realtime inventory)
+        if (window.products && Object.keys(window.products).length > 0) {
+            products = window.products;
+            console.log('Using merged products from window.products');
+        } else if (siteConfig && siteConfig.products && siteConfig.products.items) {
+            products = siteConfig.products.items;
+            console.log('Using products from config');
         }
     }
     
-    // Check if products object is empty
-    if (!window.products || Object.keys(window.products).length === 0) {
-        console.log('Products object is empty.');
+    // Check if we have any products to display
+    if (!products || Object.keys(products).length === 0) {
+        console.log('No product data found in any source');
         productGrid.innerHTML = `<div class="no-products-message">No ${siteConfig.terminology.productPluralTerm} found. Add some products in the configuration tool.</div>`;
         return;
     }
     
-    console.log('Products loaded:', Object.keys(window.products).length);
+    console.log('Rendering', Object.keys(products).length, 'products');
     
     // Create card for each product
-    Object.values(window.products).forEach(product => {
+    Object.values(products).forEach(product => {
         const card = createProductCard(product);
         productGrid.appendChild(card);
     });
@@ -903,6 +1128,24 @@ function createProductCard(product) {
     }
     
     card.setAttribute('data-category', categoryClass);
+
+	// Add click handler for available products if shop is enabled
+	const shopEnabled = siteConfig.advanced && siteConfig.advanced.enableShop !== false;
+
+	if (product.status === 'available') {
+		card.addEventListener('click', function() {
+			if (shopEnabled) {
+				openProductModal(product);
+			} else if (product.delivery === 'digital' && product.digitalContent) {
+				// For digital products when shop is disabled, directly open the digital content
+				window.open(product.digitalContent, '_blank');
+			} else {
+				// For physical products when shop is disabled, just show product details
+				// without the ability to add to cart
+				openProductModalReadOnly(product);
+			}
+		});
+	}
     
     // Add unavailable class for non-available products
     if (product.status !== 'available') {
@@ -927,25 +1170,19 @@ function createProductCard(product) {
         });
     }
     
-    // ALWAYS prepend "img/" to the image path if it doesn't already have it
-    let imagePath = product.image;
-    if (!imagePath && product.additionalImages && product.additionalImages.length > 0) {
-        // Use first additional image if main image is empty
-        imagePath = product.additionalImages[0];
-    }
-    
-    // Ensure the path starts with img/
+    // Simply prepend "img/" if needed and let browser handle missing images
+    let imagePath = product.image || '';
     if (imagePath && !imagePath.startsWith('img/') && !imagePath.startsWith('/') && !imagePath.startsWith('http')) {
         imagePath = 'img/' + imagePath;
     }
     
     // Create the card content
     card.innerHTML += `
-        <img src="${imagePath}" alt="${product.name}" class="product-img">
+        <img src="${imagePath}" alt="${product.name}" class="product-img" onerror="this.style.display='none'">
         <div class="card-content">
             <h3 class="card-title">${product.name}</h3>
             <span class="product-type">${product.type}</span>
-            <p class="card-description">${product.description.substring(0, 150)}...</p>
+            <p class="card-description">${product.description || ''}</p>
             <div class="product-details">
                 <div class="detail-item">${product.delivery === 'digital' ? 'Digital' : siteConfig.terminology.productTerm}</div>
                 <div class="detail-item">${product.variety || 'Premium'}</div>
@@ -1389,7 +1626,11 @@ function setupFilterButtons() {
 function setupEventListeners() {
     // Cart link
     const cartLink = document.getElementById('cart-link');
-    if (cartLink) {
+    
+    // Check if shopping cart is enabled
+    const shopEnabled = window.siteConfig.advanced && window.siteConfig.advanced.enableShop !== false;
+    
+    if (cartLink && shopEnabled) {
         cartLink.addEventListener('click', function(e) {
             e.preventDefault();
             openCartModal();
@@ -1581,6 +1822,9 @@ function setupEventListeners() {
 function handleEmailCheckout(name, email, phone, message, orderDetails) {
     const siteConfig = window.siteConfig;
     
+    // Use order email if available, otherwise fall back to contact email
+    const orderEmail = siteConfig.advanced.orderEmail || siteConfig.site.email;
+    
     // Prepare email body
     let emailBody = `
 Name: ${name}
@@ -1615,7 +1859,7 @@ Phone: ${phone}
     emailBody += `\nAdditional Notes:\n${message}`;
     
     // Create mailto link
-    const mailtoLink = `mailto:${siteConfig.site.email}?subject=New Order from ${name}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoLink = `mailto:${orderEmail}?subject=New Order from ${name}&body=${encodeURIComponent(emailBody)}`;
     
     // Display digital products if any
     if (hasDigitalProducts) {

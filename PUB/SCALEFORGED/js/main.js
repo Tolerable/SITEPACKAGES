@@ -564,45 +564,8 @@ function applySiteConfig() {
    document.getElementById('footerSiteName').textContent = siteConfig.site.name;
    document.getElementById('copyright-text').textContent = siteConfig.site.copyright;
    
-	// Set hero content based on showHeroText setting
-	const heroSection = document.querySelector('.hero-section');
-	const heroTitle = document.getElementById('hero-title');
-	const heroDescription = document.getElementById('hero-description');
-
-	// Get the hero background path
-	let heroImagePath = '';
-	if (siteConfig.site.heroBackground) {
-		heroImagePath = siteConfig.site.heroBackground;
-		if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
-			heroImagePath = 'img/' + heroImagePath;
-		}
-	}
-
-	// Check if showHeroText is explicitly set to false
-	if (siteConfig.site.showHeroText === false) {
-		// Hide text elements
-		heroTitle.style.display = 'none';
-		heroDescription.style.display = 'none';
-		
-		// Add full-image class
-		heroSection.classList.add('full-image');
-		
-		// CRITICAL FIX: Override the CSS !important rule with inline style
-		// Set direct background image WITHOUT gradient but with !important
-		heroSection.style.cssText = `background-image: url('${heroImagePath}') !important; height: 500px !important; padding: 0 !important;`;
-	} else {
-		// Default behavior - show text with dimmed background
-		heroTitle.style.display = '';
-		heroDescription.style.display = '';
-		heroTitle.textContent = `Explore Our ${siteConfig.terminology.productPluralTerm}`;
-		heroDescription.textContent = siteConfig.site.tagline;
-		
-		// Remove full-image class
-		heroSection.classList.remove('full-image');
-		
-		// Apply background with dimming overlay
-		heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,1), rgba(0,0,0,1)), url('${heroImagePath}')`;
-	}
+   // Handle hero section
+   setupHeroSection();
    
    // Set cart terminology
    document.getElementById('cartTitle').textContent = `Your ${siteConfig.terminology.cartTerm}`;
@@ -611,19 +574,6 @@ function applySiteConfig() {
    // Set navigation
    const mainNav = document.getElementById('main-navigation');
    mainNav.innerHTML = ''; // Clear existing navigation
-
-	// Set hero background if provided in config
-	if (siteConfig.site.heroBackground) {
-		let heroImagePath = siteConfig.site.heroBackground;
-		// Add img/ prefix if needed
-		if (heroImagePath && !heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
-			heroImagePath = 'img/' + heroImagePath;
-		}
-		
-		// Apply the background image with the overlay gradient
-		const heroSection = document.querySelector('.hero-section');
-		heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
-	}
    
    // Add cart link
    const cartLi = document.createElement('li');
@@ -683,6 +633,61 @@ function applySiteConfig() {
    
    // Update filter buttons
    updateFilterButtons();
+}
+
+function setupHeroSection() {
+    const siteConfig = window.siteConfig;
+    const heroSection = document.querySelector('.hero-section');
+    const heroTitle = document.getElementById('hero-title');
+    const heroDescription = document.getElementById('hero-description');
+
+    // Get the hero background path with proper prefix handling
+    let heroImagePath = '';
+    if (siteConfig.site.heroBackground) {
+        heroImagePath = siteConfig.site.heroBackground;
+        if (!heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
+            heroImagePath = 'img/' + heroImagePath;
+        }
+    }
+
+    // Check if we should show text or full image
+    if (siteConfig.site.showHeroText === false) {
+        // Full image mode - no dimming, no text
+        
+        // First, add the full-image class
+        heroSection.classList.add('full-image');
+        
+        // Apply direct background image with no gradient
+        heroSection.style.backgroundImage = `url('${heroImagePath}')`;
+        
+        // Make sure no inline gradient is applied
+        heroSection.style.background = `url('${heroImagePath}')`;
+        heroSection.style.backgroundSize = 'cover';
+        heroSection.style.backgroundPosition = 'center';
+        
+        // Hide text elements (redundant with CSS but for extra certainty)
+        if (heroTitle) heroTitle.style.display = 'none';
+        if (heroDescription) heroDescription.style.display = 'none';
+    } else {
+        // Text mode with dimming
+        
+        // Remove full-image class
+        heroSection.classList.remove('full-image');
+        
+        // Apply background with dimming gradient
+        heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
+        
+        // Ensure text elements are visible
+        if (heroTitle) {
+            heroTitle.style.display = '';
+            heroTitle.textContent = `Explore Our ${siteConfig.terminology.productPluralTerm}`;
+        }
+        
+        if (heroDescription) {
+            heroDescription.style.display = '';
+            heroDescription.textContent = siteConfig.site.tagline;
+        }
+    }
 }
 
 function updateFilterButtons() {

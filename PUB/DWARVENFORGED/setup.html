@@ -438,6 +438,7 @@
                 <div class="config-tab" data-tab="advanced">Advanced</div>
 				<div class="config-tab" data-tab="images">Images</div>
 				<div class="config-tab" data-tab="products">Products</div>
+				<div class="config-tab" data-tab="strainTree">Strain Tree</div>
 				<div class="config-tab" data-tab="about">About</div>
 				<div class="config-tab" data-tab="support">Support</div>
             </div>
@@ -1053,6 +1054,37 @@
                 <button type="button" class="btn" id="add-friend-btn">Add Friend Link</button>				
 				
             </div>
+
+			<!-- STRAIN TREE SECTIONS -->
+			<div class="config-section" id="strainTree-section">
+				<h2>Strain Tree Visualization</h2>
+				<p>Configure the interactive strain tree visualization that will appear after your product cards.</p>
+				
+				<div class="form-group">
+					<label for="enable-strain-tree">Enable Strain Tree</label>
+					<select id="enable-strain-tree">
+						<option value="true">Yes</option>
+						<option value="false" selected>No</option>
+					</select>
+					<p class="help-text">Enable or disable the strain tree visualization section.</p>
+				</div>
+				
+				<div class="form-group">
+					<label for="strain-tree-title">Section Title</label>
+					<input type="text" id="strain-tree-title" value="Strain Genetics Explorer">
+				</div>
+				
+				<div class="form-group">
+					<label for="strain-tree-description">Section Description</label>
+					<textarea id="strain-tree-description" rows="2">Explore the genetic relationships between our strains.</textarea>
+				</div>
+				
+				<div class="form-group">
+					<label for="strain-data-path">Strain Data JSON Path</label>
+					<input type="text" id="strain-data-path" value="data/straindata.json">
+					<p class="help-text">Path to the JSON file containing strain tree data. Default: data/straindata.json</p>
+				</div>
+			</div>
 
 			<!-- About Section -->
 			<div class="config-section" id="about-section">
@@ -3673,5 +3705,60 @@
                 init();
             });
         </script>
+		<script>
+			// Strain Tree section save/load handlers
+			function saveStrainTreeConfig() {
+				const strainTreeConfig = {
+					enabled: document.getElementById('enable-strain-tree').value === 'true',
+					title: document.getElementById('strain-tree-title').value,
+					description: document.getElementById('strain-tree-description').value,
+					dataPath: document.getElementById('strain-data-path').value || 'data/straindata.json'
+				};
+				
+				localStorage.setItem('strainTreeConfig', JSON.stringify(strainTreeConfig));
+			}
+			
+			function loadStrainTreeConfig() {
+				const savedConfig = localStorage.getItem('strainTreeConfig');
+				if (savedConfig) {
+					try {
+						const config = JSON.parse(savedConfig);
+						document.getElementById('enable-strain-tree').value = config.enabled ? 'true' : 'false';
+						document.getElementById('strain-tree-title').value = config.title || 'Strain Genetics Explorer';
+						document.getElementById('strain-tree-description').value = config.description || 'Explore the genetic relationships between our strains.';
+						document.getElementById('strain-data-path').value = config.dataPath || 'data/straindata.json';
+					} catch (error) {
+						console.error('Error loading strain tree config:', error);
+					}
+				}
+			}
+			
+			// Add event listeners for strain tree form fields
+			document.getElementById('enable-strain-tree').addEventListener('change', saveStrainTreeConfig);
+			document.getElementById('strain-tree-title').addEventListener('input', saveStrainTreeConfig);
+			document.getElementById('strain-tree-description').addEventListener('input', saveStrainTreeConfig);
+			document.getElementById('strain-data-path').addEventListener('input', saveStrainTreeConfig);
+			
+			// Load saved config when page loads
+			document.addEventListener('DOMContentLoaded', function() {
+				loadStrainTreeConfig();
+			});
+			
+			// Add strain tree config to the main config generation
+			const originalGenerateConfig = window.generateConfig || function() { return {}; };
+			window.generateConfig = function() {
+				const config = originalGenerateConfig();
+				
+				// Add strain tree config
+				config.strainTree = {
+					enabled: document.getElementById('enable-strain-tree').value === 'true',
+					title: document.getElementById('strain-tree-title').value,
+					description: document.getElementById('strain-tree-description').value,
+					dataPath: document.getElementById('strain-data-path').value || 'data/straindata.json'
+				};
+				
+				return config;
+			};
+		</script>		
     </body>
     </html>

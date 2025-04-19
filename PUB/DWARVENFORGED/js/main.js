@@ -921,15 +921,15 @@ function applyCustomStyles() {
 		bgStyle.textContent = `
 			body::before {
 				content: '';
-				position: absolute;  // Changed from fixed to absolute
+				position: fixed;
 				top: 0;
 				left: 0;
 				width: 100%;
 				height: 100%;
 				background-image: url('${bgPath}');
-				background-size: cover;
-				background-position: center;
-				background-attachment: scroll;  // Changed from fixed to scroll
+				background-size: 100% auto;  // Fill width, maintain aspect ratio
+				background-position: top center;  // Align to top
+				background-attachment: fixed;
 				z-index: -10;
 				pointer-events: none;
 			}
@@ -947,15 +947,15 @@ function applyCustomStyles() {
 		textureStyle.textContent = `
 			body::after {
 				content: '';
-				position: fixed;  // This is correct - keep it fixed
+				position: fixed;
 				top: 0;
 				left: 0;
 				width: 100%;
 				height: 100%;
 				background-image: url('${sectionPath}');
 				background-repeat: repeat;
-				opacity: 0.15;
-				z-index: -5;
+				opacity: 0.5;  // Increased from 0.15 for visibility
+				z-index: -15;  // Lower than the main image (-10)
 				pointer-events: none;
 			}
 		`;

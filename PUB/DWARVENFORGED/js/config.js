@@ -6,7 +6,7 @@
         "name": "DwarvenForged",
         "tagline": "Cannabis Seeds Forged With Dwarven Precision",
         "logo": "img/logo.jpg",
-        "heroBackground": "img/forge-background.jpg",
+        "heroBackground": "img/hero-bg.jpg",
         "showHeroText": false,
         "email": "info@dwarvenforged.com",
         "socialLinks": {

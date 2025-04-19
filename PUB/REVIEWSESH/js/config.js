@@ -7,7 +7,7 @@
         "tagline": "Sharing Honest Reviews Online",
         "logo": "img/logo.jpg",
         "heroBackground": "hero-bg.jpg",
-        "showHeroText": true,
+        "showHeroText": false,
         "email": "reviewsesh@sitepackages.net",
         "socialLinks": {
             "discord": "https://discord.gg/",

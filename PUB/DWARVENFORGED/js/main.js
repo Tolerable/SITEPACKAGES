@@ -900,6 +900,46 @@ function updateFilterButtons() {
 
 // Apply custom styles from config
 function applyCustomStyles() {
+	
+	// Apply background image if configured
+	if (siteConfig.background && siteConfig.background.image) {
+		const bgImage = siteConfig.background.image;
+		let bgPath = bgImage.startsWith('http') ? bgImage : `img/${bgImage}`;
+		
+		document.body.style.backgroundImage = `url('${bgPath}')`;
+		document.body.style.backgroundSize = 'cover';
+		document.body.style.backgroundAttachment = 'fixed';
+	}
+
+	// Apply section divider images if configured
+	if (siteConfig.background && siteConfig.background.sectionImage) {
+		const sectionImage = siteConfig.background.sectionImage;
+		let sectionPath = sectionImage.startsWith('http') ? sectionImage : `img/${sectionImage}`;
+		
+		const style = document.createElement('style');
+		style.textContent = `
+			section {
+				position: relative;
+			}
+			section::before, section::after {
+				content: '';
+				position: absolute;
+				left: 0;
+				width: 100%;
+				height: 10px;
+				background-image: url('${sectionPath}');
+				background-size: cover;
+			}
+			section::before {
+				top: 0;
+			}
+			section::after {
+				bottom: 0;
+			}
+		`;
+		document.head.appendChild(style);
+	}
+	
     const siteConfig = window.siteConfig;
     const dynamicStyles = document.getElementById('dynamic-styles');
     

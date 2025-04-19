@@ -918,22 +918,22 @@ function applyCustomStyles() {
         
         // Add a fixed, full-screen background image
         const bgStyle = document.createElement('style');
-        bgStyle.textContent = `
-            body::before {
-                content: '';
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url('${bgPath}');
-                background-size: cover;
-                background-position: center;
-                background-attachment: fixed;
-                z-index: -10;
-                pointer-events: none;
-            }
-        `;
+		bgStyle.textContent = `
+			body::before {
+				content: '';
+				position: absolute;  // Changed from fixed to absolute
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: url('${bgPath}');
+				background-size: cover;
+				background-position: center;
+				background-attachment: scroll;  // Changed from fixed to scroll
+				z-index: -10;
+				pointer-events: none;
+			}
+		`;
         document.head.appendChild(bgStyle);
     }
 
@@ -944,36 +944,21 @@ function applyCustomStyles() {
         
         // Add a tiled texture pattern
         const textureStyle = document.createElement('style');
-        textureStyle.textContent = `
-            body {
-                position: relative;
-                background-color: ${siteConfig.colors?.background || '#0A0E17'};
-            }
-            
-            body::after {
-                content: '';
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url('${sectionPath}');
-                background-repeat: repeat;
-                opacity: 0.15;
-                z-index: -5;
-                pointer-events: none;
-            }
-            
-            section {
-                position: relative;
-                z-index: 1;
-                background-color: rgba(20, 20, 20, 0.75);
-                margin: 20px 0;
-                border-radius: 8px;
-                overflow: hidden;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            }
-        `;
+		textureStyle.textContent = `
+			body::after {
+				content: '';
+				position: fixed;  // This is correct - keep it fixed
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: url('${sectionPath}');
+				background-repeat: repeat;
+				opacity: 0.15;
+				z-index: -5;
+				pointer-events: none;
+			}
+		`;
         document.head.appendChild(textureStyle);
     }
     

@@ -26,8 +26,8 @@
         "text": "#f5f0e6"
     },
     "fonts": {
-        "heading": "",
-        "body": ""
+        "heading": "'Oswald', sans-serif",
+        "body": "'Lato', sans-serif"
     },
     "terminology": {
         "category1": "Anvil Series",

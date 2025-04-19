@@ -1150,7 +1150,7 @@ function createProductCard(product) {
 		card.addEventListener('click', function() {
 			if (shopEnabled) {
 				openProductModal(product);
-			else if (product.delivery === 'digital' && product.digitalContent) {
+			} else if (product.delivery === 'digital' && product.digitalContent) {
 				// For digital products when shop is disabled, show the modal with the digital content link
 				openProductModalReadOnly(product);
 			} else {

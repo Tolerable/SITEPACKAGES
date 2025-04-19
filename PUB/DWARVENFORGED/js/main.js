@@ -900,51 +900,84 @@ function updateFilterButtons() {
 
 // Apply custom styles from config
 function applyCustomStyles() {
-    // Make sure siteConfig exists before trying to use it
+    // Get siteConfig safely with fallback
     const siteConfig = window.siteConfig || {};
     
-    // Apply background image if configured
+    // Get or create the dynamic styles element
+    let dynamicStyles = document.getElementById('dynamic-styles');
+    if (!dynamicStyles) {
+        dynamicStyles = document.createElement('style');
+        dynamicStyles.id = 'dynamic-styles';
+        document.head.appendChild(dynamicStyles);
+    }
+    
+    // First, handle the primary background image (full screen, fixed position)
     if (siteConfig.background && siteConfig.background.image) {
         const bgImage = siteConfig.background.image;
-        let bgPath = bgImage.startsWith('http') ? bgImage : `img/${bgImage}`;
+        const bgPath = bgImage.startsWith('http') ? bgImage : `img/${bgImage}`;
         
-        document.body.style.backgroundImage = `url('${bgPath}')`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundAttachment = 'fixed';
-    }
-
-    // Apply section divider images if configured
-    if (siteConfig.background && siteConfig.background.sectionImage) {
-        const sectionImage = siteConfig.background.sectionImage;
-        let sectionPath = sectionImage.startsWith('http') ? sectionImage : `img/${sectionImage}`;
-        
-        const style = document.createElement('style');
-        style.textContent = `
-            section {
-                position: relative;
-            }
-            section::before, section::after {
+        // Add a fixed, full-screen background image
+        const bgStyle = document.createElement('style');
+        bgStyle.textContent = `
+            body::before {
                 content: '';
-                position: absolute;
+                position: fixed;
+                top: 0;
                 left: 0;
                 width: 100%;
-                height: 10px;
-                background-image: url('${sectionPath}');
+                height: 100%;
+                background-image: url('${bgPath}');
                 background-size: cover;
-            }
-            section::before {
-                top: 0;
-            }
-            section::after {
-                bottom: 0;
+                background-position: center;
+                background-attachment: fixed;
+                z-index: -10;
+                pointer-events: none;
             }
         `;
-        document.head.appendChild(style);
+        document.head.appendChild(bgStyle);
+    }
+
+    // Then, handle the texture pattern (tiled background)
+    if (siteConfig.background && siteConfig.background.sectionImage) {
+        const sectionImage = siteConfig.background.sectionImage;
+        const sectionPath = sectionImage.startsWith('http') ? sectionImage : `img/${sectionImage}`;
+        
+        // Add a tiled texture pattern
+        const textureStyle = document.createElement('style');
+        textureStyle.textContent = `
+            body {
+                position: relative;
+                background-color: ${siteConfig.colors?.background || '#0A0E17'};
+            }
+            
+            body::after {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('${sectionPath}');
+                background-repeat: repeat;
+                opacity: 0.15;
+                z-index: -5;
+                pointer-events: none;
+            }
+            
+            section {
+                position: relative;
+                z-index: 1;
+                background-color: rgba(20, 20, 20, 0.75);
+                margin: 20px 0;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+        `;
+        document.head.appendChild(textureStyle);
     }
     
-    const dynamicStyles = document.getElementById('dynamic-styles');
-    if (!dynamicStyles) return;
-    
+    // Base CSS variables and other styles
     dynamicStyles.textContent = `
         :root {
             --primary-color: ${siteConfig.colors?.primary || '#003B6F'};
@@ -959,6 +992,7 @@ function applyCustomStyles() {
             --font-body: ${siteConfig.fonts?.body || "'Exo 2', sans-serif"};
         }
         
+        /* Rest of your styles unchanged */
         .modal-thumbnail-gallery {
             display: flex;
             gap: 10px;

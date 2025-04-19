@@ -54,7 +54,7 @@
         }
     },
     "about": {
-        "title": "About Review Session",
+        "title": "About Review Sesh",
         "subtitle": "Our Story and Mission",
         "image": "img/about.jpg",
         "description": "",
@@ -137,18 +137,18 @@
             },
             "product-1744637326648": {
                 "id": "product-1744637326648",
-                "name": "SCALE FORGED MANUFACTURING",
-                "type": "Premium Collection",
+                "name": "SCALE FORGED 3D",
+                "type": "Premium Content",
                 "status": "available",
                 "delivery": "digital",
-                "digitalContent": "https://www.sitenavigator.com/PUB/SCALEFORGED/",
+                "digitalContent": "https://www.scaleforged3d.com/",
                 "image": "digital4.jpg",
                 "additionalImages": [],
                 "description": "3D Printing and Manufacturing",
                 "variety": "Premium Collection",
                 "rating": "5/5",
                 "origin": "EXTERNAL",
-                "details": "Making quality items available on a limited basis.",
+                "details": "Making Dreams Come True",
                 "notes": "Drops happen quickly, do not miss your chance.",
                 "packOptions": []
             }
@@ -178,8 +178,8 @@
             "url": "https://www.sitepackages.net/"
         },
         {
-            "name": "Scale Forged Manufacturing",
-            "url": "https://www.sitepackages.net/PUB/SCALEFORGED/"
+            "name": "Scale Forged 3D",
+            "url": "https://www.scaleforged3d.com/"
         }
     ],
     "advanced": {
@@ -188,6 +188,6 @@
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "reviewshesh@sitepackages.net"
+        "orderEmail": "reviewsesh@sitepackages.net"
     }
 };

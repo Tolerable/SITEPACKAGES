@@ -25,6 +25,10 @@
         "background": "#2e2119",
         "text": "#f5f0e6"
     },
+    "background": {
+        "image": "dark-forge-texture.jpg",
+        "sectionImage": "forge-background.jpg"
+    },
     "fonts": {
         "heading": "'Oswald', sans-serif",
         "body": "'Lato', sans-serif"

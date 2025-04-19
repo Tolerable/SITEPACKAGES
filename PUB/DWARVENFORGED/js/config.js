@@ -63,13 +63,13 @@
                 "name": "Master Brokkr",
                 "title": "Lead Geneticist & Founder",
                 "bio": "With over 20 years of breeding experience, Master Brokkr has developed some of the most exceptional cannabis genetics in the industry.",
-                "image": "img/team1.jpg"
+                "image": ""
             },
             {
                 "name": "Sindri",
                 "title": "Strain Curator",
                 "bio": "Responsible for selecting and preserving our collection of rare genetics, Sindri ensures that only the finest traits make it to our final products.",
-                "image": "img/team2.jpg"
+                "image": ""
             }
         ],
         "historyItems": [
@@ -322,10 +322,6 @@
             "url": "https://www.strainnavigator.com/"
         },
         {
-            "name": "StrainNavigator",
-            "url": "https://www.strainnavigator.com"
-        },
-        {
             "name": "BuildASoil",
             "url": "https://buildasoil.com"
         },
@@ -340,6 +336,6 @@
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "order@dwarvenforged.com"
+        "orderEmail": "orders@example.com"
     }
 };

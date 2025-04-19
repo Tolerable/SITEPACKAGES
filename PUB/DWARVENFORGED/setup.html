@@ -3488,30 +3488,42 @@
 				function loadExistingConfig() {
 					console.log("Attempting to load existing config.js...");
 					
-					// Create a script element to load the config file
-					const configScript = document.createElement('script');
-					configScript.src = 'js/config.js';
-					
-					// When the config loads successfully
-					configScript.onload = function() {
-						console.log("Successfully loaded config.js file");
+					// Try to load from CURRENT DIRECTORY ONLY if not already loaded
+					if (typeof window.siteConfig === 'undefined') {
+						// Build path based on CURRENT URL ONLY - not relative paths
+						const currentPath = window.location.pathname;
+						const dirPath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+						const configPath = dirPath + 'js/config.js';
 						
-						// Check if window.siteConfig exists after loading
-						if (window.siteConfig) {
-							console.log("Found existing siteConfig, populating form fields...");
-							populateFormFromConfig(window.siteConfig);
-						} else {
-							console.warn("Config file loaded but siteConfig object not found");
-						}
-					};
-					
-					// Handle load errors
-					configScript.onerror = function() {
-						console.warn("Could not load config.js file - using defaults");
-					};
-					
-					// Add the script to the document to start loading
-					document.head.appendChild(configScript);
+						console.log("Looking for config at specific path:", configPath);
+						
+						const configScript = document.createElement('script');
+						configScript.src = configPath;
+						
+						configScript.onload = function() {
+							console.log('Successfully loaded config.js from current directory:', configPath);
+							
+							// Only populate if config was found
+							if (window.siteConfig) {
+								populateFormFromConfig(window.siteConfig);
+							} else {
+								console.warn("Config file loaded but siteConfig object not found");
+							}
+						};
+						
+						configScript.onerror = function() {
+							console.error('Failed to load config.js from:', configPath);
+							// Create fallback config
+							window.siteConfig = {
+								// Default values remain unchanged...
+							};
+							console.warn("Using default config values");
+						};
+						
+						document.head.appendChild(configScript);
+						return false;
+					}
+					return true;
 				}
 
 				// Add this function to populate form fields based on the loaded config

@@ -26,8 +26,8 @@
         "text": "#f5f0e6"
     },
     "background": {
-        "image": "forge-background.jpg",
-        "sectionImage": "dark-forge-texture.jpg"
+        "image": "",
+        "sectionImage": ""
     },
     "fonts": {
         "heading": "'Oswald', sans-serif",

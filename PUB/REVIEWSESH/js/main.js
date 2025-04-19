@@ -984,25 +984,37 @@ function initializeCart() {
     const siteConfig = window.siteConfig;
     let cart = [];
     
-    // Check if local storage is enabled in config
-    if (siteConfig.advanced && siteConfig.advanced.enableLocalStorage) {
-        const storedCart = localStorage.getItem('siteCart');
-        if (storedCart) {
-            cart = JSON.parse(storedCart);
+    // Check if shopping is enabled
+    const shopEnabled = siteConfig.advanced && siteConfig.advanced.enableShop !== false;
+    
+    // Only proceed with cart initialization if shopping is enabled
+    if (shopEnabled) {
+        // Check if local storage is enabled in config
+        if (siteConfig.advanced && siteConfig.advanced.enableLocalStorage) {
+            const storedCart = localStorage.getItem('siteCart');
+            if (storedCart) {
+                cart = JSON.parse(storedCart);
+            }
         }
+        
+        // Update cart count
+        updateCartCount(cart);
+        
+        // Store cart in window for access in other functions
+        window.siteCart = cart;
+    } else {
+        // Still initialize empty cart for consistency
+        window.siteCart = cart;
     }
-    
-    // Update cart count
-    updateCartCount(cart);
-    
-    // Store cart in window for access in other functions
-    window.siteCart = cart;
 }
 
 // Update cart count display
 function updateCartCount(cart) {
-    const count = cart.reduce((total, item) => total + item.quantity, 0);
-    document.getElementById('cart-count').textContent = count;
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) { // Check if the element exists before updating
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        cartCountElement.textContent = count;
+    }
 }
 
 function loadProductsFromLocalStorage() {

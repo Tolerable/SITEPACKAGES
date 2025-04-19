@@ -644,8 +644,10 @@ function applySiteConfig() {
 }
 
 // Open product modal in read-only mode (when shop is disabled)
+// Open product modal in read-only mode (when shop is disabled)
 function openProductModalReadOnly(product) {
     const modal = document.getElementById('productModal');
+    const siteConfig = window.siteConfig;
     
     document.getElementById('modalTitle').textContent = product.name;
     
@@ -720,14 +722,68 @@ function openProductModalReadOnly(product) {
         });
     }
     
-    // Hide the pack options section
-    const packOptionsSection = document.getElementById('packOptions');
-    if (packOptionsSection) {
-        packOptionsSection.style.display = 'none';
+    // Get the pack options container
+    const packOptionsContainer = document.getElementById('packOptionButtons');
+    if (!packOptionsContainer) return;
+    
+    // Clear existing content
+    packOptionsContainer.innerHTML = '';
+    
+    // Get the title element
+    const packOptionsTitle = document.getElementById('packOptionsTitle');
+    if (packOptionsTitle) {
+        packOptionsTitle.style.display = 'block';
     }
     
-    // Add view-only message if this is a physical product
-    if (product.delivery !== 'digital') {
+    // Check if this is a digital product with content
+    if (product.delivery === 'digital' && product.digitalContent) {
+        // Show digital product access button
+        if (packOptionsTitle) {
+            packOptionsTitle.textContent = 'Access Digital Content:';
+            packOptionsTitle.style.color = siteConfig.colors.highlight || '#FFD700';
+        }
+        
+        // Create access button for digital content
+        const accessButton = document.createElement('button');
+        accessButton.className = 'cta-button digital-access-btn';
+        accessButton.innerHTML = `<i class="download-icon"></i> Access Digital Content`;
+        accessButton.style.width = '100%';
+        accessButton.style.marginTop = '10px';
+        accessButton.style.padding = '12px 20px';
+        accessButton.style.display = 'flex';
+        accessButton.style.alignItems = 'center';
+        accessButton.style.justifyContent = 'center';
+        
+        // Add info text
+        const accessInfo = document.createElement('div');
+        accessInfo.className = 'digital-access-info';
+        accessInfo.innerHTML = `<p>Digital product. Click the button below to access content.</p>`;
+        accessInfo.style.marginBottom = '15px';
+        accessInfo.style.padding = '10px';
+        accessInfo.style.borderRadius = '5px';
+        accessInfo.style.backgroundColor = 'rgba(0,0,0,0.1)';
+        
+        // Add to container
+        packOptionsContainer.appendChild(accessInfo);
+        packOptionsContainer.appendChild(accessButton);
+        
+        // Add click handler
+        accessButton.addEventListener('click', function() {
+            // Open the digital content URL in a new tab
+            window.open(product.digitalContent, '_blank');
+            
+            // Close the modal
+            document.getElementById('productModal').style.display = 'none';
+        });
+    } else {
+        // For physical products
+        // Hide the pack options section if needed
+        const packOptionsSection = document.getElementById('packOptions');
+        if (packOptionsSection) {
+            packOptionsSection.style.display = 'none';
+        }
+        
+        // Add view-only message
         const viewOnlyMessage = document.createElement('div');
         viewOnlyMessage.className = 'view-only-message';
         viewOnlyMessage.innerHTML = `
@@ -740,7 +796,10 @@ function openProductModalReadOnly(product) {
         viewOnlyMessage.style.borderRadius = '5px';
         viewOnlyMessage.style.textAlign = 'center';
         
-        document.querySelector('.modal-info').appendChild(viewOnlyMessage);
+        const modalInfo = document.querySelector('.modal-info');
+        if (modalInfo) {
+            modalInfo.appendChild(viewOnlyMessage);
+        }
     }
     
     // Show modal

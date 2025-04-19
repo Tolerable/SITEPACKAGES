@@ -39,6 +39,8 @@
     <style id="dynamic-styles"></style>
 </head>
 <body>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="js/navigator.js"></script>
 <script>
   // Immediately check for preview mode when page loads
   (function() {
@@ -124,6 +126,25 @@
                 <div class="product-grid" id="product-grid">
                     <!-- Product cards will be dynamically inserted here -->
                 </div>
+
+				<section id="strain-tree-section" style="display: none;">
+					<div class="container">
+						<h2 id="strain-tree-title">Strain Genetics Explorer</h2>
+						<p id="strain-tree-description">Explore the genetic relationships between our strains.</p>
+						
+						<div class="genetics-tree-container">
+							<div id="genetics-tree" class="genetics-tree"></div>
+							<div class="genetics-controls">
+								<button id="expand-all" class="cta-button">Expand All</button>
+								<button id="collapse-all" class="cta-button">Collapse All</button>
+							</div>
+							<div id="strain-description" class="genetics-info">
+								Click on a strain to view its information.
+							</div>
+						</div>
+					</div>
+				</section>
+				
             </section>
         </div>
     </div>

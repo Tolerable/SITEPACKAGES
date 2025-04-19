@@ -7,7 +7,7 @@
         "tagline": "Cannabis Seeds Forged With Dwarven Precision",
         "logo": "img/logo.jpg",
         "heroBackground": "img/forge-background.jpg",
-        "showHeroText": true,
+        "showHeroText": false,
         "email": "info@dwarvenforged.com",
         "socialLinks": {
             "discord": "https://discord.gg/dwarvenforged",
@@ -43,7 +43,7 @@
     "effects": {
         "backgroundEffect": {
             "enabled": true,
-            "type": "particles",
+            "type": "leaves",
             "intensity": "medium"
         },
         "specialFeature": {
@@ -318,10 +318,6 @@
             "url": "#seed-catalog"
         },
         {
-            "name": "Genetics Explorer",
-            "url": "#genetics-explorer"
-        },
-        {
             "name": "Our Forge",
             "url": "#about"
         }
@@ -345,11 +341,11 @@
         }
     ],
     "advanced": {
-        "enableShop": false,
+        "enableShop": true,
         "enableLocalStorage": true,
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "reviewsesh@sitepackages.net"
+        "orderEmail": "orders@example.com"
     }
 };

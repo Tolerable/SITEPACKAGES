@@ -112,81 +112,83 @@ document.addEventListener('DOMContentLoaded', function() {
 		return errorLog;
 	}
     
-    // Function to check if config exists - ONLY RUN if not in preview mode
-    function checkConfig() {
-        if (typeof window.siteConfig === 'undefined') {
-            // Try to load from /js/ folder if not already loaded
-            const configScript = document.createElement('script');
-            configScript.src = 'js/config.js';
-            configScript.onload = function() {
-                console.log('Successfully loaded config.js from /js/ folder');
-                initializeSite();
-            };
-            configScript.onerror = function() {
-                console.error('Failed to load config.js from /js/ folder');
-                // Create fallback config
-                window.siteConfig = {
-                    // Default config values (unchanged)
-                    site: {
-                        name: "Site is Loading...",
-                        tagline: "Configuration Issue",
-                        logo: "",
-                        email: "",
-                        copyright: "© " + new Date().getFullYear()
-                    },
-                    colors: {
-                        primary: "#003B6F",
-                        secondary: "#00FF9F",
-                        tertiary: "#6A0DAD",
-                        highlight: "#FFD700", 
-                        alert: "#FF5722",
-                        background: "#0A0E17",
-                        text: "#FFFFFF"
-                    },
-                    fonts: {
-                        heading: "'Orbitron', sans-serif",
-                        body: "'Exo 2', sans-serif"
-                    },
-                    terminology: {
-                        category1: "Premium",
-                        category2: "Standard",
-                        category3: "Special",
-                        productTerm: "Item",
-                        productPluralTerm: "Items",
-                        packTerm: "Pack",
-                        cartTerm: "Cart",
-                        soldOutLabel: "SOLD OUT",
-                        comingSoonLabel: "COMING SOON"
-                    },
-                    navigation: [],
-                    effects: {
-                        backgroundEffect: { enabled: false },
-                        specialFeature: { enabled: false }
-                    },
-                    advanced: {
-                        enableLocalStorage: true,
-                        checkoutMethod: "email"
-                    },
-                    products: {
-                        defaultPackOptions: []
-                    }
-                };
-                // Show error message
-                const errorMsg = document.createElement('div');
-                errorMsg.style.cssText = 'background:#f44336;color:white;padding:15px;margin:20px;border-radius:5px;';
-                errorMsg.innerHTML = `
-                    <h3>Configuration Error</h3>
-                    <p>The site configuration could not be loaded from either location.</p>
-                    <p>Please ensure config.js exists in the /js/ folder and is properly formatted.</p>
-                `;
-                document.body.insertBefore(errorMsg, document.body.firstChild);
-                initializeSite();
-            };
-            document.head.appendChild(configScript);
-            return false;
-        }
-        return true;
-    }
+	// Function to check if config exists - ONLY RUN if not in preview mode
+	function checkConfig() {
+		if (typeof window.siteConfig === 'undefined') {
+			// Try to load from /js/ folder if not already loaded
+			const configScript = document.createElement('script');
+			// Build path based on current location to support subfolder deployments
+			const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
+			configScript.src = basePath + 'js/config.js';
+			configScript.onload = function() {
+				console.log('Successfully loaded config.js from ' + basePath + 'js/ folder');
+				initializeSite();
+			};
+			configScript.onerror = function() {
+				console.error('Failed to load config.js from ' + basePath + 'js/ folder');
+				// Create fallback config
+				window.siteConfig = {
+					// Default config values (unchanged)
+					site: {
+						name: "Site is Loading...",
+						tagline: "Configuration Issue",
+						logo: "",
+						email: "",
+						copyright: "© " + new Date().getFullYear()
+					},
+					colors: {
+						primary: "#003B6F",
+						secondary: "#00FF9F",
+						tertiary: "#6A0DAD",
+						highlight: "#FFD700", 
+						alert: "#FF5722",
+						background: "#0A0E17",
+						text: "#FFFFFF"
+					},
+					fonts: {
+						heading: "'Orbitron', sans-serif",
+						body: "'Exo 2', sans-serif"
+					},
+					terminology: {
+						category1: "Premium",
+						category2: "Standard",
+						category3: "Special",
+						productTerm: "Item",
+						productPluralTerm: "Items",
+						packTerm: "Pack",
+						cartTerm: "Cart",
+						soldOutLabel: "SOLD OUT",
+						comingSoonLabel: "COMING SOON"
+					},
+					navigation: [],
+					effects: {
+						backgroundEffect: { enabled: false },
+						specialFeature: { enabled: false }
+					},
+					advanced: {
+						enableLocalStorage: true,
+						checkoutMethod: "email"
+					},
+					products: {
+						defaultPackOptions: []
+					}
+				};
+				// Show error message
+				const errorMsg = document.createElement('div');
+				errorMsg.style.cssText = 'background:#f44336;color:white;padding:15px;margin:20px;border-radius:5px;';
+				errorMsg.innerHTML = `
+					<h3>Configuration Error</h3>
+					<p>The site configuration could not be loaded from either location.</p>
+					<p>Please ensure config.js exists in the /js/ folder and is properly formatted.</p>
+				`;
+				document.body.insertBefore(errorMsg, document.body.firstChild);
+				initializeSite();
+			};
+			document.head.appendChild(configScript);
+			return false;
+		}
+		return true;
+	}
     
     // For normal mode, check if config exists and then initialize
     // This will only run if not in preview mode or if preview config failed to load

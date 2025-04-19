@@ -26,7 +26,7 @@
         "text": "#f5f0e6"
     },
     "background": {
-        "image": "",
+        "image": "forge-background.jpg",
         "sectionImage": "dark-forge-texture.jpg"
     },
     "fonts": {

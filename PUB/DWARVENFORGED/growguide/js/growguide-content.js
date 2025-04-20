@@ -5,7 +5,7 @@ const contentData = {
     // Introduction Section
     "intro": `
         <div class="content-header">
-            <img src="https://www.sitepackages.net/PUB/DWARVENFORGED/img/growing-guide.jpg" alt="Dwarven Forged Grow Guide" class="hero-image">
+            <img src="https://www.sitepackages.net/PUB/DWARVENFORGED/growguide/img/growing-guide.jpg" alt="Dwarven Forged Grow Guide" class="hero-image">
             <h1>DWARVEN FORGED MASTER GROW GUIDE</h1>
             <div class="subtitle">DIGITAL EDITION</div>
         </div>
@@ -224,7 +224,7 @@ const contentData = {
         </div>
     `,
 
-    // Step 7 Section
+	// Step 7 Section 
     "step7": `
         <h1>Step 7: Tempering the Steel (Vegetative Growth)</h1>
         
@@ -251,4 +251,301 @@ const contentData = {
         <p>To maximize potential during this phase:</p>
         <ul>
             <li><strong>Beneficial Microbes:</strong> Add mycorrhizae and beneficial bacteria to enhance root development</li>
-            <li
+            <li><strong>Silicon Supplements:</strong> Strengthen cell walls for more resilient plants</li>
+            <li><strong>Regular Inspection:</strong> Monitor for signs of deficiencies, pests, or disease</li>
+        </ul>
+        
+        <div class="tip-box">
+            <h4>Dwarven Wisdom:</h4>
+            <p>The vegetative stage is the time to address any structural issues through training techniques (covered in Step 9). Like a smith who can only shape metal while it's still malleable, you have the greatest influence over your plant's final form during this phase. The time spent in vegetation varies by grower preference and space constraints - from as little as 2 weeks to 2+ months. Longer vegetation generally means larger plants and potentially greater yields, but requires more space and resources.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="showSection('step6')">Previous: The First Shaping</button>
+            <button class="nav-button" onclick="showSection('step8')">Next: Alchemical Nourishment</button>
+        </div>
+    `,
+
+    // Step 8 Section
+    "step8": `
+        <h1>Step 8: Alchemical Nourishment (Nutrients & Water Management)</h1>
+        
+        <p>Just as dwarven smiths use special alchemical mixtures to strengthen and enhance their metals, your plants require precise nutrient formulations to reach their full potential. Mastering nutrient and water management is essential for cultivating premium quality herbs.</p>
+        
+        <h3>Essential Nutrients</h3>
+        <p>Cannabis requires a range of macro and micronutrients:</p>
+        <ul>
+            <li><strong>Primary Macronutrients:</strong> Nitrogen (N), Phosphorus (P), Potassium (K)</li>
+            <li><strong>Secondary Macronutrients:</strong> Calcium (Ca), Magnesium (Mg), Sulfur (S)</li>
+            <li><strong>Micronutrients:</strong> Iron (Fe), Zinc (Zn), Manganese (Mn), Copper (Cu), Boron (B), Molybdenum (Mo)</li>
+        </ul>
+        
+        <h3>Nutrient Solutions</h3>
+        <p>There are two main approaches to feeding:</p>
+        <ul>
+            <li><strong>Synthetic Nutrients:</strong> Concentrated, readily available minerals that provide immediate feeding</li>
+            <li><strong>Organic Nutrients:</strong> Derived from natural sources like compost, worm castings, bone meal, and bat guano, which are processed by soil microbes before becoming available to plants</li>
+        </ul>
+        
+        <h3>Water Management</h3>
+        <p>Proper watering is as important as nutrient balance:</p>
+        <ul>
+            <li>Water only when the top 1-2 inches of growing medium is dry</li>
+            <li>Ensure 10-20% runoff when watering to prevent salt buildup</li>
+            <li>Use pH-adjusted water (6.0-6.5 for soil, 5.5-6.0 for hydro/coco)</li>
+            <li>Consider water temperature (room temperature is ideal)</li>
+        </ul>
+        
+        <h3>Feeding Schedule</h3>
+        <p>Nutrient needs change throughout the growing cycle:</p>
+        <ul>
+            <li><strong>Seedling Stage:</strong> Minimal to no additional nutrients</li>
+            <li><strong>Vegetative Stage:</strong> Higher nitrogen (N), moderate phosphorus (P) and potassium (K)</li>
+            <li><strong>Flowering Stage:</strong> Lower nitrogen, higher phosphorus and potassium</li>
+            <li><strong>Late Flowering:</strong> Reduced overall nutrients, sometimes followed by a flush</li>
+        </ul>
+        
+        <div class="tip-box">
+            <h4>Dwarven Wisdom:</h4>
+            <p>When it comes to nutrients, less is often more. Like the precise amounts of rare metals added to dwarven alloys, cannabis nutrients should be applied with restraint. Begin at half the manufacturer's recommended strength and increase gradually based on plant response. It's far easier to fix under-feeding than over-feeding. Monitor your plants closely - they will tell you what they need through their appearance and growth patterns.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="showSection('step7')">Previous: Tempering the Steel</button>
+            <button class="nav-button" onclick="showSection('step9')">Next: Master's Touch</button>
+        </div>
+    `,
+
+    // Step 9 Section
+    "step9": `
+        <h1>Step 9: Master's Touch (Training & Pruning)</h1>
+        
+        <p>Just as a dwarven smith carefully hammers and shapes metal to create intricate designs, training and pruning your plants allows you to control their growth patterns and maximize yields. These techniques represent the artistry of cultivation, where craft transforms into mastery.</p>
+        
+        <h3>Training Techniques</h3>
+        
+        <h4>Low-Stress Training (LST)</h4>
+        <p>This gentle technique involves carefully bending and securing branches horizontally using soft ties or plant wire. By training branches to grow outward rather than upward, you create a flatter, more even canopy that receives uniform light distribution. LST is perfect for beginners as it minimizes stress while significantly increasing potential bud sites.</p>
+        
+        <h4>Topping</h4>
+        <p>Topping involves cutting off the main growth tip, forcing the plant to develop two new main colas instead of one. This creates a bushier plant with multiple main bud sites rather than a single dominant cola. While more stressful than LST, topping dramatically changes growth structure and increases yield potential.</p>
+        
+        <h4>Super Cropping</h4>
+        <p>This advanced technique involves carefully pinching and slightly crushing the inner tissue of stems to create a controlled injury. The plant responds by strengthening the damaged area, creating a thicker, stronger stem that can support more weight. Additionally, the bent portion allows for a more even canopy and increased light penetration.</p>
+        
+        <h3>Pruning Techniques</h3>
+        
+        <h4>Defoliation</h4>
+        <p>Selective removal of fan leaves to improve light penetration and air circulation to lower bud sites. This technique should be applied conservatively, as leaves are the plant's energy factories. Focus on removing leaves that shade developing bud sites or those that receive minimal light.</p>
+        
+        <h4>Lollipopping</h4>
+        <p>This technique involves removing growth from the lower portions of the plant, focusing energy on the upper canopy where light is strongest. Like a lollipop with its stick, the plant has a bare lower section and full upper section, maximizing efficiency by eliminating bud sites that would produce only small, airy flowers.</p>
+        
+        <div class="tip-box">
+            <h4>Dwarven Wisdom:</h4>
+            <p>Approach training and pruning with patience and restraint. Like a master smith who makes each hammer blow count, make your cuts and bends deliberate and purposeful. Give plants time to recover between significant interventions. The best results come from consistent, minor adjustments rather than dramatic, stressful changes. Always use clean, sharp tools to minimize stress and prevent infection.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="showSection('step8')">Previous: Alchemical Nourishment</button>
+            <button class="nav-button" onclick="showSection('step10')">Next: Crystallizing the Craft</button>
+        </div>
+    `,
+
+    // Step 10 Section
+    "step10": `
+        <h1>Step 10: Crystallizing the Craft (Flowering)</h1>
+        
+        <p>The flowering stage is when your cannabis plants transform from vegetative growth to producing the resinous buds prized by connoisseurs. Like the final heating process where a dwarven smith's metal crystallizes into its ultimate form, flowering is where your plants realize their full genetic potential.</p>
+        
+        <h3>Initiating Flowering</h3>
+        <p>For photoperiod plants, flowering is triggered by changing the light schedule to 12 hours of light and 12 hours of uninterrupted darkness. This mimics the shortening days of late summer/fall, signaling the plant to shift from growth to reproduction.</p>
+        
+        <h3>The Flowering Timeline</h3>
+        <p>The flowering period typically lasts 7-12+ weeks depending on strain genetics:</p>
+        <ul>
+            <li><strong>Weeks 1-3:</strong> The stretch phase - plants may double in height</li>
+            <li><strong>Weeks 3-4:</strong> First flowers appear, pistils form</li>
+            <li><strong>Weeks 4-6:</strong> Buds develop and expand</li>
+            <li><strong>Weeks 6-8:</strong> Buds fatten, trichome production increases</li>
+            <li><strong>Weeks 8+:</strong> Ripening, trichome maturation, pistil darkening</li>
+        </ul>
+        
+        <h3>Environmental Adjustments</h3>
+        <ul>
+            <li><strong>Temperature:</strong> Slightly lower than vegetative stage, 65-80°F during light periods, 5-10°F cooler during dark</li>
+            <li><strong>Humidity:</strong> Gradually decrease from 40-50% early flowering to 30-40% late flowering to prevent mold</li>
+            <li><strong>Airflow:</strong> Critical during this stage to prevent bud rot and powdery mildew</li>
+        </ul>
+        
+        <h3>Nutrient Adjustments</h3>
+        <p>Flowering plants require different nutritional ratios:</p>
+        <ul>
+            <li>Reduce nitrogen (N) to prevent excessive leafy growth</li>
+            <li>Increase phosphorus (P) and potassium (K) to support bud development</li>
+            <li>Consider bloom-specific supplements containing beneficial compounds</li>
+            <li>Some growers perform a final "flush" with plain water in the last 1-2 weeks</li>
+        </ul>
+        
+        <div class="tip-box">
+            <h4>Dwarven Wisdom:</h4>
+            <p>The dark period during flowering must remain completely uninterrupted - even brief light exposure can stress plants and reduce yields. Seal any light leaks in your grow space and avoid entering during the dark cycle. If inspection is necessary, use a green headlamp, as plants are less sensitive to green light spectrum. Support your developing buds with trellises, stakes, or yo-yos to prevent branch breakage as they gain weight.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="showSection('step9')">Previous: Master's Touch</button>
+            <button class="nav-button" onclick="showSection('step11')">Next: Reaping the Rewards</button>
+        </div>
+    `,
+
+    // Step 11 Section
+    "step11": `
+        <h1>Step 11: Reaping the Rewards (Harvesting & Curing)</h1>
+        
+        <p>After months of careful cultivation, the time has come to harvest your craft. Like dwarven smiths admiring their finished masterpieces, harvesting is the culmination of your hard work and dedication. Proper harvesting and curing techniques preserve and enhance the potency, flavor, and quality of your final product.</p>
+        
+        <h3>Determining Harvest Readiness</h3>
+        <p>Harvest timing significantly affects potency and effects. Use these indicators to determine the perfect moment:</p>
+        <ul>
+            <li><strong>Trichome Observation:</strong> Examine with a jeweler's loupe or digital microscope
+                <ul>
+                    <li>Clear trichomes: Not ready, lower potency</li>
+                    <li>Cloudy/milky trichomes: Peak THC, energetic effects</li>
+                    <li>Amber trichomes: More sedative effects, CBD converting to CBN</li>
+                    <li>Ideal mix varies by preference, typically 70-90% cloudy with 10-30% amber</li>
+                </ul>
+            </li>
+            <li><strong>Pistil Coloration:</strong> When 70-90% of pistils have darkened and curled inward</li>
+            <li><strong>Calyx Swelling:</strong> Calyxes should be full and firm</li>
+            <li><strong>Leaf Fading:</strong> Natural reduction in chlorophyll production near harvest</li>
+        </ul>
+        
+        <h3>The Harvesting Process</h3>
+        <ol>
+            <li>Prepare your workspace with clean tools and drying area</li>
+            <li>Stop fertilizing 1-2 weeks before harvest (optional flush with plain water)</li>
+            <li>Harvest in the dark period, just before lights would normally turn on</li>
+            <li>Cut whole plants at the base or remove branches individually</li>
+            <li>Remove large fan leaves (wet trimming) or leave them for protection (dry trimming)</li>
+        </ol>
+        
+        <h3>Drying Techniques</h3>
+        <p>Proper drying preserves terpenes and prevents mold:</p>
+        <ul>
+            <li>Hang plants upside down in a dark room at 60-70°F with 45-55% humidity</li>
+            <li>Ensure good air circulation but avoid direct fan contact</li>
+            <li>Drying should take 7-14 days - too fast loses terpenes, too slow risks mold</li>
+            <li>Branches are ready when stems snap rather than bend</li>
+        </ul>
+        
+        <h3>Curing Process</h3>
+        <p>Curing is where good herbs become exceptional:</p>
+        <ol>
+            <li>Once properly dried, trim remaining leaves if dry trimming</li>
+            <li>Place buds loosely in airtight glass containers</li>
+            <li>"Burp" containers daily for 15 minutes during the first two weeks</li>
+            <li>Reduce to weekly burping for the next 2-4 weeks</li>
+            <li>Store in cool, dark place during curing process</li>
+            <li>Full cure takes 4-8 weeks, but noticeable improvements occur after 2-3 weeks</li>
+        </ol>
+        
+        <div class="tip-box">
+            <h4>Dwarven Wisdom:</h4>
+            <p>Patience during curing is rewarded with superior quality. Like the aging of dwarven spirits, proper curing allows for the breakdown of chlorophyll and the development of complex terpene profiles. Use humidity control packs (62%) in your curing jars to maintain optimal moisture levels. Always label your containers with strain and harvest date for reference. The best craftsmen track their process so they can replicate success and learn from each cultivation cycle.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="showSection('step10')">Previous: Crystallizing the Craft</button>
+            <button class="nav-button" onclick="showSection('step12')">Next: Enjoying Your Craft</button>
+        </div>
+    `,
+
+    // Step 12 Section
+    "step12": `
+        <h1>Step 12: Enjoying Your Craft</h1>
+        
+        <p>The final step in your journey is appreciating and properly storing the fruits of your labor. Like dwarven craftsmen who take pride in their finished artifacts, take time to appreciate what you've created through skill and patience.</p>
+        
+        <h3>Storage Solutions</h3>
+        <p>Proper storage preserves potency, flavor, and aroma:</p>
+        <ul>
+            <li><strong>Glass Containers:</strong> Mason jars or specialized UV-blocking containers</li>
+            <li><strong>Environment:</strong> Cool (60-70°F), dark place away from direct light</li>
+            <li><strong>Humidity Control:</strong> Maintain 58-62% relative humidity using control packs</li>
+            <li><strong>Organization:</strong> Label containers with strain, harvest date, and any notes on effects</li>
+        </ul>
+        
+        <h3>Consumption Methods</h3>
+        <p>There are various ways to enjoy your crafted herbs:</p>
+        <ul>
+            <li><strong>Traditional Smoking:</strong> Hand-rolled, pipes, water pipes</li>
+            <li><strong>Vaporization:</strong> Heating without combustion, preserving terpenes and reducing harmful byproducts</li>
+            <li><strong>Edibles:</strong> Infused foods and beverages for longer-lasting effects</li>
+            <li><strong>Tinctures:</strong> Alcohol or glycerin extracts for precise dosing</li>
+            <li><strong>Topicals:</strong> Creams and balms for localized relief without psychoactive effects</li>
+        </ul>
+        
+        <h3>Responsible Use</h3>
+        <p>Like all powerful crafts, cannabis should be respected and used mindfully:</p>
+        <ul>
+            <li>Start with small amounts, especially with new strains or methods</li>
+            <li>Be aware of your local laws and regulations</li>
+            <li>Store securely away from children and pets</li>
+            <li>Avoid driving or operating heavy machinery under the influence</li>
+            <li>Respect those who choose not to partake</li>
+        </ul>
+        
+        <div class="tip-box">
+            <h4>Dwarven Wisdom:</h4>
+            <p>Take pride in your craft and continue to refine your techniques with each cycle. The master dwarf smiths didn't forge legendary artifacts on their first attempt - they learned, improved, and perfected their craft over many years. Keep detailed grow journals to track what works and what doesn't. Share your knowledge with other respectful cultivators, creating a community of master crafters dedicated to quality and excellence.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="showSection('step11')">Previous: Reaping the Rewards</button>
+            <button class="nav-button" onclick="showSection('legal')">Next: Legal Considerations</button>
+        </div>
+    `,
+
+    // Legal Section
+    "legal": `
+        <h1>Legal Considerations</h1>
+        
+        <p>Before embarking on your cultivation journey, it's essential to understand the legal landscape. Even master dwarven smiths must respect the rules of their mountain kingdoms.</p>
+        
+        <h3>Know Your Local Laws</h3>
+        <p>Cannabis cultivation laws vary widely by location:</p>
+        <ul>
+            <li>Research current laws in your specific region before beginning</li>
+            <li>Be aware that laws can change - stay informed of updates</li>
+            <li>Consider both local and national/federal regulations</li>
+            <li>Some regions require specific licenses or medical documentation</li>
+        </ul>
+        
+        <h3>Common Restrictions</h3>
+        <p>Even in areas where home cultivation is permitted, there are typically restrictions:</p>
+        <ul>
+            <li>Plant count limitations (often 3-12 plants per household)</li>
+            <li>Requirements for secure growing locations not visible to the public</li>
+            <li>Restrictions on selling or distributing without proper licensing</li>
+            <li>Age restrictions (typically 21+ or 18+ for medical users)</li>
+        </ul>
+        
+        <h3>Additional Considerations</h3>
+        <ul>
+            <li><strong>Employment Policies:</strong> Some employers prohibit cannabis use regardless of legality</li>
+            <li><strong>Rental Agreements:</strong> Landlords may restrict cultivation on their property</li>
+            <li><strong>HOA Regulations:</strong> Some housing associations have additional restrictions</li>
+            <li><strong>Travel Restrictions:</strong> Never transport cannabis across state or international borders</li>
+        </ul>
+        
+        <div class="tip-box">
+            <h4>Dwarven Wisdom:</h4>
+            <p>Respect for law is the mark of a true craftsman. Always cultivate responsibly and within the boundaries of your local regulations. Remember that this guide provides educational information only and is not legal advice. Consult with a legal professional for guidance specific to your situation.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="showSection('step12')">Previous: Enjoying Your Craft</button>
+            <button class="nav-button" onclick="showSection('intro')">Back to Introduction</button>
+        </div>
+    `
+};

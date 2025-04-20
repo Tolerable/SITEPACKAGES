@@ -450,7 +450,7 @@
                 "type": "Anvil Series",
                 "status": "available",
                 "delivery": "digital",
-                "digitalContent": "https://www.sitepackages.net/PUB/DWARVENFORGED/dwarvenforgedgrowguide.html",
+                "digitalContent": "https://www.sitepackages.net/PUB/DWARVENFORGED/growguide/dwarvenforgedgrowguide.html",
                 "image": "growing-guide.jpg",
                 "additionalImages": [],
                 "description": "Our complete growing guide with tips and tricks from the Dwarven master growers. Learn how to maximize yields and potency with our step-by-step instructions.",

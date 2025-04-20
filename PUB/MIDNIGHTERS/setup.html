@@ -3844,13 +3844,19 @@ document.createElement = function(tagName) {
 			window.generateConfig = function() {
 				const config = originalGenerateConfig();
 				
-				// Add strain tree config
+				// Add strain tree config - FIXED boolean conversion
+				const strainTreeEnabled = document.getElementById('enable-strain-tree').value;
+				
 				config.strainTree = {
-					enabled: document.getElementById('enable-strain-tree').value === 'true',
+					enabled: strainTreeEnabled === 'true', // This will properly convert string 'false' to boolean false
 					title: document.getElementById('strain-tree-title').value,
 					description: document.getElementById('strain-tree-description').value,
 					dataPath: document.getElementById('strain-data-path').value || 'data/straindata.json'
 				};
+				
+				// Log the actual value being set to help with debugging
+				console.log('Setting strainTree.enabled to:', strainTreeEnabled === 'true', 
+							'from dropdown value:', strainTreeEnabled);
 				
 				return config;
 			};

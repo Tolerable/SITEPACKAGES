@@ -1,7 +1,7 @@
 // Seed Collective - Configuration File
-// Edit this file to customize your site
+				// Edit this file to customize your site
 
-window.siteConfig = {
+				window.siteConfig = {
     "site": {
         "name": "DwarvenForged",
         "tagline": "Cannabis Seeds Forged With Dwarven Precision",
@@ -60,7 +60,7 @@ window.siteConfig = {
     "strainTree": {
         "enabled": true,
         "title": "Strain Genetics Explorer",
-        "description": "Explore the genetic relationships between our carefully bred strains with our interactive family tree visualization.",
+        "description": "Explore the genetic relationships between our strains.",
         "dataPath": "data/straindata.json"
     },
     "about": {
@@ -167,7 +167,7 @@ window.siteConfig = {
                 "id": "thors-hammer",
                 "name": "Thor's Hammer",
                 "type": "Anvil Series",
-                "status": "coming-soon",
+                "status": "available",
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/thors-hammer.jpg",
@@ -199,8 +199,8 @@ window.siteConfig = {
             "runefire-haze": {
                 "id": "runefire-haze",
                 "name": "Runefire Haze",
-                "type": "Forge Collection",
-                "status": "coming-soon",
+                "type": "Anvil Series",
+                "status": "available",
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/runefire-haze.jpg",
@@ -223,7 +223,7 @@ window.siteConfig = {
                 "id": "mountain-forge",
                 "name": "Mountain Forge",
                 "type": "Anvil Series",
-                "status": "sold-out",
+                "status": "available",
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/mountain-forge.jpg",
@@ -245,8 +245,8 @@ window.siteConfig = {
             "ancient-relic": {
                 "id": "ancient-relic",
                 "name": "Ancient Relic",
-                "type": "Heirloom Treasures",
-                "status": "sold-out",
+                "type": "Anvil Series",
+                "status": "available",
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/ancient-relic.jpg",
@@ -269,7 +269,7 @@ window.siteConfig = {
                 "id": "allfather-kush",
                 "name": "Allfather Kush",
                 "type": "Anvil Series",
-                "status": "coming-soon",
+                "status": "available",
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/allfather-kush.jpg",
@@ -380,8 +380,8 @@ window.siteConfig = {
             "mithril-mint": {
                 "id": "mithril-mint",
                 "name": "Mithril Mint",
-                "type": "Forge Collection",
-                "status": "coming-soon",
+                "type": "Anvil Series",
+                "status": "available",
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/mithril-mint.jpg",
@@ -403,8 +403,8 @@ window.siteConfig = {
             "dragon-breath": {
                 "id": "dragon-breath",
                 "name": "Dragon Breath",
-                "type": "Forge Collection",
-                "status": "limited",
+                "type": "Anvil Series",
+                "status": "available",
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/dragon-breath.jpg",
@@ -481,7 +481,7 @@ window.siteConfig = {
             "url": "#seed-catalog"
         },
         {
-            "name": "Genetics Explorer", 
+            "name": "Genetics Explorer",
             "url": "#genetics-explorer"
         },
         {
@@ -496,12 +496,11 @@ window.siteConfig = {
         },
         {
             "name": "BuildASoil",
-            "url": "https://buildasoil.com",
-            "discountCode": "BROKKR10"
+            "url": "https://buildasoil.com/"
         },
         {
             "name": "GrowDiaries",
-            "url": "https://growdiaries.com"
+            "url": "https://growdiaries.com/"
         }
     ],
     "advanced": {
@@ -510,6 +509,6 @@ window.siteConfig = {
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "orders@dwarvenforged.com"
+        "orderEmail": "orders@example.com"
     }
 };

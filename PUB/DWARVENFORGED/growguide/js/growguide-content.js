@@ -443,7 +443,7 @@ const contentData = {
         <ol>
             <li>Once properly dried, trim remaining leaves if dry trimming</li>
             <li>Place buds loosely in airtight glass containers</li>
-            <li>"Burp" containers daily for 15 minutes during the first two weeks</li>
+            <li>"Burp" containers briefly each day during the first two weeks</li>
             <li>Reduce to weekly burping for the next 2-4 weeks</li>
             <li>Store in cool, dark place during curing process</li>
             <li>Full cure takes 4-8 weeks, with noticeable improvements after 2-3 weeks</li>

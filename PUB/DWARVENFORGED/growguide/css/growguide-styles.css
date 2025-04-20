@@ -259,4 +259,14 @@ footer {
     .content-header {
         margin-top: 50px;
     }
+
+    .hero-image {
+        max-width: 90%;
+    }	
+}
+
+@media (max-width: 650px) {
+    .hero-image {
+        max-width: 90%;
+    }
 }

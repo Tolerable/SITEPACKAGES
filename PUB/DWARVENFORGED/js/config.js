@@ -449,7 +449,7 @@
                 "name": "Dwarven Growing Guide",
                 "type": "Anvil Series",
                 "status": "available",
-                "delivery": "physical",
+                "delivery": "digital",
                 "digitalContent": "https://www.sitepackages.net/PUB/DWARVENFORGED/dwarvenforgedgrowguide.html",
                 "image": "growing-guide.jpg",
                 "additionalImages": [],

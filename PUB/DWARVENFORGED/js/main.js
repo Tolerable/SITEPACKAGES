@@ -417,16 +417,7 @@ function formatTextWithParagraphs(text) {
         .join('');
 }
 
-function initializeSite() {
-	if (window.location.pathname.includes('setup.html')) {
-		// Clear saved images when loading a new configuration setup
-		if (!localStorage.getItem('configInit') || 
-			localStorage.getItem('configInit') !== window.location.pathname) {
-			localStorage.removeItem('savedImages');
-			localStorage.setItem('configInit', window.location.pathname);
-		}
-	}	
-		
+function initializeSite() {		
     // Check if siteConfig exists
     if (!window.siteConfig) {
         console.error('Error: siteConfig is not defined');

@@ -1060,11 +1060,24 @@ function applyCustomStyles() {
 }
 
 function initializeStrainTree() {
-	console.log("Initializing strain tree...");
-    // Check if strain tree is enabled in config
-	if (!window.siteConfig?.strainTree?.enabled || window.siteConfig?.strainTree?.enabled === false) {
-		return;
-	}
+    console.log("Initializing strain tree...");
+    
+    // Get strainTree config and explicitly log its value to debug
+    const strainTreeEnabled = window.siteConfig?.strainTree?.enabled;
+    console.log("Strain tree enabled value:", strainTreeEnabled, "type:", typeof strainTreeEnabled);
+    
+    // Check if strain tree is enabled in config - FIXED to work with all value types
+    // This will handle both boolean false and string "false"
+    if (strainTreeEnabled === false || strainTreeEnabled === "false" || !strainTreeEnabled) {
+        console.log("Strain tree is disabled, not displaying");
+        
+        // Hide the strain tree section
+        const treeSection = document.getElementById('strain-tree-section');
+        if (treeSection) {
+            treeSection.style.display = 'none';
+        }
+        return;
+    }
     
     // Get the strain tree section
     const treeSection = document.getElementById('strain-tree-section');

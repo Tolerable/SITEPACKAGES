@@ -2856,7 +2856,6 @@ document.createElement = function(tagName) {
 					document.querySelectorAll('.nav-item').forEach(item => {
 						const inputs = item.querySelectorAll('input');
 						if (inputs[0].value && inputs[1].value) {
-							// Just use the URL as is - no automatic modifications
 							let navUrl = inputs[1].value;
 							
 							navItems.push({
@@ -2866,12 +2865,11 @@ document.createElement = function(tagName) {
 						}
 					});
 					
-					// Get friend links - same approach
+					// Get friend links
 					const friendLinks = [];
 					document.querySelectorAll('#friend-links .form-group').forEach(item => {
 						const inputs = item.querySelectorAll('input');
 						if (inputs[0].value && inputs[1].value) {
-							// Just use the URL as is - no automatic modifications
 							let friendUrl = inputs[1].value;
 							
 							friendLinks.push({
@@ -2887,11 +2885,14 @@ document.createElement = function(tagName) {
 					// Get about section data
 					const aboutData = getAboutSectionConfig();
 					
+					// THIS IS THE FIX - Get strainTree value properly from the form
+					const strainTreeEnabled = document.getElementById('enable-strain-tree').value;
+					
 					return {
 						site: {
 							name: document.getElementById('site-name').value,
 							tagline: document.getElementById('site-tagline').value,
-							logo: document.getElementById('site-logo').value,							
+							logo: document.getElementById('site-logo').value,                            
 							heroBackground: document.getElementById('hero-background').value,
 							showHeroText: document.getElementById('show-hero-text').value === 'true',
 							email: document.getElementById('site-email').value,
@@ -2942,8 +2943,14 @@ document.createElement = function(tagName) {
 								image: document.getElementById('floating-object-image').value,
 								behavior: document.getElementById('special-feature-behavior').value
 							}
-						},											
-						about: aboutData, // Add the about section data
+						},                        
+						strainTree: {
+							enabled: document.getElementById('enable-strain-tree').value === 'true',
+							title: document.getElementById('strain-tree-title').value,
+							description: document.getElementById('strain-tree-description').value,
+							dataPath: document.getElementById('strain-data-path').value || 'data/straindata.json'
+						},                  
+						about: aboutData,
 						products: {
 							defaultStatus: 'available',
 							enableRatings: true,
@@ -2956,7 +2963,7 @@ document.createElement = function(tagName) {
 							items: savedProducts
 						},
 						navigation: navItems,
-						friendLinks: friendLinks,  // Add friend links to the config
+						friendLinks: friendLinks,
 						advanced: {
 							enableShop: document.getElementById('enable-shop').value === 'true',
 							enableLocalStorage: document.getElementById('enable-local-storage').value === 'true',

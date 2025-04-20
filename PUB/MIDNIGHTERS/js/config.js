@@ -5,16 +5,16 @@
     "site": {
         "name": "Midnighters Seed Bank",
         "tagline": "Testing Premium Genetics from Around the World",
-        "logo": "img/logo.jpg",
-        "heroBackground": "",
+        "logo": "img/logo.png",
+        "heroBackground": "hero-bg.jpg",
         "showHeroText": true,
-        "email": "contact@example.com",
+        "email": "midnighters@sitepackages.net",
         "socialLinks": {
-            "discord": "https://discord.gg/yourcollective",
-            "youtube": "https://youtube.com/@yourchannel",
-            "tiktok": "https://tiktok.com/@yourhandle"
+            "discord": "https://discord.gg/8vK42qAGBP",
+            "youtube": "",
+            "tiktok": ""
         },
-        "copyright": "© 2025 Seed Collective. All rights reserved."
+        "copyright": "© 2025 Midnighters Seed Bank. All rights reserved."
     },
     "colors": {
         "primary": "#003b6f",
@@ -26,8 +26,8 @@
         "text": "#ffffff"
     },
     "background": {
-        "image": "",
-        "sectionImage": ""
+        "image": "hero-background.jpg",
+        "sectionImage": "metal-texure.jpg"
     },
     "fonts": {
         "heading": "'Orbitron', sans-serif",
@@ -51,7 +51,7 @@
             "intensity": "medium"
         },
         "specialFeature": {
-            "enabled": true,
+            "enabled": false,
             "type": "floatingObject",
             "image": "img/floating-object.png",
             "behavior": "teleport"
@@ -93,11 +93,29 @@
                 "salePrice": 80
             }
         ],
-        "items": {}
+        "items": {
+            "product-00001": {
+                "id": "product-00001",
+                "name": "FREE GOOGLE SEARCH",
+                "type": "Premium Collection",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "https://www.google.com/",
+                "image": "digital1.jpg",
+                "additionalImages": [],
+                "description": "A Digital Product, FREE for you.",
+                "variety": "Premium Collection",
+                "rating": "4.5/5",
+                "origin": "INTERNET",
+                "details": "No Charge, Use it freely!",
+                "notes": "Share it with friends!",
+                "packOptions": []
+            }
+        }
     },
     "navigation": [
         {
-            "name": "Premium Collections",
+            "name": "Collections",
             "url": "#products"
         },
         {
@@ -116,11 +134,11 @@
         }
     ],
     "advanced": {
-        "enableShop": true,
+        "enableShop": false,
         "enableLocalStorage": true,
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "orders@example.com"
+        "orderEmail": "midnighters@sitepackages.net"
     }
 };

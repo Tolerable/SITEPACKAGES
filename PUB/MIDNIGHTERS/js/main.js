@@ -1062,7 +1062,7 @@ function applyCustomStyles() {
 function initializeStrainTree() {
 	console.log("Initializing strain tree...");
     // Check if strain tree is enabled in config
-	if (!window.siteConfig?.strainTree?.enabled || window.siteConfig?.strainTree?.enabled === "false") {
+	if (!window.siteConfig?.strainTree?.enabled || window.siteConfig?.strainTree?.enabled === false) {
 		return;
 	}
     

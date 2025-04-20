@@ -26,8 +26,8 @@
         "text": "#ffffff"
     },
     "background": {
-        "image": "hero-background.jpg",
-        "sectionImage": "metal-texure.jpg"
+        "image": "",
+        "sectionImage": ""
     },
     "fonts": {
         "heading": "'Orbitron', sans-serif",
@@ -59,7 +59,7 @@
     },
     "strainTree": {
         "enabled": false,
-        "title": "Strain Genetics Explorer",
+        "title": "Genetics Explorer",
         "description": "Explore the genetic relationships between our strains.",
         "dataPath": "data/straindata.json"
     },
@@ -134,11 +134,11 @@
         }
     ],
     "advanced": {
-        "enableShop": false,
+        "enableShop": true,
         "enableLocalStorage": true,
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "midnighters@sitepackages.net"
+        "orderEmail": "orders@example.com"
     }
 };

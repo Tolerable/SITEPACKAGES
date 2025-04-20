@@ -3,8 +3,8 @@
 
 				window.siteConfig = {
     "site": {
-        "name": "Seed Collective",
-        "tagline": "Unique Collectibles from Around the World",
+        "name": "Midnighters Seed Bank",
+        "tagline": "Testing Premium Genetics from Around the World",
         "logo": "img/logo.jpg",
         "heroBackground": "",
         "showHeroText": true,

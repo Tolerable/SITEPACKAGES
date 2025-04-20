@@ -91,10 +91,9 @@ body {
 }
 
 .hero-image {
-    width: 800px;
-    max-width: 100%;
-    object-fit: contain;
-    height: 835px;
+    max-width: 720px; /* Reduced from 800px to make it smaller */
+    width: 100%;      /* Will scale down on smaller screens */
+    height: auto;     /* Auto height to maintain aspect ratio */
     display: block;
     margin: 0 auto 20px;
     border-radius: 5px;

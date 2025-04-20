@@ -1,7 +1,7 @@
 // Seed Collective - Configuration File
-				// Edit this file to customize your site
+// Edit this file to customize your site
 
-				window.siteConfig = {
+window.siteConfig = {
     "site": {
         "name": "DwarvenForged",
         "tagline": "Cannabis Seeds Forged With Dwarven Precision",
@@ -36,7 +36,7 @@
     "terminology": {
         "category1": "Anvil Series",
         "category2": "Forge Collection",
-        "category3": "Hybrid Collection",
+        "category3": "Heirloom Treasures",
         "productTerm": "Strain",
         "productPluralTerm": "Strains",
         "packTerm": "Seed Pack",
@@ -60,7 +60,7 @@
     "strainTree": {
         "enabled": true,
         "title": "Strain Genetics Explorer",
-        "description": "Explore the genetic relationships between our strains.",
+        "description": "Explore the genetic relationships between our carefully bred strains with our interactive family tree visualization.",
         "dataPath": "data/straindata.json"
     },
     "about": {
@@ -199,7 +199,7 @@
             "runefire-haze": {
                 "id": "runefire-haze",
                 "name": "Runefire Haze",
-                "type": "Anvil Series",
+                "type": "Forge Collection",
                 "status": "coming-soon",
                 "delivery": "physical",
                 "digitalContent": "",
@@ -245,7 +245,7 @@
             "ancient-relic": {
                 "id": "ancient-relic",
                 "name": "Ancient Relic",
-                "type": "Anvil Series",
+                "type": "Heirloom Treasures",
                 "status": "sold-out",
                 "delivery": "physical",
                 "digitalContent": "",
@@ -293,10 +293,163 @@
                     }
                 ]
             },
+            "mythic-sunrise": {
+                "id": "mythic-sunrise",
+                "name": "Mythic Sunrise",
+                "type": "Forge Collection",
+                "status": "available",
+                "delivery": "physical",
+                "digitalContent": "",
+                "image": "strains/mythic-sunrise.jpg",
+                "additionalImages": [],
+                "description": "Greet the day with this energizing sativa-dominant strain that brings clarity and creativity. The perfect morning companion with uplifting effects and citrus notes.",
+                "variety": "Photoperiod",
+                "rating": "21-23% THC",
+                "origin": "Jack Herer × Tangie",
+                "details": "Flowering Time: 9-10 weeks\nStretch: High\nYield: Medium\nHeight: Tall\nTHC: 21-23%\nCBD: 0.1%\nEffects: Energetic, Creative, Uplifting, Focused\nFlavors: Citrus, Sweet, Pine",
+                "notes": "Perfect for daytime use and creative pursuits. Grows tall, so training is recommended for indoor cultivation.",
+                "packOptions": [
+                    {
+                        "size": "6 Pack",
+                        "regularPrice": 65,
+                        "salePrice": 60
+                    },
+                    {
+                        "size": "10 Pack",
+                        "regularPrice": 95,
+                        "salePrice": 85
+                    }
+                ]
+            },
+            "lokis-trick": {
+                "id": "lokis-trick",
+                "name": "Loki's Trick",
+                "type": "Forge Collection",
+                "status": "available",
+                "delivery": "physical",
+                "digitalContent": "",
+                "image": "strains/lokis-trick.jpg",
+                "additionalImages": [],
+                "description": "As unpredictable as the trickster god himself, this hybrid strain offers a balanced high that shifts between euphoria and relaxation. Expect surprising flavor notes and color expressions.",
+                "variety": "Photoperiod",
+                "rating": "23-25% THC",
+                "origin": "Gelato × Northern Lights",
+                "details": "Flowering Time: 8-9 weeks\nStretch: Medium\nYield: Medium-High\nHeight: Medium\nTHC: 23-25%\nCBD: 0.2%\nEffects: Balanced, Euphoric, Creative, Relaxing\nFlavors: Sweet, Berry, Cream",
+                "notes": "Known for its bag appeal and colorful buds. A crowd-pleaser with well-balanced effects.",
+                "packOptions": [
+                    {
+                        "size": "6 Pack",
+                        "regularPrice": 70,
+                        "salePrice": 65
+                    },
+                    {
+                        "size": "10 Pack",
+                        "regularPrice": 100,
+                        "salePrice": 90
+                    }
+                ]
+            },
+            "golem-og": {
+                "id": "golem-og",
+                "name": "Golem OG",
+                "type": "Anvil Series",
+                "status": "available",
+                "delivery": "physical",
+                "digitalContent": "",
+                "image": "strains/golem-og.jpg",
+                "additionalImages": [],
+                "description": "A massive producer with the strength of a stone giant. This indica-dominant strain delivers heavy yields of potent, resinous buds with classic OG flavors.",
+                "variety": "Photoperiod",
+                "rating": "25-28% THC",
+                "origin": "OG Kush × GMO",
+                "details": "Flowering Time: 9-10 weeks\nStretch: Medium\nYield: Very High\nHeight: Medium-Tall\nTHC: 25-28%\nCBD: 0.1%\nEffects: Relaxing, Sedative, Euphoric, Pain Relief\nFlavors: Fuel, Earth, Garlic, Citrus",
+                "notes": "Our highest yielding strain, perfect for commercial growers. Strong structure that can support massive buds.",
+                "packOptions": [
+                    {
+                        "size": "6 Pack",
+                        "regularPrice": 80,
+                        "salePrice": 70
+                    },
+                    {
+                        "size": "10 Pack",
+                        "regularPrice": 120,
+                        "salePrice": 100
+                    }
+                ]
+            },
+            "mithril-mint": {
+                "id": "mithril-mint",
+                "name": "Mithril Mint",
+                "type": "Forge Collection",
+                "status": "coming-soon",
+                "delivery": "physical",
+                "digitalContent": "",
+                "image": "strains/mithril-mint.jpg",
+                "additionalImages": [],
+                "description": "As rare and valuable as mithril itself, this hybrid strain features a unique minty terpene profile with refreshing effects and moderate potency.",
+                "variety": "Photoperiod",
+                "rating": "18-20% THC",
+                "origin": "Thin Mint GSC × White Widow",
+                "details": "Flowering Time: 9 weeks\nStretch: Medium\nYield: Medium\nHeight: Medium\nTHC: 18-20%\nCBD: 0.3%\nEffects: Balanced, Clear-headed, Refreshing\nFlavors: Mint, Chocolate, Cream",
+                "notes": "A unique terpene profile unlike any other strain in our catalog. Limited release coming soon.",
+                "packOptions": [
+                    {
+                        "size": "6 Pack",
+                        "regularPrice": 75,
+                        "salePrice": 65
+                    }
+                ]
+            },
+            "dragon-breath": {
+                "id": "dragon-breath",
+                "name": "Dragon Breath",
+                "type": "Forge Collection",
+                "status": "limited",
+                "delivery": "physical",
+                "digitalContent": "",
+                "image": "strains/dragon-breath.jpg",
+                "additionalImages": [],
+                "description": "As fierce as dragonfire, this potent strain ignites the senses with spicy terps and intense effects. Not for the faint of heart.",
+                "variety": "Photoperiod",
+                "rating": "27-30% THC",
+                "origin": "Fire OG × Red Dragon",
+                "details": "Flowering Time: 10 weeks\nStretch: High\nYield: Medium-High\nHeight: Tall\nTHC: 27-30%\nCBD: 0.1%\nEffects: Intense, Euphoric, Cerebral, Long-lasting\nFlavors: Spicy, Pepper, Fuel",
+                "notes": "Our highest THC strain. Limited quantities available. Experienced users only.",
+                "packOptions": [
+                    {
+                        "size": "5 Pack",
+                        "regularPrice": 85,
+                        "salePrice": 75
+                    }
+                ]
+            },
+            "dwarven-gold": {
+                "id": "dwarven-gold",
+                "name": "Dwarven Gold",
+                "type": "Heirloom Treasures",
+                "status": "available",
+                "delivery": "physical",
+                "digitalContent": "",
+                "image": "strains/dwarven-gold.jpg",
+                "additionalImages": [],
+                "description": "A treasure from our genetic vaults, Dwarven Gold produces buds with a golden hue and balanced effects. The product of generations of selective breeding.",
+                "variety": "Photoperiod",
+                "rating": "19-21% THC",
+                "origin": "Acapulco Gold × Skunk #1",
+                "details": "Flowering Time: 9-10 weeks\nStretch: Medium\nYield: Medium-High\nHeight: Medium\nTHC: 19-21%\nCBD: 0.2%\nEffects: Balanced, Uplifting, Relaxing\nFlavors: Sweet, Tropical, Skunk",
+                "notes": "A classic strain with modern refinements. Regular seeds perfect for breeding projects.",
+                "packOptions": [
+                    {
+                        "size": "10 Pack",
+                        "regularPrice": 90,
+                        "salePrice": 80
+                    }
+                ]
+            },
             "growing-guide": {
                 "id": "growing-guide",
                 "name": "Dwarven Growing Guide",
-                "type": "Anvil Series",
+                "type": "Digital",
                 "status": "coming-soon",
                 "delivery": "digital",
                 "digitalContent": "https://www.dwarvenforged.com/downloads/growing-guide.pdf",
@@ -308,7 +461,13 @@
                 "origin": "DwarvenForged Research",
                 "details": "Many pages of growing information including:\n- Nutrient schedules\n- Lighting tips\n- Environmental control\n- Strain-specific advice\n- Troubleshooting common issues",
                 "notes": "Digital product - instant access after purchase. Perfect companion for our genetics.",
-                "packOptions": []
+                "packOptions": [
+                    {
+                        "size": "Single Guide",
+                        "regularPrice": 25,
+                        "salePrice": 20
+                    }
+                ]
             }
         }
     },
@@ -322,6 +481,10 @@
             "url": "#seed-catalog"
         },
         {
+            "name": "Genetics Explorer", 
+            "url": "#genetics-explorer"
+        },
+        {
             "name": "Our Forge",
             "url": "#about"
         }
@@ -333,7 +496,8 @@
         },
         {
             "name": "BuildASoil",
-            "url": "https://buildasoil.com"
+            "url": "https://buildasoil.com",
+            "discountCode": "BROKKR10"
         },
         {
             "name": "GrowDiaries",
@@ -346,6 +510,6 @@
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "orders@example.com"
+        "orderEmail": "orders@dwarvenforged.com"
     }
 };

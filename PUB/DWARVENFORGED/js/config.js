@@ -447,17 +447,17 @@
             "growing-guide": {
                 "id": "growing-guide",
                 "name": "Dwarven Growing Guide",
-                "type": "Digital",
-                "status": "coming-soon",
-                "delivery": "digital",
-                "digitalContent": "https://www.dwarvenforged.com/downloads/growing-guide.pdf",
+                "type": "Anvil Series",
+                "status": "available",
+                "delivery": "physical",
+                "digitalContent": "https://www.sitepackages.net/PUB/DWARVENFORGED/dwarvenforgedgrowguide.html",
                 "image": "growing-guide.jpg",
                 "additionalImages": [],
                 "description": "Our complete growing guide with tips and tricks from the Dwarven master growers. Learn how to maximize yields and potency with our step-by-step instructions.",
                 "variety": "Comprehensive Guide",
                 "rating": "5/5",
                 "origin": "DwarvenForged Research",
-                "details": "Many pages of growing information including:\n- Nutrient schedules\n- Lighting tips\n- Environmental control\n- Strain-specific advice\n- Troubleshooting common issues",
+                "details": "Many pages of growing information including:\n- Nutrient schedules\n- Lighting tips\n- Environmental control\n- Troubleshooting common issues",
                 "notes": "Digital product - instant access after purchase. Perfect companion for our genetics.",
                 "packOptions": [
                     {

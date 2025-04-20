@@ -1,6 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+// Generate a unique session ID when the page loads
+const sessionId = Date.now().toString() + Math.random().toString(36).substring(2, 8);
+localStorage.setItem('configSessionId', sessionId);
+
+// Create a meta tag to prevent caching
+const metaTag = document.createElement('meta');
+metaTag.httpEquiv = 'Cache-Control';
+metaTag.content = 'no-cache, no-store, must-revalidate';
+document.head.appendChild(metaTag);
+
+// Add a unique parameter to all image requests to bypass cache
+const originalFetch = window.fetch;
+window.fetch = function(url, options) {
+  // Only modify image URLs
+  if (typeof url === 'string' && 
+      (url.endsWith('.jpg') || url.endsWith('.png') || url.endsWith('.jpeg') || url.endsWith('.ico') || 
+       url.match(/\/img\//) || url.match(/\/strains\//) || url.includes('pollinations'))) {
+    // Add a cache-busting parameter
+    const separator = url.includes('?') ? '&' : '?';
+    url = `${url}${separator}_cb=${sessionId}`;
+  }
+  return originalFetch.call(this, url, options);
+};
+
+// Do the same for image tags when they're created
+const originalCreateElement = document.createElement;
+document.createElement = function(tagName) {
+  const element = originalCreateElement.call(document, tagName);
+  if (tagName.toLowerCase() === 'img') {
+    // Override the src property
+    const originalSrcDescriptor = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+    Object.defineProperty(element, 'src', {
+      get: function() {
+        return originalSrcDescriptor.get.call(this);
+      },
+      set: function(value) {
+        if (typeof value === 'string') {
+          // Add cache-busting parameter to image URLs
+          const separator = value.includes('?') ? '&' : '?';
+          value = `${value}${separator}_cb=${sessionId}`;
+        }
+        return originalSrcDescriptor.set.call(this, value);
+      },
+      configurable: true
+    });
+  }
+  return element;
+};
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site Configuration Tool</title>
@@ -3804,6 +3854,45 @@
 				
 				return config;
 			};
+		</script>
+		<script>
+		// Add cache-busting parameter to all existing images on the page
+		document.addEventListener('DOMContentLoaded', function() {
+		  const sessionId = localStorage.getItem('configSessionId');
+		  if (!sessionId) return;
+		  
+		  // Process all images
+		  const images = document.querySelectorAll('img');
+		  images.forEach(img => {
+			if (img.src) {
+			  const url = new URL(img.src);
+			  url.searchParams.set('_cb', sessionId);
+			  img.src = url.toString();
+			}
+		  });
+		  
+		  // Process background images in style attributes
+		  const elementsWithBackgroundImage = document.querySelectorAll('[style*="background-image"]');
+		  elementsWithBackgroundImage.forEach(el => {
+			const style = el.getAttribute('style');
+			if (style && style.includes('url(')) {
+			  // Extract URL from background-image style
+			  const urlMatch = style.match(/url\(['"]?([^'")]+)['"]?\)/);
+			  if (urlMatch && urlMatch[1]) {
+				let imageUrl = urlMatch[1];
+				const separator = imageUrl.includes('?') ? '&' : '?';
+				const newUrl = `${imageUrl}${separator}_cb=${sessionId}`;
+				// Replace the URL in the style attribute
+				const newStyle = style.replace(imageUrl, newUrl);
+				el.setAttribute('style', newStyle);
+			  }
+			}
+		  });
+		  
+		  // Clear any existing image cache in localStorage
+		  // We need to do this to ensure our images and image library are in sync
+		  localStorage.removeItem('savedImages');
+		});
 		</script>		
     </body>
     </html>

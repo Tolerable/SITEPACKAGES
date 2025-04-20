@@ -57,6 +57,12 @@
             "behavior": "float"
         }
     },
+    "strainTree": {
+        "enabled": true,
+        "title": "Strain Genetics Explorer",
+        "description": "Explore the genetic relationships between our strains.",
+        "dataPath": "data/straindata.json"
+    },
     "about": {
         "title": "The Brokkr Story",
         "subtitle": "Premium Genetics Forged with Dwarven Precision",

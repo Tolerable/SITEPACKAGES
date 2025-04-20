@@ -1275,6 +1275,18 @@
                 });
             });
 
+			// Add tab switching event listener
+			document.querySelectorAll('.config-tab').forEach(tab => {
+				tab.addEventListener('click', function() {
+					// Check if this is the Images tab
+					if (this.getAttribute('data-tab') === 'images') {
+						// Reload the saved images with our modified function
+						// This will check if we're in a different config and clear if needed
+						loadSavedImages();
+					}
+				});
+			});
+
 			// Show/hide Digital Content URL based on delivery type
 			document.getElementById('product-delivery').addEventListener('change', function() {
 				const digitalContentGroup = document.getElementById('digital-content-group');
@@ -2455,6 +2467,11 @@
 					filename = `product${productNum}.jpg`;
 				}
 				
+				// Update the config ID whenever we save a new image
+				const configPath = window.location.pathname;
+				const currentConfigId = configPath.split('/').slice(0, -1).join('/');
+				localStorage.setItem('configImageId', currentConfigId);
+				
 				if (existingItem) {
 					// Update the existing item in the DOM
 					existingItem.querySelector('img').src = imageUrl;
@@ -2511,6 +2528,26 @@
 			}
 
 			function loadSavedImages() {
+				// First, we'll set a unique identifier for this configuration
+				// We'll use the path to uniquely identify different configurations
+				const configPath = window.location.pathname;
+				const currentConfigId = configPath.split('/').slice(0, -1).join('/');
+				
+				// Get the saved config ID
+				const savedConfigId = localStorage.getItem('configImageId');
+				
+				// If the config IDs don't match, clear the saved images
+				if (savedConfigId && savedConfigId !== currentConfigId) {
+					console.log("Detected different configuration path. Clearing saved images.");
+					localStorage.removeItem('savedImages');
+					// Update the config ID
+					localStorage.setItem('configImageId', currentConfigId);
+				} else if (!savedConfigId) {
+					// First time loading, set the config ID
+					localStorage.setItem('configImageId', currentConfigId);
+				}
+				
+				// Now load any saved images (which will be empty if we just cleared them)
 				const savedImages = JSON.parse(localStorage.getItem('savedImages') || '[]');
 				const libraryGrid = document.getElementById('image-library-grid');
 				
@@ -3518,6 +3555,8 @@
 						document.getElementById('cancel-product-btn').addEventListener('click', function() {
 							document.getElementById('product-editor-modal').style.display = 'none';
 						});
+
+						loadSavedImages();
 
 						// Initialize product management
 						initializeProductManagement();

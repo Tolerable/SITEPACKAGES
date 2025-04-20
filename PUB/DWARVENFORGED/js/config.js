@@ -136,9 +136,7 @@
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/dwarf-hammer.jpg",
-                "additionalImages": [
-                    "strains/dwarf-hammer-detail1.jpg"
-                ],
+                "additionalImages": [],
                 "description": "Our flagship strain, Dwarf Hammer hits with the force of a dwarven smithing hammer. This indica-dominant powerhouse produces dense, resin-covered nuggets with a knockout effect.",
                 "variety": "Autoflower",
                 "rating": "24-26% THC",

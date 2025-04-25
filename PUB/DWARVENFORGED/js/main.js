@@ -605,11 +605,14 @@ function applySiteConfig() {
        mainNav.appendChild(cartLi);
    }
    
-   // Set contact links
+   // CHANGED: Obfuscate email in contact links
    const contactLinks = document.getElementById('contact-links');
-   contactLinks.innerHTML = `
-       <li><a href="mailto:${siteConfig.site.email}">${siteConfig.site.email}</a></li>
-   `;
+   contactLinks.innerHTML = '';
+   
+   const emailParts = siteConfig.site.email.split('@');
+   const emailItem = document.createElement('li');
+   emailItem.innerHTML = `<a href="#" onclick="window.location.href='mailto:' + '${emailParts[0]}' + '@' + '${emailParts[1]}'; return false;">${emailParts[0]}[at]${emailParts[1]}</a>`;
+   contactLinks.appendChild(emailItem);
    
    // Add social links if they exist
    if (siteConfig.site.socialLinks) {
@@ -646,7 +649,6 @@ function applySiteConfig() {
    updateFilterButtons();
 }
 
-// Open product modal in read-only mode (when shop is disabled)
 // Open product modal in read-only mode (when shop is disabled)
 function openProductModalReadOnly(product) {
     const modal = document.getElementById('productModal');
@@ -1060,11 +1062,24 @@ function applyCustomStyles() {
 }
 
 function initializeStrainTree() {
-	console.log("Initializing strain tree...");
-    // Check if strain tree is enabled in config
-	if (!window.siteConfig?.strainTree?.enabled || window.siteConfig?.strainTree?.enabled === "false") {
-		return;
-	}
+    console.log("Initializing strain tree...");
+    
+    // Get strainTree config and explicitly log its value to debug
+    const strainTreeEnabled = window.siteConfig?.strainTree?.enabled;
+    console.log("Strain tree enabled value:", strainTreeEnabled, "type:", typeof strainTreeEnabled);
+    
+    // Check if strain tree is enabled in config - FIXED to work with all value types
+    // This will handle both boolean false and string "false"
+    if (strainTreeEnabled === false || strainTreeEnabled === "false" || !strainTreeEnabled) {
+        console.log("Strain tree is disabled, not displaying");
+        
+        // Hide the strain tree section
+        const treeSection = document.getElementById('strain-tree-section');
+        if (treeSection) {
+            treeSection.style.display = 'none';
+        }
+        return;
+    }
     
     // Get the strain tree section
     const treeSection = document.getElementById('strain-tree-section');

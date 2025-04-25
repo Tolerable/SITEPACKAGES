@@ -417,7 +417,7 @@ function formatTextWithParagraphs(text) {
         .join('');
 }
 
-function initializeSite() {
+function initializeSite() {		
     // Check if siteConfig exists
     if (!window.siteConfig) {
         console.error('Error: siteConfig is not defined');
@@ -438,6 +438,9 @@ function initializeSite() {
     initializeCart();
 	
     initializeFriendLinks();
+	
+	// Initialize strain tree
+    initializeStrainTree();
     
     // Check if we're in preview mode
     const isPreviewMode = window.location.search.includes('preview=true');
@@ -602,11 +605,14 @@ function applySiteConfig() {
        mainNav.appendChild(cartLi);
    }
    
-   // Set contact links
+   // CHANGED: Obfuscate email in contact links
    const contactLinks = document.getElementById('contact-links');
-   contactLinks.innerHTML = `
-       <li><a href="mailto:${siteConfig.site.email}">${siteConfig.site.email}</a></li>
-   `;
+   contactLinks.innerHTML = '';
+   
+   const emailParts = siteConfig.site.email.split('@');
+   const emailItem = document.createElement('li');
+   emailItem.innerHTML = `<a href="#" onclick="window.location.href='mailto:' + '${emailParts[0]}' + '@' + '${emailParts[1]}'; return false;">${emailParts[0]}[at]${emailParts[1]}</a>`;
+   contactLinks.appendChild(emailItem);
    
    // Add social links if they exist
    if (siteConfig.site.socialLinks) {
@@ -643,7 +649,6 @@ function applySiteConfig() {
    updateFilterButtons();
 }
 
-// Open product modal in read-only mode (when shop is disabled)
 // Open product modal in read-only mode (when shop is disabled)
 function openProductModalReadOnly(product) {
     const modal = document.getElementById('productModal');
@@ -900,23 +905,84 @@ function updateFilterButtons() {
 
 // Apply custom styles from config
 function applyCustomStyles() {
-    const siteConfig = window.siteConfig;
-    const dynamicStyles = document.getElementById('dynamic-styles');
+    // Get siteConfig safely with fallback
+    const siteConfig = window.siteConfig || {};
     
+    // Get or create the dynamic styles element
+    let dynamicStyles = document.getElementById('dynamic-styles');
+    if (!dynamicStyles) {
+        dynamicStyles = document.createElement('style');
+        dynamicStyles.id = 'dynamic-styles';
+        document.head.appendChild(dynamicStyles);
+    }
+    
+    // First, handle the primary background image (full screen, fixed position)
+    if (siteConfig.background && siteConfig.background.image) {
+        const bgImage = siteConfig.background.image;
+        const bgPath = bgImage.startsWith('http') ? bgImage : `img/${bgImage}`;
+        
+        // Add a fixed, full-screen background image
+        const bgStyle = document.createElement('style');
+		bgStyle.textContent = `
+			body::before {
+				content: '';
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: url('${bgPath}');
+				background-size: 100% auto;  // Fill width, maintain aspect ratio
+				background-position: top center;  // Align to top
+				background-attachment: fixed;
+				z-index: -10;
+				pointer-events: none;
+			}
+		`;
+        document.head.appendChild(bgStyle);
+    }
+
+    // Then, handle the texture pattern (tiled background)
+    if (siteConfig.background && siteConfig.background.sectionImage) {
+        const sectionImage = siteConfig.background.sectionImage;
+        const sectionPath = sectionImage.startsWith('http') ? sectionImage : `img/${sectionImage}`;
+        
+        // Add a tiled texture pattern
+        const textureStyle = document.createElement('style');
+		textureStyle.textContent = `
+			body::after {
+				content: '';
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: url('${sectionPath}');
+				background-repeat: repeat;
+				opacity: 0.5;  // Increased from 0.15 for visibility
+				z-index: -15;  // Lower than the main image (-10)
+				pointer-events: none;
+			}
+		`;
+        document.head.appendChild(textureStyle);
+    }
+    
+    // Base CSS variables and other styles
     dynamicStyles.textContent = `
         :root {
-            --primary-color: ${siteConfig.colors.primary};
-            --secondary-color: ${siteConfig.colors.secondary};
-            --tertiary-color: ${siteConfig.colors.tertiary};
-            --highlight-color: ${siteConfig.colors.highlight};
-            --alert-color: ${siteConfig.colors.alert};
-            --background-color: ${siteConfig.colors.background};
-            --text-color: ${siteConfig.colors.text};
+            --primary-color: ${siteConfig.colors?.primary || '#003B6F'};
+            --secondary-color: ${siteConfig.colors?.secondary || '#00FF9F'};
+            --tertiary-color: ${siteConfig.colors?.tertiary || '#6A0DAD'};
+            --highlight-color: ${siteConfig.colors?.highlight || '#FFD700'};
+            --alert-color: ${siteConfig.colors?.alert || '#FF5722'};
+            --background-color: ${siteConfig.colors?.background || '#0A0E17'};
+            --text-color: ${siteConfig.colors?.text || '#FFFFFF'};
             
-            --font-heading: ${siteConfig.fonts.heading};
-            --font-body: ${siteConfig.fonts.body};
+            --font-heading: ${siteConfig.fonts?.heading || "'Orbitron', sans-serif"};
+            --font-body: ${siteConfig.fonts?.body || "'Exo 2', sans-serif"};
         }
         
+        /* Rest of your styles unchanged */
         .modal-thumbnail-gallery {
             display: flex;
             gap: 10px;
@@ -993,6 +1059,72 @@ function applyCustomStyles() {
             padding-bottom: 20px;
         }
     `;
+}
+
+function initializeStrainTree() {
+    console.log("Initializing strain tree...");
+    
+    // Get strainTree config and explicitly log its value to debug
+    const strainTreeEnabled = window.siteConfig?.strainTree?.enabled;
+    console.log("Strain tree enabled value:", strainTreeEnabled, "type:", typeof strainTreeEnabled);
+    
+    // Check if strain tree is enabled in config - FIXED to work with all value types
+    // This will handle both boolean false and string "false"
+    if (strainTreeEnabled === false || strainTreeEnabled === "false" || !strainTreeEnabled) {
+        console.log("Strain tree is disabled, not displaying");
+        
+        // Hide the strain tree section
+        const treeSection = document.getElementById('strain-tree-section');
+        if (treeSection) {
+            treeSection.style.display = 'none';
+        }
+        return;
+    }
+    
+    // Get the strain tree section
+    const treeSection = document.getElementById('strain-tree-section');
+    if (!treeSection) {
+        console.error('Strain tree section not found in the DOM');
+        return;
+    }
+    
+    // Show the section
+    treeSection.style.display = 'block';
+    
+    // Set title and description from config
+    const titleEl = document.getElementById('strain-tree-title');
+    const descriptionEl = document.getElementById('strain-tree-description');
+    
+    if (titleEl && window.siteConfig.strainTree.title) {
+        titleEl.textContent = window.siteConfig.strainTree.title;
+    }
+    
+    if (descriptionEl && window.siteConfig.strainTree.description) {
+        descriptionEl.textContent = window.siteConfig.strainTree.description;
+    }
+    
+    // Initialize tree visualization if GeneticsTreeVisualizer is available
+    if (typeof GeneticsTreeVisualizer === 'function') {
+        const strainDataPath = window.siteConfig.strainTree.dataPath || 'data/straindata.json';
+        
+        try {
+            window.strainVisualizer = new GeneticsTreeVisualizer({
+                treeElementId: 'genetics-tree',
+                strainDescriptionId: 'strain-description',
+                expandAllId: 'expand-all',
+                collapseAllId: 'collapse-all',
+                dataUrl: strainDataPath
+            });
+        } catch (error) {
+            console.error('Error initializing strain tree:', error);
+            document.getElementById('genetics-tree').innerHTML = 
+                '<p class="error-message">Error initializing strain tree visualization.</p>';
+        }
+    } else {
+        console.error('GeneticsTreeVisualizer not found. Make sure navigator.js is loaded.');
+        document.getElementById('genetics-tree').innerHTML = 
+            '<p class="error-message">Strain tree visualizer not loaded properly.</p>';
+    }
 }
 
 // Initialize visual effects

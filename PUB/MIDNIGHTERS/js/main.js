@@ -605,11 +605,14 @@ function applySiteConfig() {
        mainNav.appendChild(cartLi);
    }
    
-   // Set contact links
+   // CHANGED: Obfuscate email in contact links
    const contactLinks = document.getElementById('contact-links');
-   contactLinks.innerHTML = `
-       <li><a href="mailto:${siteConfig.site.email}">${siteConfig.site.email}</a></li>
-   `;
+   contactLinks.innerHTML = '';
+   
+   const emailParts = siteConfig.site.email.split('@');
+   const emailItem = document.createElement('li');
+   emailItem.innerHTML = `<a href="#" onclick="window.location.href='mailto:' + '${emailParts[0]}' + '@' + '${emailParts[1]}'; return false;">${emailParts[0]}[at]${emailParts[1]}</a>`;
+   contactLinks.appendChild(emailItem);
    
    // Add social links if they exist
    if (siteConfig.site.socialLinks) {
@@ -646,7 +649,6 @@ function applySiteConfig() {
    updateFilterButtons();
 }
 
-// Open product modal in read-only mode (when shop is disabled)
 // Open product modal in read-only mode (when shop is disabled)
 function openProductModalReadOnly(product) {
     const modal = document.getElementById('productModal');

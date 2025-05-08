@@ -34,12 +34,12 @@
         "body": "'Exo 2', sans-serif"
     },
     "terminology": {
-        "category1": "Premium Collection",
-        "category2": "Signature Series",
-        "category3": "Hybrid Collection",
-        "productTerm": "Collectible",
-        "productPluralTerm": "Collectibles",
-        "packTerm": "Collection Pack",
+        "category1": "Digital Items",
+        "category2": "Genetics Submissions",
+        "category3": "Testing Genetics",
+        "productTerm": "Package",
+        "productPluralTerm": "Packages",
+        "packTerm": "Pack",
         "cartTerm": "Collection Box",
         "soldOutLabel": "UNAVAILABLE",
         "comingSoonLabel": "COMING SOON"
@@ -152,6 +152,6 @@
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "midnighters@sitepackages.net"
+        "orderEmail": "orders@example.com"
     }
 };

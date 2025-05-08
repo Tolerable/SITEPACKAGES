@@ -7,7 +7,7 @@
         "tagline": "Testing Premium Genetics from Around the World",
         "logo": "img/logo.png",
         "heroBackground": "hero-bg.jpg",
-        "showHeroText": true,
+        "showHeroText": false,
         "email": "midnighters@sitepackages.net",
         "socialLinks": {
             "discord": "https://discord.gg/8vK42qAGBP",
@@ -26,7 +26,7 @@
         "text": "#ffffff"
     },
     "background": {
-        "image": "hero-bg.jpg",
+        "image": "",
         "sectionImage": ""
     },
     "fonts": {
@@ -152,6 +152,6 @@
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
         "analyticsId": "",
-        "orderEmail": "orders@example.com"
+        "orderEmail": "midnighters@sitepackages.net"
     }
 };

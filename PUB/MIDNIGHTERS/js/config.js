@@ -68,8 +68,21 @@
         "subtitle": "We test premium genetics in Ohio",
         "image": "img/about.jpg",
         "description": "Founded in 2025, Midnighters Seed Bank is dedicated to bringing unique collectibles to enthusiasts around Ohio. We carefully curate our collections to ensure only the highest quality items reach our members.",
-        "teamMembers": [],
-        "historyItems": [],
+        "teamMembers": [
+            {
+                "name": "Weedstream",
+                "title": "Founder & CEO",
+                "bio": "Music makes everything better",
+                "image": "weedstream.jpg"
+            }
+        ],
+        "historyItems": [
+            {
+                "year": "2025",
+                "title": "Website Created",
+                "description": "Massive Virtual Party Celebrated International Launch"
+            }
+        ],
         "additionalSections": []
     },
     "products": {

@@ -26,7 +26,7 @@
         "text": "#ffffff"
     },
     "background": {
-        "image": "",
+        "image": "hero-bg.jpg",
         "sectionImage": ""
     },
     "fonts": {

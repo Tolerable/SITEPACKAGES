@@ -128,7 +128,7 @@
     },
     "navigation": [
         {
-            "name": "Collections",
+            "name": "Products",
             "url": "#products"
         },
         {
@@ -147,7 +147,7 @@
         }
     ],
     "advanced": {
-        "enableShop": true,
+        "enableShop": false,
         "enableLocalStorage": true,
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",

@@ -2416,16 +2416,14 @@ document.createElement = function(tagName) {
 					const inputs = packEl.querySelectorAll('input');
 					
 					const size = inputs[0].value;
-					// Parse the values as floats first
 					const regularPrice = parseFloat(inputs[1].value);
 					const salePrice = parseFloat(inputs[2].value);
 					
 					if (size && !isNaN(regularPrice) && !isNaN(salePrice)) {
 						packOptions.push({
 							size,
-							// Store the exact values with 2 decimal places
-							regularPrice: regularPrice.toFixed(2),
-							salePrice: salePrice.toFixed(2)
+							regularPrice,
+							salePrice
 						});
 					}
 				});

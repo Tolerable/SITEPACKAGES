@@ -1325,7 +1325,7 @@ function renderProductCards() {
     });
 }
 
-// Create product card element 
+// Function to create product card element
 function createProductCard(product) {
     const siteConfig = window.siteConfig;
     const card = document.createElement('div');
@@ -1350,41 +1350,25 @@ function createProductCard(product) {
     
     card.setAttribute('data-category', categoryClass);
 
-	// Handle hover image functionality if product has additional images
-	if (product.additionalImages && product.additionalImages.length > 0 && product.enableHoverImage) {
-		// Get the first additional image (or the specified hover image)
-		let hoverImagePath = product.hoverImage || product.additionalImages[0];
-		
-		// Add img/ prefix if needed
-		if (hoverImagePath && !hoverImagePath.startsWith('img/') && !hoverImagePath.startsWith('/') && !hoverImagePath.startsWith('http')) {
-			hoverImagePath = 'img/' + hoverImagePath;
-		}
-		
-		// Set data attribute for hover image
-		card.setAttribute('data-hover-image', hoverImagePath);
-		
-		// Add a CSS class to indicate hover image is available
-		card.classList.add('has-hover-image');
-	}
+    // Handle hover image functionality if product has additional images
+    if (product.enableHoverImage && product.additionalImages && product.additionalImages.length > 0) {
+        // Get the hover image (or default to first additional image)
+        let hoverImagePath = product.hoverImage || product.additionalImages[0];
+        
+        // Add img/ prefix if needed
+        if (hoverImagePath && !hoverImagePath.startsWith('img/') && !hoverImagePath.startsWith('/') && !hoverImagePath.startsWith('http')) {
+            hoverImagePath = 'img/' + hoverImagePath;
+        }
+        
+        // Set a custom CSS style for this specific card
+        const styleEl = document.createElement('style');
+        styleEl.textContent = `.product-card[data-product="${product.id}"]::after { background-image: url("${hoverImagePath}"); }`;
+        document.head.appendChild(styleEl);
+        
+        // Add class to enable hover effect
+        card.classList.add('has-hover-image');
+    }
 
-	// Add click handler for available products if shop is enabled
-	const shopEnabled = siteConfig.advanced && siteConfig.advanced.enableShop !== false;
-
-	if (product.status === 'available') {
-		card.addEventListener('click', function() {
-			if (shopEnabled) {
-				openProductModal(product);
-			} else if (product.delivery === 'digital' && product.digitalContent) {
-				// For digital products when shop is disabled, show the modal with the digital content link
-				openProductModalReadOnly(product);
-			} else {
-				// For physical products when shop is disabled, just show product details
-				// without the ability to add to cart
-				openProductModalReadOnly(product);
-			}
-		});
-	}
-    
     // Add unavailable class for non-available products
     if (product.status !== 'available') {
         card.classList.add('unavailable');

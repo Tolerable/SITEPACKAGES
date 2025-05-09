@@ -417,6 +417,23 @@ function formatTextWithParagraphs(text) {
         .join('');
 }
 
+// Function to initialize hover images
+function initializeHoverImages() {
+    // Find all product cards with hover images
+    document.querySelectorAll('.product-card.has-hover-image').forEach(card => {
+        const hoverImage = card.getAttribute('data-hover-image');
+        if (hoverImage) {
+            // Set the background image for the hover effect
+            card.style.setProperty('--hover-image', `url('${hoverImage}')`);
+            // Update the ::after pseudo-element with the hover image
+            const style = document.createElement('style');
+            const cardId = card.getAttribute('data-product');
+            style.textContent = `.product-card[data-product="${cardId}"]::after { background-image: url('${hoverImage}'); }`;
+            document.head.appendChild(style);
+        }
+    });
+}
+
 function initializeSite() {		
     // Check if siteConfig exists
     if (!window.siteConfig) {
@@ -456,6 +473,8 @@ function initializeSite() {
         
         // Render product cards
         renderProductCards();
+		// Initialize hover images for products
+		initializeHoverImages();		
         setupEventListeners();
         addDigitalProductStyles();
     } else {
@@ -1318,21 +1337,35 @@ function createProductCard(product) {
         card.setAttribute('data-delivery', 'digital');
     }
     
-    // Determine category class
-    let categoryClass = 'category3'; // Default to hybrid/category3
+    // Match product type to category
+    let categoryClass = 'category3'; // Default
     
-    // Find which category this product type matches
-    if (product.type === siteConfig.terminology.category1 || 
-        product.type.toLowerCase().includes(siteConfig.terminology.category1.toLowerCase())) {
+    if (product.type === siteConfig.terminology.category1) {
         categoryClass = 'category1';
-    } else if (product.type === siteConfig.terminology.category2 || 
-               product.type.toLowerCase().includes(siteConfig.terminology.category2.toLowerCase())) {
+    } else if (product.type === siteConfig.terminology.category2) {
         categoryClass = 'category2';
-    } else {
+    } else if (product.type === siteConfig.terminology.category3) {
         categoryClass = 'category3';
     }
     
     card.setAttribute('data-category', categoryClass);
+
+	// Handle hover image functionality if product has additional images
+	if (product.additionalImages && product.additionalImages.length > 0 && product.enableHoverImage) {
+		// Get the first additional image (or the specified hover image)
+		let hoverImagePath = product.hoverImage || product.additionalImages[0];
+		
+		// Add img/ prefix if needed
+		if (hoverImagePath && !hoverImagePath.startsWith('img/') && !hoverImagePath.startsWith('/') && !hoverImagePath.startsWith('http')) {
+			hoverImagePath = 'img/' + hoverImagePath;
+		}
+		
+		// Set data attribute for hover image
+		card.setAttribute('data-hover-image', hoverImagePath);
+		
+		// Add a CSS class to indicate hover image is available
+		card.classList.add('has-hover-image');
+	}
 
 	// Add click handler for available products if shop is enabled
 	const shopEnabled = siteConfig.advanced && siteConfig.advanced.enableShop !== false;
@@ -1786,45 +1819,38 @@ function openCartModal() {
 }
 
 // Filter buttons
+// Filter buttons
 function setupFilterButtons() {
-	document.querySelectorAll('.filter-button').forEach(button => {
-		button.addEventListener('click', function() {
-			// Remove active class from all buttons
-			document.querySelectorAll('.filter-button').forEach(btn => {
-				btn.classList.remove('active');
-			});
-			
-			// Add active class to clicked button
-			this.classList.add('active');
-			
-			// Get filter value
-			const filter = this.getAttribute('data-filter');
-			const siteConfig = window.siteConfig;
-			
-			// Show/hide product cards based on filter
-			document.querySelectorAll('.product-card').forEach(card => {
-				const product = window.products[card.getAttribute('data-product')];
-				
-				if (filter === 'all') {
-					card.style.display = 'block';
-				} else if (filter === 'category1' && 
-						  (product.type === siteConfig.terminology.category1 || 
-						   product.type.toLowerCase().includes(siteConfig.terminology.category1.toLowerCase()))) {
-					card.style.display = 'block';
-				} else if (filter === 'category2' && 
-						  (product.type === siteConfig.terminology.category2 || 
-						   product.type.toLowerCase().includes(siteConfig.terminology.category2.toLowerCase()))) {
-					card.style.display = 'block';
-				} else if (filter === 'category3' && 
-						  (product.type === siteConfig.terminology.category3 || 
-						   product.type.toLowerCase().includes(siteConfig.terminology.category3.toLowerCase()))) {
-					card.style.display = 'block';
-				} else {
-					card.style.display = 'none';
-				}
-			});
-		});
-	});
+    document.querySelectorAll('.filter-button').forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            document.querySelectorAll('.filter-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Get filter value
+            const filter = this.getAttribute('data-filter');
+            const siteConfig = window.siteConfig;
+            
+            // Show/hide product cards based on filter
+            document.querySelectorAll('.product-card').forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    // Get the category attribute directly
+                    const category = card.getAttribute('data-category');
+                    if (category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
 }
 	
 // Set up event listeners

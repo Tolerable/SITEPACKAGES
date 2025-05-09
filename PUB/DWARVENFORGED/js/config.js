@@ -26,8 +26,8 @@
         "text": "#f5f0e6"
     },
     "background": {
-        "image": "hero-background.jpg",
-        "sectionImage": "metal-texture.jpg"
+        "image": "",
+        "sectionImage": ""
     },
     "fonts": {
         "heading": "'Oswald', sans-serif",
@@ -58,8 +58,8 @@
         }
     },
     "strainTree": {
-        "enabled": true,
-        "title": "Strain Genetics Explorer",
+        "enabled": false,
+        "title": "Genetics Explorer",
         "description": "Explore the genetic relationships between our strains.",
         "dataPath": "data/straindata.json"
     },
@@ -136,30 +136,35 @@
                 "delivery": "physical",
                 "digitalContent": "",
                 "image": "strains/dwarf-hammer.jpg",
-                "additionalImages": [],
+                "additionalImages": [
+                    "detail1-1.jpg"
+                ],
                 "description": "Our flagship strain, Dwarf Hammer hits with the force of a dwarven smithing hammer. This indica-dominant powerhouse produces dense, resin-covered nuggets with a knockout effect.",
                 "variety": "Autoflower",
                 "rating": "24-26% THC",
                 "origin": "Gorilla Glue #4 × Anvil #8 FEM F7",
+                "rarity": "Rare",
                 "details": "Flowering Time: 12 weeks\nStretch: Medium\nYield: High\nHeight: Medium\nTHC: 24-26%\nCBD: 0.1%\nEffects: Relaxing, Sedative, Euphoric, Pain Relief\nFlavors: Earthy, Pine",
                 "notes": "Our flagship strain, perfect for evening use and pain management. Easy to grow with exceptional yields.",
                 "packOptions": [
                     {
                         "size": "6 Pack",
-                        "regularPrice": 60,
-                        "salePrice": 55
+                        "regularPrice": "60.00",
+                        "salePrice": "55.00"
                     },
                     {
                         "size": "10 Pack",
-                        "regularPrice": 95,
-                        "salePrice": 80
+                        "regularPrice": "95.00",
+                        "salePrice": "80.00"
                     },
                     {
                         "size": "40 Pack",
-                        "regularPrice": 320,
-                        "salePrice": 280
+                        "regularPrice": "320.00",
+                        "salePrice": "280.00"
                     }
-                ]
+                ],
+                "enableHoverImage": true,
+                "hoverImage": ""
             },
             "thors-hammer": {
                 "id": "thors-hammer",

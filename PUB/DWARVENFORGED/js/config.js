@@ -149,22 +149,22 @@
                 "packOptions": [
                     {
                         "size": "6 Pack",
-                        "regularPrice": "60.00",
-                        "salePrice": "55.00"
+                        "regularPrice": 60,
+                        "salePrice": 55
                     },
                     {
                         "size": "10 Pack",
-                        "regularPrice": "95.00",
-                        "salePrice": "80.00"
+                        "regularPrice": 95,
+                        "salePrice": 80
                     },
                     {
                         "size": "40 Pack",
-                        "regularPrice": "320.00",
-                        "salePrice": "280.00"
+                        "regularPrice": 320,
+                        "salePrice": 280
                     }
                 ],
                 "enableHoverImage": true,
-                "hoverImage": ""
+                "hoverImage": "detail1-1.jpg"
             },
             "thors-hammer": {
                 "id": "thors-hammer",

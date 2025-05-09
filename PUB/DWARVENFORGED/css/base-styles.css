@@ -319,13 +319,10 @@ nav a:hover::before {
 /* Add to base-styles.css after the product-img styles */
 .product-card.has-hover-image {
     position: relative;
-    overflow: hidden;
 }
 
 .product-card.has-hover-image .product-img {
     transition: opacity 0.3s ease;
-    position: relative;
-    z-index: 1;
 }
 
 .product-card.has-hover-image:hover .product-img {
@@ -338,17 +335,18 @@ nav a:hover::before {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    /* Set a fixed aspect ratio matching your product images */
+    height: 0;
+    padding-top: 100%; /* This creates a 1:1 aspect ratio */
     background-size: cover;
     background-position: center;
     opacity: 0;
     transition: opacity 0.3s ease;
-    z-index: 0;
+    z-index: 1;
 }
 
 .product-card.has-hover-image:hover::after {
     opacity: 1;
-    z-index: 2;
 }
 
 .card-content {

@@ -2415,16 +2415,26 @@ document.createElement = function(tagName) {
 				document.querySelectorAll('#pack-options .pack-option').forEach(packEl => {
 					const inputs = packEl.querySelectorAll('input');
 					
-					const size = inputs[0].value;
-					const regularPrice = parseFloat(inputs[1].value);
-					const salePrice = parseFloat(inputs[2].value);
-					
-					if (size && !isNaN(regularPrice) && !isNaN(salePrice)) {
-						packOptions.push({
-							size,
-							regularPrice,
-							salePrice
-						});
+					if (inputs.length >= 3) {
+						const size = inputs[0].value.trim();
+						
+						// Handle the price values properly regardless of format
+						let regularPrice = inputs[1].value.trim();
+						let salePrice = inputs[2].value.trim();
+						
+						// If they're not empty, convert to numbers
+						if (size && regularPrice && salePrice) {
+							// Remove any quotes and convert to numbers
+							regularPrice = Number(regularPrice.replace(/"/g, ''));
+							salePrice = Number(salePrice.replace(/"/g, ''));
+							
+							// Add to pack options
+							packOptions.push({
+								size: size,
+								regularPrice: regularPrice,
+								salePrice: salePrice
+							});
+						}
 					}
 				});
 				

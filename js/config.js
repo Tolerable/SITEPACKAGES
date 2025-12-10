@@ -175,10 +175,10 @@ window.siteConfig = {
                 "hidden": false,
                 "displayOrder": 2,
                 "promotional": {
-                    "type": "bogo",
-                    "value": "+ FREE Starter Image Pack!",
-                    "bogoType": "choice",
-                    "bogoChoices": ["image-pack-starter"],
+                    "type": "percentage",
+                    "value": "25",
+                    "discountPercent": "25",
+                    "bogoType": "same",
                     "enabled": true
                 }
             },
@@ -206,10 +206,10 @@ window.siteConfig = {
                 "hidden": false,
                 "displayOrder": 3,
                 "promotional": {
-                    "type": "bogo",
-                    "value": "+ FREE Pro Image Pack!",
-                    "bogoType": "choice",
-                    "bogoChoices": ["image-pack-pro"],
+                    "type": "percentage",
+                    "value": "25",
+                    "discountPercent": "25",
+                    "bogoType": "same",
                     "enabled": true
                 }
             },
@@ -295,7 +295,7 @@ window.siteConfig = {
                 "id": "image-pack-starter",
                 "name": "Image Pack - Starter",
                 "type": "Add-on",
-                "status": "available",
+                "status": "comingSoon",
                 "delivery": "digital",
                 "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/collection%20of%20website%20textures%20backgrounds%20seamless%20patterns%20dark%20theme%20purple%20blue%20gradient%20grid%20preview?width=400&height=400&nologo=true",
@@ -320,7 +320,7 @@ window.siteConfig = {
                 "displayOrder": 7,
                 "promotional": {
                     "type": "custom",
-                    "value": "NEW!",
+                    "value": "COMING SOON",
                     "enabled": true
                 }
             },
@@ -328,7 +328,7 @@ window.siteConfig = {
                 "id": "image-pack-pro",
                 "name": "Image Pack - Pro",
                 "type": "Add-on",
-                "status": "available",
+                "status": "comingSoon",
                 "delivery": "digital",
                 "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/premium%20website%20asset%20collection%20textures%20backgrounds%20overlays%20particles%20dark%20theme%20professional%20grid%20showcase?width=400&height=400&nologo=true",
@@ -353,10 +353,8 @@ window.siteConfig = {
                 "hidden": false,
                 "displayOrder": 8,
                 "promotional": {
-                    "type": "percentage",
-                    "value": "21",
-                    "discountPercent": "21",
-                    "bogoType": "same",
+                    "type": "custom",
+                    "value": "COMING SOON",
                     "enabled": true
                 }
             },
@@ -364,7 +362,7 @@ window.siteConfig = {
                 "id": "image-pack-holiday",
                 "name": "Image Pack - Holiday Bundle",
                 "type": "Add-on",
-                "status": "available",
+                "status": "comingSoon",
                 "delivery": "digital",
                 "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/holiday%20themed%20website%20backgrounds%20christmas%20halloween%20valentines%20easter%20festive%20collection%20dark%20theme%20preview%20grid?width=400&height=400&nologo=true",
@@ -389,10 +387,8 @@ window.siteConfig = {
                 "hidden": false,
                 "displayOrder": 9,
                 "promotional": {
-                    "type": "percentage",
-                    "value": "24",
-                    "discountPercent": "24",
-                    "bogoType": "same",
+                    "type": "custom",
+                    "value": "COMING SOON",
                     "enabled": true
                 }
             },
@@ -400,7 +396,7 @@ window.siteConfig = {
                 "id": "image-pack-ultimate",
                 "name": "Image Pack - Ultimate Bundle",
                 "type": "Add-on",
-                "status": "available",
+                "status": "comingSoon",
                 "delivery": "digital",
                 "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/ultimate%20website%20asset%20bundle%20textures%20backgrounds%20overlays%20icons%20everything%20dark%20premium%20gold%20accents%20showcase?width=400&height=400&nologo=true",
@@ -426,10 +422,8 @@ window.siteConfig = {
                 "hidden": false,
                 "displayOrder": 10,
                 "promotional": {
-                    "type": "bogo",
-                    "value": "FREE Image Pack Starter!",
-                    "bogoType": "choice",
-                    "bogoChoices": ["image-pack-starter"],
+                    "type": "custom",
+                    "value": "COMING SOON",
                     "enabled": true
                 }
             }

@@ -1011,7 +1011,48 @@ document.createElement = function(tagName) {
 									<input type="url" id="digital-content" placeholder="https://example.com/download/file.zip">
 									<p style="font-size: 0.8rem; color: #aaa; margin-top: 3px;">For digital products, enter the download link or access URL.</p>
 								</div>
-								
+
+								<!-- Text-Based Card Options -->
+								<div class="form-group">
+									<label for="product-card-style" style="color: var(--secondary-color);">Card Display Style</label>
+									<select id="product-card-style">
+										<option value="image">Image-Based (default)</option>
+										<option value="text">Text-Based (gradient background)</option>
+									</select>
+									<p style="font-size: 0.8rem; color: #aaa; margin-top: 3px;">Text cards use a gradient background instead of product images.</p>
+								</div>
+
+								<div id="text-card-options" style="display: none; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px;">
+									<div class="form-group">
+										<label for="product-card-icon" style="color: var(--secondary-color);">Card Icon (emoji)</label>
+										<input type="text" id="product-card-icon" placeholder="📦" maxlength="4" style="font-size: 1.5rem; width: 60px;">
+									</div>
+
+									<div class="form-group">
+										<label for="product-card-gradient" style="color: var(--secondary-color);">Background Gradient</label>
+										<select id="product-card-gradient">
+											<option value="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">Purple (Starter)</option>
+											<option value="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">Pink/Magenta (Pro)</option>
+											<option value="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">Blue/Cyan (Business)</option>
+											<option value="linear-gradient(135deg, #fa709a 0%, #fee140 100%)">Pink/Yellow (Effects)</option>
+											<option value="linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)">Mint/Pink (Themes)</option>
+											<option value="linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)">Soft Pink (Support)</option>
+											<option value="custom">Custom CSS Gradient</option>
+										</select>
+									</div>
+
+									<div class="form-group" id="custom-gradient-group" style="display: none;">
+										<label for="product-card-custom-gradient" style="color: var(--secondary-color);">Custom Gradient CSS</label>
+										<input type="text" id="product-card-custom-gradient" placeholder="linear-gradient(135deg, #color1, #color2)">
+									</div>
+
+									<div class="form-group">
+										<label style="color: var(--secondary-color);">Feature List (one per line, max 5)</label>
+										<textarea id="product-card-features" rows="5" placeholder="Feature 1&#10;Feature 2&#10;Feature 3"></textarea>
+										<p style="font-size: 0.8rem; color: #aaa; margin-top: 3px;">Features shown as bullet points on the card.</p>
+									</div>
+								</div>
+
 								<div class="form-group">
 									<label for="product-image" style="color: var(--secondary-color);">Main Image URL</label>
 									<input type="url" id="product-image" placeholder="product1.jpg">
@@ -1552,7 +1593,32 @@ document.createElement = function(tagName) {
 					if (addPackBtn) addPackBtn.style.display = 'block';
 				}
 			});
-            
+
+			// Show/hide text-card options based on card style selection
+			document.getElementById('product-card-style').addEventListener('change', function() {
+				const textCardOptions = document.getElementById('text-card-options');
+				const imageFields = document.getElementById('product-image').closest('.form-group');
+
+				if (this.value === 'text') {
+					textCardOptions.style.display = 'block';
+					// Hide image field for text cards (optional - you might still want a fallback image)
+					// imageFields.style.display = 'none';
+				} else {
+					textCardOptions.style.display = 'none';
+					// imageFields.style.display = 'block';
+				}
+			});
+
+			// Show/hide custom gradient input
+			document.getElementById('product-card-gradient').addEventListener('change', function() {
+				const customGradientGroup = document.getElementById('custom-gradient-group');
+				if (this.value === 'custom') {
+					customGradientGroup.style.display = 'block';
+				} else {
+					customGradientGroup.style.display = 'none';
+				}
+			});
+
             // Preset theme selection
             document.querySelectorAll('.preset-theme').forEach(theme => {
                 theme.addEventListener('click', function() {
@@ -2255,6 +2321,45 @@ document.createElement = function(tagName) {
 				safeSetValue('product-notes', isNewProduct ? '' : product.notes);
 				safeSetValue('product-enable-hover', isNewProduct ? 'false' : (product.enableHoverImage ? 'true' : 'false'));
 
+				// Set text-card options
+				safeSetValue('product-card-style', isNewProduct ? 'image' : (product.cardStyle || 'image'));
+				safeSetValue('product-card-icon', isNewProduct ? '' : (product.cardIcon || ''));
+				safeSetValue('product-card-features', isNewProduct ? '' : (product.features ? product.features.join('\n') : ''));
+
+				// Handle gradient - check if it's a preset or custom
+				const cardGradient = isNewProduct ? '' : (product.cardBackground || '');
+				const gradientSelect = document.getElementById('product-card-gradient');
+				const customGradientInput = document.getElementById('product-card-custom-gradient');
+				const customGradientGroup = document.getElementById('custom-gradient-group');
+				const textCardOptions = document.getElementById('text-card-options');
+
+				if (gradientSelect && customGradientInput) {
+					// Check if gradient matches any preset
+					let isPreset = false;
+					for (let i = 0; i < gradientSelect.options.length; i++) {
+						if (gradientSelect.options[i].value === cardGradient) {
+							gradientSelect.selectedIndex = i;
+							isPreset = true;
+							break;
+						}
+					}
+
+					// If not a preset, set to custom
+					if (!isPreset && cardGradient) {
+						gradientSelect.value = 'custom';
+						customGradientInput.value = cardGradient;
+						if (customGradientGroup) customGradientGroup.style.display = 'block';
+					} else {
+						if (customGradientGroup) customGradientGroup.style.display = 'none';
+					}
+				}
+
+				// Show/hide text-card options based on card style
+				if (textCardOptions) {
+					const cardStyle = isNewProduct ? 'image' : (product.cardStyle || 'image');
+					textCardOptions.style.display = cardStyle === 'text' ? 'block' : 'none';
+				}
+
 				// Set hidden flag - determine if product should be hidden
 				const isHidden = isNewProduct ? false : !!product.hidden;
 				
@@ -2853,6 +2958,30 @@ document.createElement = function(tagName) {
 					displayOrder = products[productId].displayOrder;
 				}
 				
+				// Get text-card fields
+				const cardStyle = document.getElementById('product-card-style').value;
+				const cardIcon = document.getElementById('product-card-icon').value;
+				const cardGradientSelect = document.getElementById('product-card-gradient');
+				const cardCustomGradient = document.getElementById('product-card-custom-gradient').value;
+				const cardFeaturesText = document.getElementById('product-card-features').value;
+
+				// Determine the gradient value
+				let cardBackground = '';
+				if (cardStyle === 'text') {
+					if (cardGradientSelect.value === 'custom' && cardCustomGradient) {
+						cardBackground = cardCustomGradient;
+					} else {
+						cardBackground = cardGradientSelect.value;
+					}
+				}
+
+				// Parse features into array (split by newlines, filter empties, limit to 5)
+				const features = cardFeaturesText
+					.split('\n')
+					.map(f => f.trim())
+					.filter(f => f.length > 0)
+					.slice(0, 5);
+
 				// Create or update product - maintain all fields
 				products[productId] = {
 					id: productId,
@@ -2872,10 +3001,15 @@ document.createElement = function(tagName) {
 					notes: productNotes,
 					packOptions: packOptions,
 					enableHoverImage: document.getElementById('product-enable-hover').value === 'true',
-					hoverImage: document.getElementById('product-enable-hover').value === 'true' ? 
+					hoverImage: document.getElementById('product-enable-hover').value === 'true' ?
 						document.getElementById('product-hover-image').value : '',
 					hidden: isHidden,  // Add the hidden flag
-					displayOrder: displayOrder  // Add the display order
+					displayOrder: displayOrder,  // Add the display order
+					// Text-card fields
+					cardStyle: cardStyle,
+					cardBackground: cardBackground,
+					cardIcon: cardIcon,
+					features: features
 				};
 				
 				// For debugging - check what's being saved

@@ -1,0 +1,40 @@
+/* Tree Visualization CSS */
+.genetics-tree {
+    height: 400px;
+    padding: 20px;
+    overflow: hidden;
+    background-color: #251a12;
+    border-radius: 8px;
+}
+
+.node-bubble {
+    fill: #b87333;
+    stroke: #b87333;
+    stroke-width: 2;
+}
+
+.link {
+    fill: none;
+    stroke: #c69c6d;
+    stroke-width: 2;
+}
+
+/* Controls for the tree */
+.genetics-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    border-top: 1px solid rgba(184, 115, 51, 0.2);
+}
+
+.genetics-info {
+    padding: 25px;
+    color: #f5f0e6;
+}
+
+.error-message {
+    text-align: center;
+    color: #ff6b6b;
+    font-style: italic;
+}

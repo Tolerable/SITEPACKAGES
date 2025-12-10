@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - StrainNavigator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f0;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .nav-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #1b5e20;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 20px;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #2d5016 0%, #1b5e20 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .profile-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(45, 80, 22, 0.1);
+        }
+
+        .card h3 {
+            color: #2d5016;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .avatar-section {
+            text-align: center;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d5016 0%, #1b5e20 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-upload {
+            margin-top: 10px;
+        }
+
+		.avatar-upload input.form-control {
+			font-size: 0.85rem;
+			padding: 8px;
+		}
+		
+        .quick-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-box .number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .stat-box .label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group .help-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2d5016;
+            box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-switch label {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2d5016;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #2d5016;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3a6b1c;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #2d5016;
+            color: #2d5016;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-input i {
+            width: 30px;
+            text-align: center;
+            color: #2d5016;
+            font-size: 1.2rem;
+        }
+
+        .public-strains {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .strain-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .strain-item:hover {
+            border-color: #2d5016;
+            transform: translateY(-2px);
+        }
+
+        .strain-item.selected {
+            border-color: #2d5016;
+            background: #e8f5e8;
+        }
+
+        .strain-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .badge-public {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-private {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .save-notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+		.user-badge {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 10px;
+			background: #f8f9fa;
+			border-radius: 8px;
+			border-left: 4px solid;
+		}
+
+		.user-badge i {
+			font-size: 1.2rem;
+		}
+
+		.user-badge.badge-tester {
+			border-left-color: #f39c12;
+		}
+
+		.user-badge.badge-tester i {
+			color: #f39c12;
+		}
+
+		.user-badge.badge-early-adopter {
+			border-left-color: #9c27b0;
+		}
+
+		.user-badge.badge-early-adopter i {
+			color: #9c27b0;
+		}
+
+		.user-badge.badge-contributor {
+			border-left-color: #2196f3;
+		}
+
+		.user-badge.badge-contributor i {
+			color: #2196f3;
+		}
+
+		.badge-info {
+			flex: 1;
+		}
+
+		.badge-name {
+			font-weight: 600;
+			font-size: 0.9rem;
+			color: #333;
+		}
+
+		.badge-date {
+			font-size: 0.75rem;
+			color: #666;
+			margin-top: 2px;
+		}
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: #2d5016;
+            border-bottom-color: #2d5016;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+		.hamburger {
+			display: none;
+			color: white;
+			font-size: 1.5rem;
+			cursor: pointer;
+		}
+
+		@media (max-width: 768px) {
+			.hamburger {
+				display: block;
+			}
+
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-container">
+        <nav class="navbar">
+            <a href="/index.html" class="logo">
+                <i class="fas fa-cannabis"></i> StrainNavigator
+            </a>
+			<ul class="nav-links" id="navLinks">
+				<li><a href="/tools/growhelp.html">AI Grow Help</a></li>
+				<li><a href="/tools/tracker.html">Strain Tracker</a></li>
+				<li><a href="/tools/CBMS.html">Breeding Manager</a></li>
+				<li><a href="/tools/labels.html">Label Branding</a></li>
+				<li><a href="/tools/growitgame.html">Manage Grow</a></li>
+				<li id="auth-nav-signin" style="display: none;"><a href="#" onclick="showAuthModal('signin'); return false;">Sign In</a></li>
+				<li id="auth-nav-signup" style="display: none;"><a href="#" onclick="showAuthModal('signup'); return false;">Sign Up</a></li>
+				<li id="user-nav-menu" style="display: none;">
+					<a href="#" onclick="toggleUserMenu(); return false;" style="color: white;">
+						<i class="fas fa-user-circle"></i> <span id="user-nav-email"></span> <i class="fas fa-chevron-down" style="font-size: 0.8em; margin-left: 5px;"></i>
+					</a>
+				</li>
+			</ul>
+			<div class="hamburger" id="hamburger">
+				<i class="fas fa-bars"></i>
+			</div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="profile-header">
+            <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+            <p>Manage your account settings and public presence</p>
+        </div>
+
+        <div class="profile-content">
+            <!-- Sidebar -->
+            <div class="profile-sidebar">
+                <!-- Avatar Card -->
+                <div class="card avatar-section">
+                    <div class="avatar" id="avatar-display">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 id="display-name-preview">Grower123</h2>
+                    <p style="color: #666; font-size: 0.9rem;" id="email-display">user@example.com</p>
+					<div class="avatar-upload">
+						<input type="url" class="form-control" id="avatar-url" placeholder="Enter image URL (e.g., from Imgur)" style="margin-bottom: 8px;">
+						<button class="btn btn-primary" onclick="updateAvatarFromUrl()" style="padding: 8px 15px; font-size: 0.9rem;">
+							<i class="fas fa-link"></i> Update Photo
+						</button>
+						<p style="font-size: 0.75rem; color: #666; margin-top: 5px;">Use Imgur, Google Drive, or any direct image link</p>
+					</div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="card">
+                    <h3>Your Stats</h3>
+                    <div class="quick-stats">
+                        <div class="stat-box">
+                            <div class="number" id="stat-strains">0</div>
+                            <div class="label">Strains</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number" id="stat-public">0</div>
+                            <div class="label">Public</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number" id="stat-pairs">0</div>
+                            <div class="label">Breeding Pairs</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number" id="stat-tests">0</div>
+                            <div class="label">Test Grows</div>
+                        </div>
+                    </div>
+                </div>
+
+				<!-- User Badges -->
+				<div class="card" id="user-badges-card" style="display: none;">
+					<h3>My Badges</h3>
+					<div id="user-badges-display" style="display: flex; flex-direction: column; gap: 8px;">
+						<!-- Badges will be populated here -->
+					</div>
+				</div>
+
+                <!-- Privacy Quick Toggle -->
+                <div class="card">
+                    <h3>Quick Privacy</h3>
+                    <div class="toggle-switch">
+                        <label>Public Profile</label>
+                        <label class="switch">
+                            <input type="checkbox" id="profile-public">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-switch">
+                        <label>Show Location</label>
+                        <label class="switch">
+                            <input type="checkbox" id="show-location">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-switch">
+                        <label>Allow Contact</label>
+                        <label class="switch">
+                            <input type="checkbox" id="allow-contact">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div>
+                <div class="tabs">
+                    <button class="tab active" onclick="showTab('basic-info')">Basic Info</button>
+                    <button class="tab" onclick="showTab('public-profile')">Public Profile</button>
+                    <button class="tab" onclick="showTab('sharing')">Strain Sharing</button>
+                    <button class="tab" onclick="showTab('security')">Security</button>
+                </div>
+
+                <!-- Basic Info Tab -->
+                <div id="basic-info" class="tab-content active">
+                    <div class="card">
+                        <h3>Account Information</h3>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" class="form-control" id="email" value="user@example.com" readonly>
+                            <p class="help-text">Contact support to change your email address</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Display Name / Alias</label>
+                            <input type="text" class="form-control" id="display-name" placeholder="Enter your public display name">
+                            <p class="help-text">This is how other users will see you. Choose a unique alias to protect your privacy.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Location (Optional)</label>
+                            <input type="text" class="form-control" id="location" placeholder="e.g., Pacific Northwest, Colorado, etc.">
+                            <p class="help-text">General region only - helps with local collaboration</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Timezone</label>
+                            <select class="form-control" id="timezone">
+                                <option>America/New_York (EST)</option>
+                                <option>America/Chicago (CST)</option>
+                                <option>America/Denver (MST)</option>
+                                <option>America/Los_Angeles (PST)</option>
+                                <option>America/Anchorage (AKST)</option>
+                                <option>Pacific/Honolulu (HST)</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="saveBasicInfo()">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Public Profile Tab -->
+                <div id="public-profile" class="tab-content">
+                    <div class="card">
+                        <h3>Public Profile</h3>
+                        <p style="color: #666; margin-bottom: 20px;">
+                            Control what information is visible to other StrainNavigator users
+                        </p>
+
+                        <div class="form-group">
+                            <label>Bio / About</label>
+                            <textarea class="form-control" id="bio" placeholder="Tell other growers about yourself, your growing experience, specialties, etc."></textarea>
+                            <p class="help-text">Max 500 characters</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Growing Experience</label>
+                            <select class="form-control" id="experience">
+                                <option value="">Prefer not to say</option>
+                                <option value="beginner">Beginner (0-1 years)</option>
+                                <option value="intermediate">Intermediate (2-5 years)</option>
+                                <option value="advanced">Advanced (5-10 years)</option>
+                                <option value="expert">Expert (10+ years)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Focus Areas (Select all that apply)</label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                                <label style="font-weight: normal;">
+                                    <input type="checkbox" value="breeding"> Breeding
+                                </label>
+                                <label style="font-weight: normal;">
+                                    <input type="checkbox" value="medical"> Medical
+                                </label>
+                                <label style="font-weight: normal;">
+                                    <input type="checkbox" value="organic"> Organic Growing
+                                </label>
+                                <label style="font-weight: normal;">
+                                    <input type="checkbox" value="indoor"> Indoor
+                                </label>
+                                <label style="font-weight: normal;">
+                                    <input type="checkbox" value="outdoor"> Outdoor
+                                </label>
+                                <label style="font-weight: normal;">
+                                    <input type="checkbox" value="autoflower"> Autoflowers
+                                </label>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 30px;">External Contact (Optional)</h3>
+                        <p style="color: #666; margin-bottom: 15px;">
+                            Add your social media or contact info so interested growers can reach you outside the platform
+                        </p>
+
+                        <div class="social-links">
+                            <div class="social-input">
+                                <i class="fab fa-instagram"></i>
+                                <input type="text" class="form-control" id="instagram" placeholder="Instagram handle">
+                            </div>
+                            <div class="social-input">
+                                <i class="fab fa-discord"></i>
+                                <input type="text" class="form-control" id="discord" placeholder="Discord username">
+                            </div>
+                            <div class="social-input">
+                                <i class="fab fa-reddit"></i>
+                                <input type="text" class="form-control" id="reddit" placeholder="Reddit username">
+                            </div>
+                            <div class="social-input">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" class="form-control" id="contact-email" placeholder="Contact email (if different)">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="savePublicProfile()" style="margin-top: 20px;">
+                            <i class="fas fa-save"></i> Save Public Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Strain Sharing Tab -->
+                <div id="sharing" class="tab-content">
+                    <div class="card">
+                        <h3>Strain Sharing Settings</h3>
+                        <p style="color: #666; margin-bottom: 20px;">
+                            Choose which strains appear in the community database. Public strains can be viewed by other users who may express interest in collaboration.
+                        </p>
+
+                        <div class="toggle-switch" style="background: #fff3cd; border: 2px solid #f39c12;">
+                            <label style="color: #856404;">
+                                <i class="fas fa-globe"></i> Enable Community Sharing
+                            </label>
+                            <label class="switch">
+                                <input type="checkbox" id="enable-sharing">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div id="sharing-options" style="display: none; margin-top: 20px;">
+                            <h4 style="color: #2d5016; margin-bottom: 15px;">Select Public Strains</h4>
+                            <p style="color: #666; margin-bottom: 15px;">
+                                Check the strains you want to make visible in the community database. Others can view details and express interest.
+                            </p>
+
+                            <div class="public-strains" id="strain-sharing-list">
+                                <!-- Strains will be populated here -->
+                                <div class="strain-item">
+                                    <label>
+                                        <input type="checkbox"> Purple Kush F2
+                                        <span class="badge badge-private">Private</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" onclick="saveSharingSettings()" style="margin-top: 20px;">
+                                <i class="fas fa-save"></i> Update Sharing Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Tab -->
+                <div id="security" class="tab-content">
+                    <div class="card">
+                        <h3>Security Settings</h3>
+                        
+                        <div class="form-group">
+                            <label>Change Password</label>
+                            <input type="password" class="form-control" placeholder="Current password" style="margin-bottom: 10px;">
+                            <input type="password" class="form-control" placeholder="New password" style="margin-bottom: 10px;">
+                            <input type="password" class="form-control" placeholder="Confirm new password">
+                            <button class="btn btn-primary" style="margin-top: 10px;">
+                                <i class="fas fa-key"></i> Update Password
+                            </button>
+                        </div>
+
+                        <hr style="margin: 30px 0;">
+
+                        <h3 style="color: #dc3545;">Danger Zone</h3>
+                        
+                        <div style="background: #f8d7da; padding: 20px; border-radius: 8px; margin-top: 15px;">
+                            <h4 style="color: #721c24; margin-bottom: 10px;">Delete Account</h4>
+                            <p style="color: #721c24; margin-bottom: 15px;">
+                                Permanently delete your account and all associated data. This action cannot be undone.
+                            </p>
+                            <button class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete My Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="save-notification" id="save-notification">
+        <i class="fas fa-check-circle"></i> Changes saved successfully!
+    </div>
+
+	<!-- User Dropdown Menu -->
+	<div id="user-dropdown-menu" style="display: none; position: fixed; top: 60px; right: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 250px; z-index: 10000; overflow: hidden;">
+		<div style="padding: 15px; border-bottom: 1px solid #eee; background: linear-gradient(135deg, #2d5016 0%, #1b5e20 100%);">
+			<div style="color: white; font-weight: 600; font-size: 0.9rem;">Signed in as</div>
+			<div style="color: white; font-size: 1rem; margin-top: 3px;" id="dropdown-user-email"></div>
+		</div>
+		
+		<div style="padding: 8px 0;">
+			<a href="/account.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+				<i class="fas fa-user" style="width: 20px; color: #2d5016;"></i>
+				<span>My Profile</span>
+			</a>
+
+			<a href="/admin/index.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+				<i class="fas fa-shield-alt" style="width: 20px; color: #dc3545;"></i>
+				<span>Admin Panel</span>
+			</a>
+			
+			<a href="/settings.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+				<i class="fas fa-cog" style="width: 20px; color: #2d5016;"></i>
+				<span>Settings</span>
+			</a>
+			
+			<a href="/privacy.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+				<i class="fas fa-shield-alt" style="width: 20px; color: #2d5016;"></i>
+				<span>Privacy & Data</span>
+			</a>
+			
+			<a href="/notifications.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+				<i class="fas fa-bell" style="width: 20px; color: #2d5016;"></i>
+				<span>Notifications</span>
+			</a>
+			
+			<a href="/billing.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+				<i class="fas fa-credit-card" style="width: 20px; color: #2d5016;"></i>
+				<span>Billing & Plans</span>
+			</a>
+			
+			<div style="border-top: 1px solid #eee; margin: 8px 0;"></div>
+			
+			<a href="/help.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+				<i class="fas fa-question-circle" style="width: 20px; color: #2d5016;"></i>
+				<span>Help & Support</span>
+			</a>
+			
+			<a href="#" onclick="handleSignOut(); return false;" style="display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #d32f2f; text-decoration: none; transition: background 0.2s; font-weight: 600;">
+				<i class="fas fa-sign-out-alt" style="width: 20px;"></i>
+				<span>Sign Out</span>
+			</a>
+		</div>
+	</div>
+
+	<style>
+	#user-dropdown-menu a:hover {
+		background: #f5f5f5;
+	}
+	</style>
+
+	<script src="/auth.js"></script>
+	<script>
+		function toggleUserMenu() {
+			const dropdown = document.getElementById('user-dropdown-menu');
+			const isVisible = dropdown.style.display === 'block';
+			
+			if (isVisible) {
+				dropdown.style.display = 'none';
+			} else {
+				const user = auth.getUser();
+				if (user) {
+					document.getElementById('dropdown-user-email').textContent = user.email;
+				}
+				dropdown.style.display = 'block';
+			}
+		}
+
+		function handleSignOut() {
+			if (confirm('Are you sure you want to sign out?')) {
+				auth.signOut();
+			}
+		}
+
+		// Close dropdown when clicking outside
+		document.addEventListener('click', function(e) {
+			const dropdown = document.getElementById('user-dropdown-menu');
+			const userMenu = document.getElementById('user-nav-menu');
+			
+			if (dropdown && userMenu && !userMenu.contains(e.target) && !dropdown.contains(e.target)) {
+				dropdown.style.display = 'none';
+			}
+		});
+
+		// Initialize
+		document.addEventListener('DOMContentLoaded', async () => {
+			// Check authentication and show appropriate nav items
+			await auth.init();
+			const user = auth.getUser();
+			
+			if (user) {
+				// User is logged in - show user menu
+				document.getElementById('user-nav-menu').style.display = 'block';
+				document.getElementById('auth-nav-signin').style.display = 'none';
+				document.getElementById('auth-nav-signup').style.display = 'none';
+				
+				// Set user email in nav (shortened version)
+				const emailParts = user.email.split('@');
+				document.getElementById('user-nav-email').textContent = emailParts[0];
+				document.getElementById('email-display').textContent = user.email;
+				document.getElementById('email').value = user.email;
+			} else {
+				// User not logged in - show sign in/up
+				document.getElementById('auth-nav-signin').style.display = 'block';
+				document.getElementById('auth-nav-signup').style.display = 'block';
+				document.getElementById('user-nav-menu').style.display = 'none';
+			}
+			
+			// Load user data
+			loadUserProfile();
+			loadUserStats();
+			loadStrainSharingList();
+            // Load user data
+            loadUserProfile();
+            loadUserStats();
+            loadStrainSharingList();
+			loadUserBadges(); 
+            
+            // Set up display name preview
+            document.getElementById('display-name').addEventListener('input', updateDisplayNamePreview);
+            
+            // Set up sharing toggle
+            document.getElementById('enable-sharing').addEventListener('change', toggleSharingOptions);
+        });
+
+		async function loadUserBadges() {
+			try {
+				const token = auth.getToken();
+				const user = auth.getUser();
+				
+				if (!token || !user) {
+					return;
+				}
+
+				const response = await fetch('/.netlify/functions/supabase-proxy', {
+					method: 'POST',
+					headers: { 
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${token}`
+					},
+					body: JSON.stringify({
+						action: 'getUserBadges',
+						payload: { userId: user.id }
+					})
+				});
+
+				const result = await response.json();
+				const badges = result.data || [];
+				
+				if (badges.length > 0) {
+					document.getElementById('user-badges-card').style.display = 'block';
+					
+					const badgeContainer = document.getElementById('user-badges-display');
+					badgeContainer.innerHTML = badges.map(badge => {
+						const badgeClass = `badge-${badge.badge_type.toLowerCase().replace('_', '-')}`;
+						const badgeName = badge.badge_type.replace('_', ' ');
+						const grantedDate = new Date(badge.granted_at).toLocaleDateString();
+						
+						return `
+							<div class="user-badge ${badgeClass}">
+								<i class="fas fa-award"></i>
+								<div class="badge-info">
+									<div class="badge-name">${badgeName}</div>
+									<div class="badge-date">Awarded ${grantedDate}</div>
+								</div>
+							</div>
+						`;
+					}).join('');
+				} else {
+					document.getElementById('user-badges-card').style.display = 'none';
+				}
+			} catch (error) {
+				console.error('Error loading badges:', error);
+			}
+		}
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+		async function loadUserProfile() {
+			try {
+				const token = auth.getToken();
+				const user = auth.getUser();
+				
+				if (!token || !user) {
+					console.log('Not authenticated');
+					return;
+				}
+
+				// Fetch fresh data from Supabase
+				const response = await fetch('/.netlify/functions/supabase-proxy', {
+					method: 'POST',
+					headers: { 
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${token}`
+					},
+					body: JSON.stringify({
+						action: 'getProfile',
+						payload: {}
+					})
+				});
+
+				const result = await response.json();
+				const profile = result.data || {};
+				
+				console.log('Loaded profile from Supabase:', profile);
+				
+				// Update localStorage with fresh data
+				localStorage.setItem('userProfile', JSON.stringify(profile));
+				
+				// Populate form fields
+				if (profile.display_name) {
+					document.getElementById('display-name').value = profile.display_name;
+					document.getElementById('display-name-preview').textContent = profile.display_name;
+				}
+				
+				if (profile.location) {
+					document.getElementById('location').value = profile.location;
+				}
+				
+				if (profile.timezone) {
+					document.getElementById('timezone').value = profile.timezone;
+				}
+				
+				if (profile.bio) {
+					document.getElementById('bio').value = profile.bio;
+				}
+				
+				if (profile.experience) {
+					document.getElementById('experience').value = profile.experience;
+				}
+				
+				// Privacy toggles
+				document.getElementById('profile-public').checked = profile.is_public || false;
+				document.getElementById('show-location').checked = profile.show_location || false;
+				document.getElementById('allow-contact').checked = profile.allow_contact || false;
+				document.getElementById('enable-sharing').checked = profile.enable_sharing || false;
+				
+				if (profile.enable_sharing) {
+					document.getElementById('sharing-options').style.display = 'block';
+				}
+				
+				// Avatar
+				if (profile.avatar_url) {
+					const avatarDisplay = document.getElementById('avatar-display');
+					avatarDisplay.innerHTML = `<img src="${profile.avatar_url}" alt="Avatar">`;
+				}
+				
+				// Focus areas
+				if (profile.focus_areas && profile.focus_areas.length > 0) {
+					document.querySelectorAll('#public-profile input[type="checkbox"]').forEach(cb => {
+						cb.checked = profile.focus_areas.includes(cb.value);
+					});
+				}
+
+				// Social links
+				if (profile.instagram) document.getElementById('instagram').value = profile.instagram;
+				if (profile.discord) document.getElementById('discord').value = profile.discord;
+				if (profile.reddit) document.getElementById('reddit').value = profile.reddit;
+				if (profile.contact_email) document.getElementById('contact-email').value = profile.contact_email;
+				
+			} catch (error) {
+				console.error('Error loading profile:', error);
+			}
+		}
+
+        function loadUserStats() {
+            const breedingData = JSON.parse(localStorage.getItem('cannabisBreedingData') || '{"strains":[],"breedingPairs":[],"testGrows":[]}');
+            
+            document.getElementById('stat-strains').textContent = breedingData.strains?.length || 0;
+            document.getElementById('stat-pairs').textContent = breedingData.breedingPairs?.length || 0;
+            document.getElementById('stat-tests').textContent = breedingData.testGrows?.length || 0;
+            
+            // Count public strains
+            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            const publicStrains = profile.publicStrains || [];
+            document.getElementById('stat-public').textContent = publicStrains.length;
+        }
+
+        function loadStrainSharingList() {
+            const breedingData = JSON.parse(localStorage.getItem('cannabisBreedingData') || '{"strains":[]}');
+            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            const publicStrains = profile.publicStrains || [];
+            
+            const container = document.getElementById('strain-sharing-list');
+            container.innerHTML = '';
+            
+            if (!breedingData.strains || breedingData.strains.length === 0) {
+                container.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No strains to share yet. Add strains in the Breeding Manager first.</p>';
+                return;
+            }
+            
+            breedingData.strains.forEach(strain => {
+                const isPublic = publicStrains.includes(strain.id);
+                const strainName = strain.strainName || strain.name || 'Unknown';
+                const plantId = strain.plantId || strain.individualId || '';
+                
+                const item = document.createElement('div');
+                item.className = 'strain-item' + (isPublic ? ' selected' : '');
+                item.innerHTML = `
+                    <label style="cursor: pointer; display: block;">
+                        <input type="checkbox" ${isPublic ? 'checked' : ''} data-strain-id="${strain.id}">
+                        ${strainName}
+                        ${plantId ? `<br><small style="color: #666;">${plantId}</small>` : ''}
+                        <span class="badge badge-${isPublic ? 'public' : 'private'}">${isPublic ? 'Public' : 'Private'}</span>
+                    </label>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+		async function updateAvatarFromUrl() {
+			const avatarUrl = document.getElementById('avatar-url').value.trim();
+			
+			if (!avatarUrl) {
+				alert('Please enter an image URL');
+				return;
+			}
+			
+			try {
+				new URL(avatarUrl);
+			} catch (e) {
+				alert('Please enter a valid URL');
+				return;
+			}
+			
+			const testImg = new Image();
+			testImg.onload = async function() {
+				const avatarDisplay = document.getElementById('avatar-display');
+				avatarDisplay.innerHTML = `<img src="${avatarUrl}" alt="Avatar">`;
+				
+				try {
+					const token = auth.getToken();
+					const user = auth.getUser();
+					
+					const response = await fetch('/.netlify/functions/supabase-proxy', {
+						method: 'POST',
+						headers: { 
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify({
+							action: 'updateProfile',
+							payload: {
+								userId: user.id,
+								profile: { avatar_url: avatarUrl }
+							}
+						})
+					});
+
+					const result = await response.json();
+					
+					if (result.error) {
+						throw new Error(result.error);
+					}
+					
+					const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+					profile.avatarUrl = avatarUrl;
+					profile.avatar_url = avatarUrl;
+					localStorage.setItem('userProfile', JSON.stringify(profile));
+					
+					document.getElementById('avatar-url').value = '';
+					showNotification('Avatar updated!');
+				} catch (error) {
+					showNotification('Error saving avatar: ' + error.message, 'error');
+				}
+			};
+			
+			testImg.onerror = function() {
+				alert('Unable to load image from that URL. Please check the link and try again.');
+			};
+			
+			testImg.src = avatarUrl;
+		}
+
+        function updateDisplayNamePreview() {
+            const displayName = document.getElementById('display-name').value || 'Grower123';
+            document.getElementById('display-name-preview').textContent = displayName;
+        }
+
+        function toggleSharingOptions() {
+            const isEnabled = document.getElementById('enable-sharing').checked;
+            document.getElementById('sharing-options').style.display = isEnabled ? 'block' : 'none';
+        }
+
+		async function saveBasicInfo() {
+			const profileData = {
+				display_name: document.getElementById('display-name').value,
+				location: document.getElementById('location').value,
+				timezone: document.getElementById('timezone').value,
+				is_public: document.getElementById('profile-public').checked,
+				show_location: document.getElementById('show-location').checked,
+				allow_contact: document.getElementById('allow-contact').checked
+			};
+			
+			console.log('Saving profile data:', profileData);
+			
+			try {
+				const token = auth.getToken();
+				const user = auth.getUser();
+				
+				console.log('User ID:', user.id);
+				
+				const response = await fetch('/.netlify/functions/supabase-proxy', {
+					method: 'POST',
+					headers: { 
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${token}`
+					},
+					body: JSON.stringify({
+						action: 'updateProfile',
+						payload: {
+							userId: user.id,
+							profile: profileData
+						}
+					})
+				});
+
+				const result = await response.json();
+				
+				console.log('Save result:', result);
+				
+				if (result.error) {
+					throw new Error(result.error);
+				}
+				
+				const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+				Object.assign(profile, profileData);
+				localStorage.setItem('userProfile', JSON.stringify(profile));
+				
+				updateDisplayNamePreview();
+				showNotification('Basic information saved!');
+			} catch (error) {
+				console.error('Full error:', error);
+				showNotification('Error saving: ' + error.message, 'error');
+			}
+		}
+
+		async function savePublicProfile() {
+			const focusAreas = [];
+			document.querySelectorAll('#public-profile input[type="checkbox"]').forEach(cb => {
+				if (cb.checked) {
+					focusAreas.push(cb.value);
+				}
+			});
+			
+			const profileData = {
+				bio: document.getElementById('bio').value,
+				experience: document.getElementById('experience').value,
+				focus_areas: focusAreas,
+				instagram: document.getElementById('instagram').value,
+				discord: document.getElementById('discord').value,
+				reddit: document.getElementById('reddit').value,
+				contact_email: document.getElementById('contact-email').value
+			};
+			
+			try {
+				const token = auth.getToken();
+				const user = auth.getUser();
+				
+				const response = await fetch('/.netlify/functions/supabase-proxy', {
+					method: 'POST',
+					headers: { 
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${token}`
+					},
+					body: JSON.stringify({
+						action: 'updateProfile',
+						payload: {
+							userId: user.id,
+							profile: profileData
+						}
+					})
+				});
+
+				const result = await response.json();
+				
+				if (result.error) {
+					throw new Error(result.error);
+				}
+				
+				const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+				Object.assign(profile, profileData);
+				localStorage.setItem('userProfile', JSON.stringify(profile));
+				
+				showNotification('Public profile saved!');
+			} catch (error) {
+				showNotification('Error saving: ' + error.message, 'error');
+			}
+		}
+
+		async function loadProfileFromSupabase() {
+			try {
+				const token = auth.getToken();
+				const user = auth.getUser();
+				
+				if (!token || !user) {
+					console.log('Not authenticated, using localStorage only');
+					return;
+				}
+
+				const response = await fetch('/.netlify/functions/supabase-proxy', {
+					method: 'POST',
+					headers: { 
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${token}`
+					},
+					body: JSON.stringify({
+						action: 'getProfile',
+						payload: { userId: user.id }
+					})
+				});
+
+				const result = await response.json();
+				
+				if (result.data) {
+					// Update localStorage with fresh data from Supabase
+					localStorage.setItem('userProfile', JSON.stringify(result.data));
+					return result.data;
+				}
+			} catch (error) {
+				console.error('Error loading profile from Supabase:', error);
+			}
+			
+			// Fallback to localStorage
+			return JSON.parse(localStorage.getItem('userProfile') || '{}');
+		}
+
+		async function saveSharingSettings() {
+			const publicStrains = [];
+			document.querySelectorAll('#strain-sharing-list input[type="checkbox"]:checked').forEach(cb => {
+				publicStrains.push(cb.dataset.strainId);
+			});
+			
+			const profileData = {
+				enable_sharing: document.getElementById('enable-sharing').checked,
+				public_strains: publicStrains
+			};
+			
+			try {
+				const token = auth.getToken();
+				const user = auth.getUser();
+				
+				const response = await fetch('/.netlify/functions/supabase-proxy', {
+					method: 'POST',
+					headers: { 
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${token}`
+					},
+					body: JSON.stringify({
+						action: 'updateProfile',
+						payload: {
+							userId: user.id,
+							profile: profileData
+						}
+					})
+				});
+
+				const result = await response.json();
+				
+				if (result.error) {
+					throw new Error(result.error);
+				}
+				
+				const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+				profile.enableSharing = profileData.enable_sharing;
+				profile.publicStrains = publicStrains;
+				localStorage.setItem('userProfile', JSON.stringify(profile));
+				
+				document.querySelectorAll('#strain-sharing-list .strain-item').forEach(item => {
+					const checkbox = item.querySelector('input[type="checkbox"]');
+					const badge = item.querySelector('.badge');
+					if (checkbox.checked) {
+						item.classList.add('selected');
+						badge.className = 'badge badge-public';
+						badge.textContent = 'Public';
+					} else {
+						item.classList.remove('selected');
+						badge.className = 'badge badge-private';
+						badge.textContent = 'Private';
+					}
+				});
+				
+				loadUserStats();
+				showNotification('Sharing settings updated!');
+			} catch (error) {
+				showNotification('Error saving: ' + error.message, 'error');
+			}
+		}
+
+        function showNotification(message) {
+            const notification = document.getElementById('save-notification');
+            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

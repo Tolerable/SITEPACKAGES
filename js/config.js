@@ -121,94 +121,142 @@ window.siteConfig = {
         ],
         "items": {
             "starter": {
+                "id": "starter",
                 "name": "Starter Package",
                 "type": "Template",
-                "category": "Template",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/minimalist%20website%20template%20mockup%20on%20laptop%20purple%20gradient%20background%20clean%20design?width=400&height=400&nologo=true",
-                "images": [],
+                "additionalImages": [],
+                "description": "Perfect for personal projects and small businesses. Get started with our full-featured template at an affordable price.",
+                "variety": "Single Site",
                 "rating": 4,
                 "origin": "SITEPACKAGES",
                 "rarity": "Standard",
-                "variety": "Single Site",
-                "description": "Perfect for personal projects and small businesses. Get started with our full-featured template at an affordable price.",
                 "details": "Includes: Full template source code, Setup wizard access, Product grid & modals, Shopping cart, Background effects, Age verification, Cookie consent, Community support via GitHub",
                 "notes": "Attribution required - 'Powered by SITEPACKAGES' footer link must remain visible.",
-                "status": "available",
                 "packOptions": [
                     { "size": "1 Site License", "regularPrice": 29, "salePrice": 19 }
-                ]
+                ],
+                "enableHoverImage": false,
+                "hoverImage": "",
+                "hidden": false,
+                "displayOrder": 1,
+                "promotional": {
+                    "type": "percentage",
+                    "value": "35",
+                    "discountPercent": "35",
+                    "enabled": true
+                }
             },
             "pro": {
+                "id": "pro",
                 "name": "Pro Package",
                 "type": "Template",
-                "category": "Template",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/professional%20ecommerce%20website%20template%20multiple%20screens%20blue%20purple%20gradient%20premium?width=400&height=400&nologo=true",
-                "images": [],
+                "additionalImages": [],
+                "description": "For serious businesses ready to launch. Includes priority support and all the bells and whistles.",
+                "variety": "Single Site",
                 "rating": 5,
                 "origin": "SITEPACKAGES",
                 "rarity": "Premium",
-                "variety": "Single Site",
-                "description": "For serious businesses ready to launch. Includes priority support and all the bells and whistles.",
                 "details": "Everything in Starter PLUS: Priority email support (30 days), All background effects unlocked, Partner showcase section, Extended about page features, Promotion system, Inventory management",
                 "notes": "Attribution required - 'Powered by SITEPACKAGES' footer link must remain visible. Commercial use allowed.",
-                "status": "available",
                 "packOptions": [
                     { "size": "1 Site License", "regularPrice": 79, "salePrice": 59 }
-                ]
+                ],
+                "enableHoverImage": false,
+                "hoverImage": "",
+                "hidden": false,
+                "displayOrder": 2,
+                "promotional": {
+                    "type": "percentage",
+                    "value": "25",
+                    "discountPercent": "25",
+                    "enabled": true
+                }
             },
             "business": {
+                "id": "business",
                 "name": "Business Package",
                 "type": "Template",
-                "category": "Template",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/enterprise%20web%20application%20dashboard%20multiple%20monitors%20gold%20purple%20gradient%20luxury?width=400&height=400&nologo=true",
-                "images": [],
+                "additionalImages": [],
+                "description": "The complete package for agencies and resellers. White-label rights let you brand it as your own.",
+                "variety": "White Label",
                 "rating": 5,
                 "origin": "SITEPACKAGES",
                 "rarity": "Exclusive",
-                "variety": "White Label",
-                "description": "The complete package for agencies and resellers. White-label rights let you brand it as your own.",
                 "details": "Everything in Pro PLUS: WHITE-LABEL RIGHTS (remove attribution), 1-hour setup consultation call, Priority support (90 days), Custom theme assistance, License for client resale",
                 "notes": "Full white-label rights - remove all SITEPACKAGES branding. Perfect for agencies building sites for clients.",
-                "status": "available",
                 "packOptions": [
                     { "size": "1 Site License", "regularPrice": 199, "salePrice": 149 }
-                ]
+                ],
+                "enableHoverImage": false,
+                "hoverImage": "",
+                "hidden": false,
+                "displayOrder": 3,
+                "promotional": {
+                    "type": "percentage",
+                    "value": "25",
+                    "discountPercent": "25",
+                    "enabled": true
+                }
             },
             "effects-pack": {
+                "id": "effects-pack",
                 "name": "Effects Add-on Pack",
                 "type": "Add-on",
-                "category": "Add-on",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/abstract%20particle%20effects%20stars%20matrix%20code%20purple%20blue%20gradient%20digital?width=400&height=400&nologo=true",
-                "images": [],
+                "additionalImages": [],
+                "description": "Additional visual effects to make your site stand out. Includes particles, matrix rain, custom floating objects, and more.",
+                "variety": "Enhancement",
                 "rating": 4,
                 "origin": "SITEPACKAGES",
                 "rarity": "Standard",
-                "variety": "Enhancement",
-                "description": "Additional visual effects to make your site stand out. Includes particles, matrix rain, custom floating objects, and more.",
                 "details": "Includes: 5 additional particle styles, Matrix code rain effect, Custom floating object support, Parallax backgrounds, Animated gradients",
                 "notes": "Requires Starter or higher. Effects are applied via config.js settings.",
-                "status": "available",
                 "packOptions": [
                     { "size": "Add-on", "regularPrice": 19, "salePrice": null }
-                ]
+                ],
+                "enableHoverImage": false,
+                "hoverImage": "",
+                "hidden": false,
+                "displayOrder": 4
             },
             "setup-service": {
+                "id": "setup-service",
                 "name": "Setup Service",
                 "type": "Service",
-                "category": "Service",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
                 "image": "https://image.pollinations.ai/prompt/professional%20consultation%20video%20call%20screen%20share%20purple%20neon%20lighting?width=400&height=400&nologo=true",
-                "images": [],
+                "additionalImages": [],
+                "description": "Let us handle the setup for you. We'll configure your template, add your products, and get you live.",
+                "variety": "Service",
                 "rating": 5,
                 "origin": "SITEPACKAGES",
                 "rarity": "Premium",
-                "variety": "Service",
-                "description": "Let us handle the setup for you. We'll configure your template, add your products, and get you live.",
                 "details": "Includes: Full template configuration, Product entry (up to 20 products), Color/branding customization, Deployment assistance, 30-minute walkthrough call",
                 "notes": "Requires purchase of any template package. Service delivered within 3 business days.",
-                "status": "available",
                 "packOptions": [
                     { "size": "Setup Service", "regularPrice": 99, "salePrice": null }
-                ]
+                ],
+                "enableHoverImage": false,
+                "hoverImage": "",
+                "hidden": false,
+                "displayOrder": 5
             }
         }
     },

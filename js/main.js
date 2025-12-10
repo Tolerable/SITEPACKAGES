@@ -1844,6 +1844,14 @@ function createProductCard(product) {
         `;
     }
 
+    // Add promo badge if product has promotional data
+    if (product.promotional && product.promotional.enabled && typeof generatePromoBadge === 'function') {
+        const badgeHtml = generatePromoBadge(product.promotional);
+        if (badgeHtml) {
+            card.insertAdjacentHTML('afterbegin', badgeHtml);
+        }
+    }
+
     return card;
 }
 

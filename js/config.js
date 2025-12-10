@@ -235,7 +235,12 @@ window.siteConfig = {
                 "enableHoverImage": false,
                 "hoverImage": "",
                 "hidden": false,
-                "displayOrder": 4
+                "displayOrder": 4,
+                "promotional": {
+                    "type": "new",
+                    "value": "NEW",
+                    "enabled": true
+                }
             },
             "setup-service": {
                 "id": "setup-service",
@@ -259,7 +264,12 @@ window.siteConfig = {
                 "enableHoverImage": false,
                 "hoverImage": "",
                 "hidden": false,
-                "displayOrder": 5
+                "displayOrder": 5,
+                "promotional": {
+                    "type": "custom",
+                    "value": "BEST SELLER",
+                    "enabled": true
+                }
             },
             "custom-themes": {
                 "id": "custom-themes",
@@ -422,8 +432,8 @@ window.siteConfig = {
                 "hidden": false,
                 "displayOrder": 10,
                 "promotional": {
-                    "type": "custom",
-                    "value": "COMING SOON",
+                    "type": "bogo",
+                    "value": "BOGO",
                     "enabled": true
                 }
             }
@@ -436,8 +446,8 @@ window.siteConfig = {
         { "name": "About", "url": "#about" }
     ],
     "friendLinks": [
-        { "name": "Rev's Genetics", "url": "https://revsgeneticslab.com/", "image": "https://revsgeneticslab.com/logo.jpg", "description": "Premium cannabis genetics" },
-        { "name": "Dwarven Forged", "url": "https://www.dwarvenforged.club/", "image": "https://image.pollinations.ai/prompt/dwarven%20forge%20fantasy%20logo%20anvil%20hammer%20fire%20gold%20medieval?width=100&height=100&nologo=true", "description": "Built with SITEPACKAGES" }
+        { "name": "Rev's Genetics", "url": "https://revsgeneticslab.com/", "image": "img/friends/revs-genetics.jpg", "description": "Premium cannabis genetics" },
+        { "name": "Dwarven Forged", "url": "https://www.dwarvenforged.club/", "image": "img/friends/dwarven-forged.jpg", "description": "Built with SITEPACKAGES" }
     ],
     "friendLinksShowcase": {
         "enabled": true,

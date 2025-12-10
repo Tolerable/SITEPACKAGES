@@ -16,6 +16,73 @@
     // Store original config
     let originalConfig = null;
 
+    // Cache for loaded theme configs and preloaded status
+    const themeCache = {};
+    let preloadStarted = false;
+
+    // All Pollinations image URLs used in themes - preload these
+    const themeImages = [
+        // Coffee shop
+        'https://image.pollinations.ai/prompt/coffee%20bean%20logo%20minimalist%20brown%20cream%20vintage%20artisan?width=200&height=200&nologo=true',
+        'https://image.pollinations.ai/prompt/coffee%20shop%20interior%20warm%20lighting%20wooden%20tables%20cozy%20atmosphere?width=1920&height=800&nologo=true',
+        'https://image.pollinations.ai/prompt/ethiopian%20coffee%20beans%20burlap%20sack%20artisan%20roasted?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/colombian%20coffee%20beans%20medium%20roast%20artisan?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/coffee%20blend%20dark%20roast%20beans%20professional?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/french%20press%20coffee%20maker%20glass%20stainless%20steel%20elegant?width=400&height=400&nologo=true',
+        // Gaming gear
+        'https://image.pollinations.ai/prompt/gaming%20logo%20neon%20green%20black%20futuristic%20esports%20hexagon?width=200&height=200&nologo=true',
+        'https://image.pollinations.ai/prompt/gaming%20setup%20RGB%20lights%20neon%20green%20purple%20dark%20room%20monitors?width=1920&height=800&nologo=true',
+        'https://image.pollinations.ai/prompt/mechanical%20gaming%20keyboard%20RGB%20lights%20green%20purple%20dark%20background?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/gaming%20mouse%20wireless%20RGB%20ergonomic%20black%20green%20glow?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/gaming%20headset%20RGB%20surround%20sound%20black%20green%20professional?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/stream%20deck%20LCD%20buttons%20streaming%20setup%20RGB%20dark?width=400&height=400&nologo=true',
+        // Fashion boutique
+        'https://image.pollinations.ai/prompt/fashion%20boutique%20logo%20elegant%20rose%20gold%20minimalist%20feminine?width=200&height=200&nologo=true',
+        'https://image.pollinations.ai/prompt/fashion%20boutique%20interior%20elegant%20rose%20gold%20pink%20marble%20luxury%20clothing%20racks?width=1920&height=800&nologo=true',
+        'https://image.pollinations.ai/prompt/elegant%20silk%20blouse%20rose%20gold%20color%20fashion%20photography%20dark%20background?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/cashmere%20wrap%20scarf%20cream%20color%20luxury%20fashion%20photography?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/tailored%20blazer%20black%20gold%20buttons%20fashion%20photography%20elegant?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/spring%20fashion%20collection%20preview%20pastel%20colors%20elegant%20clothing%20rack?width=400&height=400&nologo=true',
+        // Fitness gym
+        'https://image.pollinations.ai/prompt/fitness%20gym%20logo%20iron%20barbell%20red%20black%20bold%20aggressive?width=200&height=200&nologo=true',
+        'https://image.pollinations.ai/prompt/gym%20interior%20dark%20red%20lighting%20weights%20barbells%20intense%20atmosphere?width=1920&height=800&nologo=true',
+        'https://image.pollinations.ai/prompt/pre%20workout%20supplement%20container%20red%20black%20bold%20fitness%20product?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/whey%20protein%20powder%20container%20gold%20black%20premium%20fitness?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/fitness%20tank%20top%20black%20red%20logo%20athletic%20wear?width=400&height=400&nologo=true',
+        'https://image.pollinations.ai/prompt/resistance%20bands%20set%20fitness%20equipment%20red%20black%20professional?width=400&height=400&nologo=true'
+    ];
+
+    // Preload all theme images in background
+    function preloadThemeImages() {
+        if (preloadStarted) return;
+        preloadStarted = true;
+
+        console.log('[Theme Switcher] Preloading', themeImages.length, 'theme images...');
+
+        // Stagger the loading to avoid hammering Pollinations
+        themeImages.forEach((url, index) => {
+            setTimeout(() => {
+                const img = new Image();
+                img.src = url;
+            }, index * 200); // 200ms between each request
+        });
+    }
+
+    // Also preload the theme JS files
+    function preloadThemeConfigs() {
+        themes.forEach(theme => {
+            if (theme.file && !themeCache[theme.id]) {
+                fetch(theme.file)
+                    .then(r => r.text())
+                    .then(text => {
+                        themeCache[theme.id] = text;
+                        console.log('[Theme Switcher] Cached:', theme.name);
+                    })
+                    .catch(e => console.warn('[Theme Switcher] Failed to cache:', theme.name));
+            }
+        });
+    }
+
     // Create the theme switcher UI
     function createSwitcherUI() {
         const container = document.createElement('div');
@@ -404,25 +471,31 @@
         const price = packOption ? (packOption.salePrice || packOption.regularPrice) : 0;
         const hasDiscount = packOption && packOption.salePrice && packOption.regularPrice > packOption.salePrice;
 
-        // Promotional badge
-        let badge = '';
+        // Promotional badge - uses .promo-badge class for tilted corner overlay
+        let promoBadge = '';
         if (product.promotional && product.promotional.enabled) {
             const promo = product.promotional;
             if (promo.type === 'percentage') {
-                badge = `<div class="product-badge sale">${promo.value}% OFF</div>`;
+                promoBadge = `<div class="promo-badge percentage">${promo.value}% OFF</div>`;
             } else if (promo.type === 'custom') {
-                badge = `<div class="product-badge">${promo.value}</div>`;
+                promoBadge = `<div class="promo-badge custom">${promo.value}</div>`;
             } else if (promo.type === 'bogo') {
-                badge = `<div class="product-badge bogo">BOGO</div>`;
+                promoBadge = `<div class="promo-badge bogo">BOGO</div>`;
+            } else if (promo.type === 'sale') {
+                promoBadge = `<div class="promo-badge sale">SALE</div>`;
+            } else if (promo.type === 'new') {
+                promoBadge = `<div class="promo-badge new">NEW</div>`;
+            } else if (promo.type === 'limited') {
+                promoBadge = `<div class="promo-badge limited">LIMITED</div>`;
             }
         }
 
-        // Status badge
+        // Status badge - uses .product-status class (top-right)
         let statusBadge = '';
         if (product.status === 'comingSoon') {
-            statusBadge = `<div class="status-badge coming-soon">${config.terminology?.comingSoonLabel || 'COMING SOON'}</div>`;
+            statusBadge = `<div class="product-status coming-soon">${config.terminology?.comingSoonLabel || 'COMING SOON'}</div>`;
         } else if (product.status === 'soldOut') {
-            statusBadge = `<div class="status-badge sold-out">${config.terminology?.soldOutLabel || 'SOLD OUT'}</div>`;
+            statusBadge = `<div class="product-status sold-out">${config.terminology?.soldOutLabel || 'SOLD OUT'}</div>`;
         }
 
         // Rating stars
@@ -431,14 +504,12 @@
 
         return `
             <div class="product-card" data-product-id="${product.id}" data-type="${product.type}">
-                ${badge}
+                <img src="${product.image}" alt="${product.name}" class="product-img" onerror="this.style.display='none'" loading="lazy">
+                ${promoBadge}
                 ${statusBadge}
-                <div class="product-image-container">
-                    <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">${product.name}</h3>
-                    <p class="product-type">${product.type}${product.variety ? ' • ' + product.variety : ''}</p>
+                <div class="card-content">
+                    <h3 class="card-title">${product.name}</h3>
+                    <span class="product-type">${product.type}${product.variety ? ' • ' + product.variety : ''}</span>
                     ${config.products.enableRatings ? `<div class="product-rating">${stars}</div>` : ''}
                     <div class="product-price">
                         ${hasDiscount ? `<span class="regular-price">$${packOption.regularPrice}</span>` : ''}

@@ -658,6 +658,63 @@ nav a:hover::before {
     color: var(--background-color);
 }
 
+/* Promotional Badge Styles */
+.promo-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 6;
+    transform: rotate(-15deg);
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    min-width: 60px;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.promo-badge.percentage {
+    background: linear-gradient(45deg, #ff4444, #ff6666);
+    color: white;
+}
+
+.promo-badge.sale {
+    background: linear-gradient(45deg, #ff8800, #ffaa00);
+    color: white;
+}
+
+.promo-badge.bogo {
+    background: linear-gradient(45deg, #00aa00, #00cc00);
+    color: white;
+    font-size: 0.7rem;
+    padding: 6px 10px;
+}
+
+.promo-badge.new {
+    background: linear-gradient(45deg, #0088ff, #00aaff);
+    color: white;
+}
+
+.promo-badge.limited {
+    background: linear-gradient(45deg, #8800ff, #aa00ff);
+    color: white;
+    font-size: 0.7rem;
+    animation: pulse 2s infinite;
+}
+
+.promo-badge.custom {
+    background: linear-gradient(45deg, var(--tertiary-color), var(--highlight-color));
+    color: var(--text-color);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
 .unavailable {
     opacity: 0.7;
     cursor: default;

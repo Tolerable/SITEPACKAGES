@@ -7,7 +7,7 @@ window.siteConfig = {
         "name": "SITEPACKAGES",
         "tagline": "Launch your professional storefront in minutes",
         "logo": "https://image.pollinations.ai/prompt/SITEPACKAGES%20modern%20tech%20logo%20purple%20blue%20gradient%20minimalist%20geometric?width=200&height=200&nologo=true",
-        "heroBackground": "img/hero-bg.jpg",
+        "heroBackground": "img/social-preview.jpg",
         "socialPreview": "img/social-preview.jpg",
         "showHeroText": true,
         "email": "support@sitepackages.net",

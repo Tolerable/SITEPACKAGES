@@ -105,8 +105,10 @@ exports.handler = async (event, context) => {
         break;
 
       case 'resetPassword':
+        // TODO: Change this URL to your domain
+        const siteUrl = process.env.SITE_URL || 'https://your-site.netlify.app';
         result = await supabase.auth.resetPasswordForEmail(payload.email, {
-          redirectTo: 'https://www.strainnavigator.com/reset-password.html'
+          redirectTo: `${siteUrl}/reset-password.html`
         });
         break;
 

@@ -1799,20 +1799,51 @@ function createProductCard(product) {
         imagePath = 'img/' + imagePath;
     }
     
-    // Create the card content
-    card.innerHTML += `
-        <img src="${imagePath}" alt="${product.name}" class="product-img" onerror="this.style.display='none'">
-        <div class="card-content">
-            <h3 class="card-title">${product.name}</h3>
-            <span class="product-type">${product.type}</span>
-            <p class="card-description">${(product.description || '').split('\n')[0]}</p>
-            <div class="product-details">
-                <div class="detail-item">${product.delivery === 'digital' ? 'Digital' : siteConfig.terminology.productTerm}</div>
-                <div class="detail-item">${product.variety || 'Premium'}</div>
+    // Check if this is a text-based card (no image)
+    if (product.cardStyle === 'text') {
+        // Text-based card with gradient background
+        card.classList.add('text-card');
+        card.style.setProperty('--card-bg', product.cardBackground || 'linear-gradient(135deg, #667eea, #764ba2)');
+
+        // Build features list HTML
+        let featuresHtml = '';
+        if (product.features && product.features.length > 0) {
+            featuresHtml = '<ul class="card-features">' +
+                product.features.slice(0, 4).map(f => `<li>${f}</li>`).join('') +
+                '</ul>';
+        }
+
+        // Get price display
+        const priceOption = product.packOptions && product.packOptions[0];
+        const priceDisplay = priceOption ? `$${priceOption.salePrice || priceOption.regularPrice}` : '';
+
+        card.innerHTML += `
+            <div class="text-card-bg"></div>
+            <div class="card-content text-card-content">
+                <div class="card-icon">${product.cardIcon || '📦'}</div>
+                <h3 class="card-title">${product.name}</h3>
+                <span class="product-type">${product.type}</span>
+                <p class="card-description">${(product.description || '').split('\n')[0]}</p>
+                ${featuresHtml}
+                <div class="card-price">${priceDisplay}</div>
             </div>
-        </div>
-    `;
-    
+        `;
+    } else {
+        // Image-based card (default behavior)
+        card.innerHTML += `
+            <img src="${imagePath}" alt="${product.name}" class="product-img" onerror="this.style.display='none'">
+            <div class="card-content">
+                <h3 class="card-title">${product.name}</h3>
+                <span class="product-type">${product.type}</span>
+                <p class="card-description">${(product.description || '').split('\n')[0]}</p>
+                <div class="product-details">
+                    <div class="detail-item">${product.delivery === 'digital' ? 'Digital' : siteConfig.terminology.productTerm}</div>
+                    <div class="detail-item">${product.variety || 'Premium'}</div>
+                </div>
+            </div>
+        `;
+    }
+
     return card;
 }
 

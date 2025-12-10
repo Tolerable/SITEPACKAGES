@@ -506,6 +506,95 @@ nav a:hover::before {
     opacity: 1;
 }
 
+/* Text-based product cards (no image) */
+.product-card.text-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 320px;
+}
+
+.product-card.text-card .text-card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--card-bg, linear-gradient(135deg, #667eea, #764ba2));
+    opacity: 0.9;
+    z-index: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.product-card.text-card:hover .text-card-bg {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+.product-card.text-card .text-card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-card.text-card .card-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.product-card.text-card .card-title {
+    text-align: center;
+    font-size: 1.8rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.product-card.text-card .product-type {
+    align-self: center;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+}
+
+.product-card.text-card .card-description {
+    text-align: center;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.product-card.text-card .card-features {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    flex-grow: 1;
+}
+
+.product-card.text-card .card-features li {
+    padding: 4px 0;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+    position: relative;
+    padding-left: 18px;
+}
+
+.product-card.text-card .card-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.7);
+}
+
+.product-card.text-card .card-price {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin-top: auto;
+    padding-top: 10px;
+}
+
 .card-content {
     padding: 20px;
 }

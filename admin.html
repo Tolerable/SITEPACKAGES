@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITEPACKAGES Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --background: #0a0a1a;
+            --surface: #1a1a2e;
+            --surface-light: #252540;
+            --text: #ffffff;
+            --text-muted: #a0a0b0;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-role {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--surface);
+            padding: 1rem 0;
+            border-right: 1px solid var(--surface-light);
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: var(--surface-light);
+            color: var(--text);
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-nav a span {
+            margin-right: 0.75rem;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--surface-light);
+        }
+
+        .stat-card h3 {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .data-table {
+            width: 100%;
+            background: var(--surface);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid var(--surface-light);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--surface-light);
+        }
+
+        .data-table th {
+            background: var(--surface-light);
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-owner { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .badge-admin { background: #f44336; }
+        .badge-moderator { background: #ff9800; }
+        .badge-user { background: #4caf50; }
+        .badge-pending { background: #ff9800; }
+        .badge-paid { background: #4caf50; }
+        .badge-cancelled { background: #f44336; }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--surface-light);
+            border-radius: 0.5rem;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .form-group select,
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--surface-light);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.5rem;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .access-denied {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .access-denied h2 {
+            color: var(--danger);
+            margin-bottom: 1rem;
+        }
+
+        #login-section {
+            max-width: 400px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: 1rem;
+        }
+
+        #login-section h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Section (shown if not logged in) -->
+    <div id="login-section" style="display: none;">
+        <h2>Admin Login</h2>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="login-email" placeholder="admin@sitepackages.net">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="login-password" placeholder="Password">
+        </div>
+        <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="handleLogin()">Sign In</button>
+        <p id="login-error" style="color: var(--danger); text-align: center; margin-top: 1rem; display: none;"></p>
+    </div>
+
+    <!-- Access Denied (shown if role insufficient) -->
+    <div id="access-denied" class="access-denied" style="display: none;">
+        <h2>Access Denied</h2>
+        <p>You must be an ADMIN or OWNER to access this page.</p>
+        <button class="btn btn-primary" style="margin-top: 1rem;" onclick="window.location.href='index.html'">Return to Store</button>
+    </div>
+
+    <!-- Admin Dashboard (shown if authorized) -->
+    <div id="admin-dashboard" style="display: none;">
+        <header class="admin-header">
+            <h1>SITEPACKAGES Admin</h1>
+            <div class="user-info">
+                <span id="admin-email"></span>
+                <span class="user-role" id="admin-role"></span>
+                <button class="logout-btn" onclick="handleLogout()">Logout</button>
+            </div>
+        </header>
+
+        <div class="admin-container">
+            <nav class="sidebar">
+                <div class="sidebar-nav">
+                    <a href="#" class="active" data-section="dashboard"><span>📊</span> Dashboard</a>
+                    <a href="#" data-section="users"><span>👥</span> Users</a>
+                    <a href="#" data-section="orders"><span>📦</span> Orders</a>
+                    <a href="#" data-section="products"><span>🛍️</span> Products</a>
+                    <a href="#" data-section="settings"><span>⚙️</span> Settings</a>
+                </div>
+            </nav>
+
+            <main class="main-content">
+                <!-- Dashboard Section -->
+                <section id="section-dashboard" class="section active">
+                    <div class="section-header">
+                        <h2>Dashboard</h2>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Users</h3>
+                            <div class="value" id="stat-users">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Orders</h3>
+                            <div class="value" id="stat-orders">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Revenue</h3>
+                            <div class="value" id="stat-revenue">$-</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Pending Orders</h3>
+                            <div class="value" id="stat-pending">-</div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-bottom: 1rem;">Recent Orders</h3>
+                    <table class="data-table" id="recent-orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Customer</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-orders-body">
+                            <tr><td colspan="5" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Users Section -->
+                <section id="section-users" class="section">
+                    <div class="section-header">
+                        <h2>Users</h2>
+                    </div>
+
+                    <div class="search-box">
+                        <input type="text" id="user-search" placeholder="Search users by email or name...">
+                        <button class="btn btn-primary" onclick="searchUsers()">Search</button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Display Name</th>
+                                <th>Role</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <tr><td colspan="5" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Orders Section -->
+                <section id="section-orders" class="section">
+                    <div class="section-header">
+                        <h2>Orders</h2>
+                    </div>
+
+                    <div class="search-box">
+                        <input type="text" id="order-search" placeholder="Search by order number or email...">
+                        <select id="order-status-filter" style="width: 150px;">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="paid">Paid</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="loadOrders()">Filter</button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Customer</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <tr><td colspan="7" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Products Section -->
+                <section id="section-products" class="section">
+                    <div class="section-header">
+                        <h2>Products (from product-data.js)</h2>
+                        <a href="setup.html#products" class="btn btn-primary">Edit in Setup Wizard</a>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <tr><td colspan="4" class="loading">Loading from product-data.js...</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="section-settings" class="section">
+                    <div class="section-header">
+                        <h2>Settings</h2>
+                    </div>
+
+                    <div class="stat-card" style="max-width: 600px;">
+                        <h3 style="margin-bottom: 1rem;">Quick Links</h3>
+                        <p style="margin-bottom: 1rem;"><a href="setup.html" style="color: var(--primary);">Setup Wizard</a> - Configure store settings, colors, products</p>
+                        <p style="margin-bottom: 1rem;"><a href="features.html" style="color: var(--primary);">Features Page</a> - View marketing page</p>
+                        <p><a href="index.html" style="color: var(--primary);">Storefront</a> - View live store</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Role Edit Modal -->
+    <div class="modal" id="role-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit User Role</h3>
+                <button class="modal-close" onclick="closeModal('role-modal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>User</label>
+                <input type="text" id="role-user-email" disabled>
+                <input type="hidden" id="role-user-id">
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select id="role-select">
+                    <option value="USER">USER</option>
+                    <option value="MODERATOR">MODERATOR</option>
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="OWNER">OWNER</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="saveUserRole()">Save Role</button>
+        </div>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div class="modal" id="order-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Order Details</h3>
+                <button class="modal-close" onclick="closeModal('order-modal')">&times;</button>
+            </div>
+            <div id="order-detail-content">
+                <!-- Order details loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // API endpoint
+        const API_URL = '/.netlify/functions/supabase-proxy';
+
+        // Current user state
+        let currentUser = null;
+        let currentRole = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await checkAuth();
+            setupNavigation();
+        });
+
+        // Check authentication and role
+        async function checkAuth() {
+            const accessToken = localStorage.getItem('accessToken');
+            const userEmail = localStorage.getItem('userEmail');
+            const userRole = localStorage.getItem('userRole');
+
+            if (!accessToken || !userEmail) {
+                showLogin();
+                return;
+            }
+
+            // Verify role is sufficient
+            if (!['ADMIN', 'OWNER'].includes(userRole)) {
+                document.getElementById('access-denied').style.display = 'block';
+                return;
+            }
+
+            currentUser = { email: userEmail };
+            currentRole = userRole;
+
+            // Show admin dashboard
+            document.getElementById('admin-dashboard').style.display = 'block';
+            document.getElementById('admin-email').textContent = userEmail;
+            document.getElementById('admin-role').textContent = userRole;
+            document.getElementById('admin-role').className = 'user-role badge-' + userRole.toLowerCase();
+
+            // Load initial data
+            loadDashboard();
+            loadUsers();
+        }
+
+        function showLogin() {
+            document.getElementById('login-section').style.display = 'block';
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorEl = document.getElementById('login-error');
+
+            if (!email || !password) {
+                errorEl.textContent = 'Please enter email and password';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'signIn', email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    errorEl.textContent = data.error;
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                // Store auth data
+                localStorage.setItem('accessToken', data.session.access_token);
+                localStorage.setItem('refreshToken', data.session.refresh_token);
+                localStorage.setItem('userEmail', data.user.email);
+
+                // Get role
+                const roleResponse = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'getUserRole',
+                        userId: data.user.id,
+                        accessToken: data.session.access_token
+                    })
+                });
+
+                const roleData = await roleResponse.json();
+                localStorage.setItem('userRole', roleData.role || 'USER');
+
+                // Reload to check access
+                location.reload();
+
+            } catch (err) {
+                errorEl.textContent = 'Login failed: ' + err.message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            location.reload();
+        }
+
+        // Navigation
+        function setupNavigation() {
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = link.dataset.section;
+
+                    // Update active states
+                    document.querySelectorAll('.sidebar-nav a').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById('section-' + section).classList.add('active');
+
+                    // Load section data
+                    if (section === 'orders') loadOrders();
+                    if (section === 'products') loadProducts();
+                });
+            });
+        }
+
+        // Load Dashboard
+        async function loadDashboard() {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+
+                // Get orders for stats
+                const ordersResponse = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'getOrders', accessToken })
+                });
+
+                const ordersData = await ordersResponse.json();
+                const orders = ordersData.orders || [];
+
+                // Calculate stats
+                const totalRevenue = orders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
+                const pendingOrders = orders.filter(o => o.status === 'pending').length;
+
+                document.getElementById('stat-orders').textContent = orders.length;
+                document.getElementById('stat-revenue').textContent = '$' + totalRevenue.toFixed(2);
+                document.getElementById('stat-pending').textContent = pendingOrders;
+
+                // Recent orders
+                const recentOrders = orders.slice(0, 5);
+                const tbody = document.getElementById('recent-orders-body');
+
+                if (recentOrders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No orders yet</td></tr>';
+                } else {
+                    tbody.innerHTML = recentOrders.map(order => `
+                        <tr>
+                            <td>${order.order_number || order.id.slice(0,8)}</td>
+                            <td>${order.customer_email || '-'}</td>
+                            <td>$${parseFloat(order.total || 0).toFixed(2)}</td>
+                            <td><span class="badge badge-${order.status}">${order.status}</span></td>
+                            <td>${new Date(order.created_at).toLocaleDateString()}</td>
+                        </tr>
+                    `).join('');
+                }
+
+            } catch (err) {
+                console.error('Failed to load dashboard:', err);
+            }
+        }
+
+        // Load Users
+        async function loadUsers() {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+
+                // Note: This requires a custom endpoint to list all users
+                // For now, show placeholder
+                const tbody = document.getElementById('users-table-body');
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">User listing requires additional backend setup</td></tr>';
+
+                document.getElementById('stat-users').textContent = '-';
+
+            } catch (err) {
+                console.error('Failed to load users:', err);
+            }
+        }
+
+        function searchUsers() {
+            const query = document.getElementById('user-search').value;
+            // Implement user search
+            console.log('Search users:', query);
+        }
+
+        // Load Orders
+        async function loadOrders() {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+                const statusFilter = document.getElementById('order-status-filter').value;
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'getOrders', accessToken, status: statusFilter || undefined })
+                });
+
+                const data = await response.json();
+                const orders = data.orders || [];
+
+                const tbody = document.getElementById('orders-table-body');
+
+                if (orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No orders found</td></tr>';
+                } else {
+                    tbody.innerHTML = orders.map(order => `
+                        <tr>
+                            <td>${order.order_number || order.id.slice(0,8)}</td>
+                            <td>${order.customer_email || order.customer_name || '-'}</td>
+                            <td>-</td>
+                            <td>$${parseFloat(order.total || 0).toFixed(2)}</td>
+                            <td><span class="badge badge-${order.status}">${order.status}</span></td>
+                            <td>${new Date(order.created_at).toLocaleDateString()}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="viewOrder('${order.id}')">View</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+
+            } catch (err) {
+                console.error('Failed to load orders:', err);
+            }
+        }
+
+        function viewOrder(orderId) {
+            // Load order details modal
+            console.log('View order:', orderId);
+            document.getElementById('order-detail-content').innerHTML = '<p>Order ID: ' + orderId + '</p><p>Loading details...</p>';
+            document.getElementById('order-modal').classList.add('active');
+        }
+
+        // Load Products (from product-data.js)
+        function loadProducts() {
+            const tbody = document.getElementById('products-table-body');
+
+            // Products are loaded from product-data.js
+            if (typeof products === 'undefined') {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Product data not loaded</td></tr>';
+                return;
+            }
+
+            const productList = Object.values(products);
+
+            if (productList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No products configured</td></tr>';
+            } else {
+                tbody.innerHTML = productList.map(p => {
+                    const price = p.packOptions && p.packOptions[0] ? '$' + p.packOptions[0].regularPrice : '-';
+                    return `
+                        <tr>
+                            <td>${p.name}</td>
+                            <td>${p.type || '-'}</td>
+                            <td>${price}</td>
+                            <td><span class="badge badge-${p.status === 'available' ? 'paid' : p.status === 'coming-soon' ? 'pending' : 'cancelled'}">${p.status}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Role management
+        function editUserRole(userId, email, currentRole) {
+            document.getElementById('role-user-id').value = userId;
+            document.getElementById('role-user-email').value = email;
+            document.getElementById('role-select').value = currentRole;
+            document.getElementById('role-modal').classList.add('active');
+        }
+
+        async function saveUserRole() {
+            const userId = document.getElementById('role-user-id').value;
+            const newRole = document.getElementById('role-select').value;
+            const accessToken = localStorage.getItem('accessToken');
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'setUserRole', userId, role: newRole, accessToken })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    alert('Role updated successfully');
+                    closeModal('role-modal');
+                    loadUsers();
+                }
+
+            } catch (err) {
+                alert('Failed to update role: ' + err.message);
+            }
+        }
+
+        // Modal helpers
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // Close modals on backdrop click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
+    <!-- Load product data for Products tab -->
+    <script src="js/product-data.js"></script>
+</body>
+</html>

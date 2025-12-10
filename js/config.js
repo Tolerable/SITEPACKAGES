@@ -6,7 +6,7 @@ window.siteConfig = {
     "site": {
         "name": "SITEPACKAGES",
         "tagline": "Launch your professional storefront in minutes",
-        "logo": "img/logo.png",
+        "logo": "https://image.pollinations.ai/prompt/SITEPACKAGES%20modern%20tech%20logo%20purple%20blue%20gradient%20minimalist%20geometric?width=200&height=200&nologo=true",
         "heroBackground": "img/hero-bg.jpg",
         "socialPreview": "img/social-preview.jpg",
         "showHeroText": true,
@@ -257,6 +257,35 @@ window.siteConfig = {
                 "hoverImage": "",
                 "hidden": false,
                 "displayOrder": 5
+            },
+            "custom-themes": {
+                "id": "custom-themes",
+                "name": "Custom Themes",
+                "type": "Template",
+                "status": "comingSoon",
+                "delivery": "digital",
+                "digitalContent": "",
+                "image": "https://image.pollinations.ai/prompt/futuristic%20website%20themes%20collection%20multiple%20color%20schemes%20purple%20gold%20blue%20preview%20grid%20premium%20design?width=400&height=400&nologo=true",
+                "additionalImages": [],
+                "description": "Premium theme packs coming soon! Transform your SITEPACKAGES site with professionally designed color schemes, layouts, and visual styles. Each theme includes custom CSS, background effects, and UI variations.",
+                "variety": "Theme Pack",
+                "rating": 5,
+                "origin": "SITEPACKAGES",
+                "rarity": "Premium",
+                "details": "Coming Soon: Neon Cyberpunk theme, Earth & Nature theme, Luxury Gold theme, Minimalist Clean theme, Retro Arcade theme. Each theme includes color presets, custom effects, and layout variations.",
+                "notes": "Join our mailing list to be notified when premium themes launch. Early subscribers get 25% off.",
+                "packOptions": [
+                    { "size": "Theme Pack", "regularPrice": 29, "salePrice": null }
+                ],
+                "enableHoverImage": false,
+                "hoverImage": "",
+                "hidden": false,
+                "displayOrder": 6,
+                "promotional": {
+                    "type": "custom",
+                    "value": "COMING SOON",
+                    "enabled": true
+                }
             }
         }
     },
@@ -267,8 +296,8 @@ window.siteConfig = {
         { "name": "About", "url": "#about" }
     ],
     "friendLinks": [
-        { "name": "Rev's Genetics", "url": "https://revsgeneticslab.com/", "image": "", "description": "Premium cannabis genetics" },
-        { "name": "StrainNavigator", "url": "https://www.strainnavigator.com/", "image": "", "description": "Strain discovery platform" }
+        { "name": "Rev's Genetics", "url": "https://revsgeneticslab.com/", "image": "https://revsgeneticslab.com/logo.jpg", "description": "Premium cannabis genetics" },
+        { "name": "Dwarven Forged", "url": "https://www.dwarvenforged.club/", "image": "https://image.pollinations.ai/prompt/dwarven%20forge%20fantasy%20logo%20anvil%20hammer%20fire%20gold%20medieval?width=100&height=100&nologo=true", "description": "Built with SITEPACKAGES" }
     ],
     "friendLinksShowcase": {
         "enabled": true,

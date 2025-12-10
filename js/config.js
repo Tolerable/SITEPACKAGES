@@ -175,10 +175,10 @@ window.siteConfig = {
                 "hidden": false,
                 "displayOrder": 2,
                 "promotional": {
-                    "type": "percentage",
-                    "value": "25",
-                    "discountPercent": "25",
-                    "bogoType": "same",
+                    "type": "bogo",
+                    "value": "+ FREE Starter Image Pack!",
+                    "bogoType": "choice",
+                    "bogoChoices": ["image-pack-starter"],
                     "enabled": true
                 }
             },
@@ -206,10 +206,10 @@ window.siteConfig = {
                 "hidden": false,
                 "displayOrder": 3,
                 "promotional": {
-                    "type": "percentage",
-                    "value": "25",
-                    "discountPercent": "25",
-                    "bogoType": "same",
+                    "type": "bogo",
+                    "value": "+ FREE Pro Image Pack!",
+                    "bogoType": "choice",
+                    "bogoChoices": ["image-pack-pro"],
                     "enabled": true
                 }
             },
@@ -288,6 +288,148 @@ window.siteConfig = {
                     "type": "custom",
                     "value": "COMING SOON",
                     "bogoType": "same",
+                    "enabled": true
+                }
+            },
+            "image-pack-starter": {
+                "id": "image-pack-starter",
+                "name": "Image Pack - Starter",
+                "type": "Add-on",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
+                "image": "https://image.pollinations.ai/prompt/collection%20of%20website%20textures%20backgrounds%20seamless%20patterns%20dark%20theme%20purple%20blue%20gradient%20grid%20preview?width=400&height=400&nologo=true",
+                "additionalImages": [
+                    "https://image.pollinations.ai/prompt/seamless%20dark%20grunge%20texture%20concrete%20subtle%20noise%20website%20background?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/purple%20blue%20gradient%20background%20smooth%20transition%20dark%20edges%20website%20hero?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/geometric%20hexagon%20pattern%20dark%20theme%20subtle%20lines%20tech%20background?width=400&height=400&nologo=true"
+                ],
+                "description": "Essential background textures and patterns for your SITEPACKAGES site. Perfect for hero sections, cards, and overlays.",
+                "variety": "Digital Assets",
+                "rating": 4,
+                "origin": "SITEPACKAGES",
+                "rarity": "Standard",
+                "details": "Includes 15 high-quality assets: 5 seamless dark textures (grunge, noise, fabric, concrete, paper), 5 gradient backgrounds (purple-blue, sunset, ocean, forest, midnight), 5 abstract patterns (geometric, circuit, hexagon, wave, dots). All images 2048x2048px, PNG format, royalty-free for your sites.",
+                "notes": "Drop into your img/ folder and reference in config.js. Works with any SITEPACKAGES template.",
+                "packOptions": [
+                    { "size": "15 Assets", "regularPrice": 9, "salePrice": 7 }
+                ],
+                "enableHoverImage": true,
+                "hoverImage": "https://image.pollinations.ai/prompt/seamless%20dark%20texture%20pack%20preview%20grunge%20noise%20concrete%20samples%20grid?width=400&height=400&nologo=true",
+                "hidden": false,
+                "displayOrder": 7,
+                "promotional": {
+                    "type": "custom",
+                    "value": "NEW!",
+                    "enabled": true
+                }
+            },
+            "image-pack-pro": {
+                "id": "image-pack-pro",
+                "name": "Image Pack - Pro",
+                "type": "Add-on",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
+                "image": "https://image.pollinations.ai/prompt/premium%20website%20asset%20collection%20textures%20backgrounds%20overlays%20particles%20dark%20theme%20professional%20grid%20showcase?width=400&height=400&nologo=true",
+                "additionalImages": [
+                    "https://image.pollinations.ai/prompt/metallic%20brushed%20steel%20texture%20dark%20theme%20industrial%20seamless?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/particle%20overlay%20sparkles%20dust%20floating%20transparent%20background%20bokeh?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/epic%20hero%20background%20mountain%20sunset%20cinematic%20wide%20landscape%20dark%20moody?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/abstract%20wave%20pattern%20flowing%20lines%20dark%20blue%20purple%20gradient?width=400&height=400&nologo=true"
+                ],
+                "description": "Comprehensive image library with textures, backgrounds, overlays, and UI elements. Everything you need for a polished site.",
+                "variety": "Digital Assets",
+                "rating": 5,
+                "origin": "SITEPACKAGES",
+                "rarity": "Premium",
+                "details": "Includes 50 high-quality assets: 10 seamless textures (dark, light, grunge, metallic, organic), 15 gradient backgrounds (all color themes), 10 abstract patterns, 5 particle overlays (PNG with transparency), 5 hero backgrounds (landscape 3840x2160), 5 card/section backgrounds. All royalty-free.",
+                "notes": "Includes size variations for each asset (full, medium, thumbnail). Perfect for performance optimization.",
+                "packOptions": [
+                    { "size": "50 Assets", "regularPrice": 24, "salePrice": 19 }
+                ],
+                "enableHoverImage": true,
+                "hoverImage": "https://image.pollinations.ai/prompt/professional%20asset%20pack%20preview%20textures%20gradients%20overlays%20samples%20dark?width=400&height=400&nologo=true",
+                "hidden": false,
+                "displayOrder": 8,
+                "promotional": {
+                    "type": "percentage",
+                    "value": "21",
+                    "discountPercent": "21",
+                    "bogoType": "same",
+                    "enabled": true
+                }
+            },
+            "image-pack-holiday": {
+                "id": "image-pack-holiday",
+                "name": "Image Pack - Holiday Bundle",
+                "type": "Add-on",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
+                "image": "https://image.pollinations.ai/prompt/holiday%20themed%20website%20backgrounds%20christmas%20halloween%20valentines%20easter%20festive%20collection%20dark%20theme%20preview%20grid?width=400&height=400&nologo=true",
+                "additionalImages": [
+                    "https://image.pollinations.ai/prompt/christmas%20background%20snowflakes%20blue%20winter%20festive%20dark%20elegant?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/halloween%20spooky%20background%20orange%20black%20fog%20bats%20moonlight?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/valentines%20hearts%20background%20red%20pink%20romantic%20bokeh%20love?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/summer%20tropical%20background%20beach%20sunset%20palm%20trees%20warm%20colors?width=400&height=400&nologo=true"
+                ],
+                "description": "Seasonal backgrounds and textures for every holiday. Keep your site fresh year-round with themed visuals.",
+                "variety": "Seasonal Assets",
+                "rating": 5,
+                "origin": "SITEPACKAGES",
+                "rarity": "Premium",
+                "details": "Includes 40 seasonal assets across 8 holidays: Christmas (snowflakes, trees, lights), Halloween (spooky, pumpkins, bats), Valentine's (hearts, roses, romance), Easter (pastels, eggs, spring), St. Patrick's (green, clovers, gold), Summer (beach, tropical, sun), Fall (leaves, harvest, warm), New Year's (fireworks, celebration, sparkle). Each holiday pack includes 5 backgrounds.",
+                "notes": "Pairs perfectly with our holiday floating effects! Use together for maximum seasonal impact.",
+                "packOptions": [
+                    { "size": "40 Assets (8 Holidays)", "regularPrice": 29, "salePrice": 22 }
+                ],
+                "enableHoverImage": true,
+                "hoverImage": "https://image.pollinations.ai/prompt/four%20seasons%20holiday%20backgrounds%20grid%20christmas%20halloween%20summer%20spring?width=400&height=400&nologo=true",
+                "hidden": false,
+                "displayOrder": 9,
+                "promotional": {
+                    "type": "percentage",
+                    "value": "24",
+                    "discountPercent": "24",
+                    "bogoType": "same",
+                    "enabled": true
+                }
+            },
+            "image-pack-ultimate": {
+                "id": "image-pack-ultimate",
+                "name": "Image Pack - Ultimate Bundle",
+                "type": "Add-on",
+                "status": "available",
+                "delivery": "digital",
+                "digitalContent": "",
+                "image": "https://image.pollinations.ai/prompt/ultimate%20website%20asset%20bundle%20textures%20backgrounds%20overlays%20icons%20everything%20dark%20premium%20gold%20accents%20showcase?width=400&height=400&nologo=true",
+                "additionalImages": [
+                    "https://image.pollinations.ai/prompt/animated%20gif%20background%20subtle%20particles%20flowing%20dark%20elegant?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/social%20media%20template%20pack%20instagram%20twitter%20dark%20theme%20preview?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/ui%20elements%20sprites%20buttons%20icons%20dark%20theme%20web%20design%20collection?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/email%20header%20graphics%20newsletter%20banners%20professional%20dark%20purple?width=400&height=400&nologo=true",
+                    "https://image.pollinations.ai/prompt/premium%20particle%20overlays%20collection%20sparkles%20smoke%20light%20rays%20transparent?width=400&height=400&nologo=true"
+                ],
+                "description": "The complete image library. Every texture, background, overlay, and seasonal asset we offer, plus exclusive bonus content.",
+                "variety": "Complete Bundle",
+                "rating": 5,
+                "origin": "SITEPACKAGES",
+                "rarity": "Exclusive",
+                "details": "EVERYTHING included: All 50 Pro assets, All 40 Holiday assets, PLUS 30 exclusive bonus items - animated GIF backgrounds, premium particle overlays, UI element sprites, social media templates, and email header graphics. 120+ assets total, regularly updated with new content.",
+                "notes": "Best value! Includes lifetime updates - get new assets added to the bundle automatically. One purchase, forever expanding library.",
+                "packOptions": [
+                    { "size": "120+ Assets + Updates", "regularPrice": 59, "salePrice": 39 }
+                ],
+                "enableHoverImage": true,
+                "hoverImage": "https://image.pollinations.ai/prompt/ultimate%20bundle%20everything%20included%20textures%20overlays%20templates%20gold%20premium?width=400&height=400&nologo=true",
+                "hidden": false,
+                "displayOrder": 10,
+                "promotional": {
+                    "type": "bogo",
+                    "value": "FREE Image Pack Starter!",
+                    "bogoType": "choice",
+                    "bogoChoices": ["image-pack-starter"],
                     "enabled": true
                 }
             }

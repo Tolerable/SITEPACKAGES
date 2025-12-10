@@ -147,6 +147,7 @@ window.siteConfig = {
                     "type": "percentage",
                     "value": "35",
                     "discountPercent": "35",
+                    "bogoType": "same",
                     "enabled": true
                 }
             },
@@ -177,6 +178,7 @@ window.siteConfig = {
                     "type": "percentage",
                     "value": "25",
                     "discountPercent": "25",
+                    "bogoType": "same",
                     "enabled": true
                 }
             },
@@ -207,6 +209,7 @@ window.siteConfig = {
                     "type": "percentage",
                     "value": "25",
                     "discountPercent": "25",
+                    "bogoType": "same",
                     "enabled": true
                 }
             },
@@ -284,6 +287,7 @@ window.siteConfig = {
                 "promotional": {
                     "type": "custom",
                     "value": "COMING SOON",
+                    "bogoType": "same",
                     "enabled": true
                 }
             }
@@ -308,12 +312,35 @@ window.siteConfig = {
     "advanced": {
         "enableShop": true,
         "enableLocalStorage": true,
+        "enableShipping": false,
+        "shippingPrice": 10,
+        "showFreeShipping": true,
         "checkoutMethod": "email",
         "externalCheckoutUrl": "",
-        "analyticsId": "",
         "orderEmail": "support@sitepackages.net",
+        "paymentProcessor": {
+            "type": "none",
+            "square": {
+                "appId": "",
+                "locationId": "",
+                "environment": "sandbox"
+            },
+            "stripe": {
+                "publishableKey": "",
+                "environment": "test"
+            },
+            "paypal": {
+                "clientId": "",
+                "environment": "sandbox",
+                "currency": "USD"
+            }
+        },
         "enableAgeCheck": false,
         "ageCheckMinimum": 21,
-        "ageRedirectUrl": "https://www.google.com"
+        "ageRedirectUrl": "https://www.google.com",
+        "enableCookieConsent": true,
+        "cookiePolicyUrl": "./privacy.html",
+        "cookieRedirectOnDecline": false,
+        "analyticsId": ""
     }
 };

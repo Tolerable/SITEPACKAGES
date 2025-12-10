@@ -4767,14 +4767,22 @@ document.createElement = function(tagName) {
 							safeSetValue('floating-object-image', config.effects.specialFeature.image);
 							safeSetValue('special-feature-behavior', config.effects.specialFeature.behavior);
 						}
+
+						if (config.effects.backgroundAudio) {
+							safeSetValue('background-audio-enabled', config.effects.backgroundAudio.enabled ? 'true' : 'false');
+							safeSetValue('background-audio-file', config.effects.backgroundAudio.file);
+							safeSetValue('background-audio-volume', config.effects.backgroundAudio.volume || 0.5);
+						}
 					}
-					
+
 					// Advanced Settings
 					if (config.advanced) {
+						safeSetValue('enable-shop', config.advanced.enableShop !== false ? 'true' : 'false');
 						safeSetValue('enable-local-storage', config.advanced.enableLocalStorage ? 'true' : 'false');
 						safeSetValue('checkout-method', config.advanced.checkoutMethod);
 						safeSetValue('external-checkout-url', config.advanced.externalCheckoutUrl);
 						safeSetValue('analytics-id', config.advanced.analyticsId);
+						safeSetValue('order-email', config.advanced.orderEmail || '');
 						safeSetValue('enable-age-check', config.advanced.enableAgeCheck ? 'true' : 'false');
 						safeSetValue('age-check-minimum', config.advanced.ageCheckMinimum || 21);
 						safeSetValue('age-redirect-url', config.advanced.ageRedirectUrl || 'https://www.google.com');
@@ -4791,7 +4799,17 @@ document.createElement = function(tagName) {
 						safeSetValue('enable-legal-disclaimer', config.legal.enableDisclaimer ? 'true' : 'false');
 						safeSetValue('legal-disclaimer-text', config.legal.disclaimerText || '');
 					}
-					
+
+					// Strain Tree settings
+					if (config.strainTree) {
+						safeSetValue('enable-strain-tree', config.strainTree.enabled ? 'true' : 'false');
+						safeSetValue('strain-tree-title', config.strainTree.title || 'Strain Genetics Explorer');
+						safeSetValue('strain-tree-description', config.strainTree.description || '');
+						safeSetValue('strain-data-path', config.strainTree.dataPath || 'data/straindata.json');
+						// Also save to localStorage for the separate loader
+						localStorage.setItem('strainTreeConfig', JSON.stringify(config.strainTree));
+					}
+
 					// Handle background images specifically
 					if (config.background) {
 						safeSetValue('background-image', config.background.image || '');

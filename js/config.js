@@ -34,7 +34,7 @@ window.siteConfig = {
         "body": "'Exo 2', sans-serif"
     },
     "terminology": {
-        "category1": "Package",
+        "category1": "Template",
         "category2": "Add-on",
         "category3": "Service",
         "productTerm": "Package",
@@ -74,27 +74,43 @@ window.siteConfig = {
     },
     "about": {
         "title": "About SITEPACKAGES",
-        "subtitle": "Professional Store Templates",
-        "image": "img/about.jpg",
-        "description": "SITEPACKAGES provides complete, ready-to-deploy store templates for creators and businesses. Built with modern web technologies, our templates include visual effects, product management, user authentication, and seamless checkout integration. Launch your professional storefront in minutes, not months.",
-        "teamMembers": [],
+        "subtitle": "Professional Store Templates Made Easy",
+        "image": "https://image.pollinations.ai/prompt/modern%20web%20development%20workspace%20with%20code%20screens%20purple%20blue%20gradient%20lighting%20professional?width=600&height=400&nologo=true",
+        "description": "SITEPACKAGES provides complete, ready-to-deploy store templates for creators and businesses. Built with modern web technologies, our templates include stunning visual effects, product management, shopping cart, user accounts, and seamless checkout integration.\n\nNo coding required - just configure through our setup wizard and launch your professional storefront in minutes, not months.",
+        "teamMembers": [
+            {
+                "name": "Rev",
+                "title": "Creator & Lead Developer",
+                "bio": "Building AI systems and web tools for over a decade. Creator of numerous projects including StrainNavigator and Rev's Genetics.",
+                "image": "https://image.pollinations.ai/prompt/cyberpunk%20hacker%20portrait%20purple%20neon%20lighting%20dark%20background?width=200&height=200&nologo=true"
+            }
+        ],
         "historyItems": [
             {
+                "year": "2024",
+                "title": "Genesis",
+                "description": "Rev's Genetics site template created with full e-commerce capabilities."
+            },
+            {
                 "year": "2025",
-                "title": "Launch",
-                "description": "SITEPACKAGES launches with full-featured store templates including Supabase integration, visual effects, and setup wizard."
+                "title": "SITEPACKAGES Launch",
+                "description": "Template system released publicly with setup wizard, visual effects, and licensing system."
             }
         ],
         "additionalSections": [
             {
                 "title": "Why SITEPACKAGES?",
-                "content": "Building a professional e-commerce site from scratch takes weeks or months. With SITEPACKAGES, you get a complete store template with product grids, detail modals, shopping cart, user accounts, and beautiful visual effects - all configurable through our setup wizard. No coding required."
+                "content": "Building a professional e-commerce site from scratch takes weeks or months. With SITEPACKAGES, you get a complete store template with product grids, detail modals, shopping cart, user accounts, and beautiful visual effects - all configurable through our setup wizard."
+            },
+            {
+                "title": "Features Included",
+                "content": "Product grid with filtering, detailed product modals with tabs, shopping cart system, checkout flow, age verification, cookie consent, background effects (particles, stars, matrix), floating objects, partner showcases, about pages with team members and timelines, and much more."
             }
         ]
     },
     "products": {
         "defaultStatus": "available",
-        "enableRatings": false,
+        "enableRatings": true,
         "showPackOptions": true,
         "defaultPackOptions": [
             {
@@ -103,22 +119,113 @@ window.siteConfig = {
                 "salePrice": null
             }
         ],
-        "items": {}
+        "items": {
+            "starter": {
+                "name": "Starter Package",
+                "type": "Template",
+                "category": "Template",
+                "image": "https://image.pollinations.ai/prompt/minimalist%20website%20template%20mockup%20on%20laptop%20purple%20gradient%20background%20clean%20design?width=400&height=400&nologo=true",
+                "images": [],
+                "rating": 4,
+                "origin": "SITEPACKAGES",
+                "rarity": "Standard",
+                "variety": "Single Site",
+                "description": "Perfect for personal projects and small businesses. Get started with our full-featured template at an affordable price.",
+                "details": "Includes: Full template source code, Setup wizard access, Product grid & modals, Shopping cart, Background effects, Age verification, Cookie consent, Community support via GitHub",
+                "notes": "Attribution required - 'Powered by SITEPACKAGES' footer link must remain visible.",
+                "status": "available",
+                "packOptions": [
+                    { "size": "1 Site License", "regularPrice": 29, "salePrice": 19 }
+                ]
+            },
+            "pro": {
+                "name": "Pro Package",
+                "type": "Template",
+                "category": "Template",
+                "image": "https://image.pollinations.ai/prompt/professional%20ecommerce%20website%20template%20multiple%20screens%20blue%20purple%20gradient%20premium?width=400&height=400&nologo=true",
+                "images": [],
+                "rating": 5,
+                "origin": "SITEPACKAGES",
+                "rarity": "Premium",
+                "variety": "Single Site",
+                "description": "For serious businesses ready to launch. Includes priority support and all the bells and whistles.",
+                "details": "Everything in Starter PLUS: Priority email support (30 days), All background effects unlocked, Partner showcase section, Extended about page features, Promotion system, Inventory management",
+                "notes": "Attribution required - 'Powered by SITEPACKAGES' footer link must remain visible. Commercial use allowed.",
+                "status": "available",
+                "packOptions": [
+                    { "size": "1 Site License", "regularPrice": 79, "salePrice": 59 }
+                ]
+            },
+            "business": {
+                "name": "Business Package",
+                "type": "Template",
+                "category": "Template",
+                "image": "https://image.pollinations.ai/prompt/enterprise%20web%20application%20dashboard%20multiple%20monitors%20gold%20purple%20gradient%20luxury?width=400&height=400&nologo=true",
+                "images": [],
+                "rating": 5,
+                "origin": "SITEPACKAGES",
+                "rarity": "Exclusive",
+                "variety": "White Label",
+                "description": "The complete package for agencies and resellers. White-label rights let you brand it as your own.",
+                "details": "Everything in Pro PLUS: WHITE-LABEL RIGHTS (remove attribution), 1-hour setup consultation call, Priority support (90 days), Custom theme assistance, License for client resale",
+                "notes": "Full white-label rights - remove all SITEPACKAGES branding. Perfect for agencies building sites for clients.",
+                "status": "available",
+                "packOptions": [
+                    { "size": "1 Site License", "regularPrice": 199, "salePrice": 149 }
+                ]
+            },
+            "effects-pack": {
+                "name": "Effects Add-on Pack",
+                "type": "Add-on",
+                "category": "Add-on",
+                "image": "https://image.pollinations.ai/prompt/abstract%20particle%20effects%20stars%20matrix%20code%20purple%20blue%20gradient%20digital?width=400&height=400&nologo=true",
+                "images": [],
+                "rating": 4,
+                "origin": "SITEPACKAGES",
+                "rarity": "Standard",
+                "variety": "Enhancement",
+                "description": "Additional visual effects to make your site stand out. Includes particles, matrix rain, custom floating objects, and more.",
+                "details": "Includes: 5 additional particle styles, Matrix code rain effect, Custom floating object support, Parallax backgrounds, Animated gradients",
+                "notes": "Requires Starter or higher. Effects are applied via config.js settings.",
+                "status": "available",
+                "packOptions": [
+                    { "size": "Add-on", "regularPrice": 19, "salePrice": null }
+                ]
+            },
+            "setup-service": {
+                "name": "Setup Service",
+                "type": "Service",
+                "category": "Service",
+                "image": "https://image.pollinations.ai/prompt/professional%20consultation%20video%20call%20screen%20share%20purple%20neon%20lighting?width=400&height=400&nologo=true",
+                "images": [],
+                "rating": 5,
+                "origin": "SITEPACKAGES",
+                "rarity": "Premium",
+                "variety": "Service",
+                "description": "Let us handle the setup for you. We'll configure your template, add your products, and get you live.",
+                "details": "Includes: Full template configuration, Product entry (up to 20 products), Color/branding customization, Deployment assistance, 30-minute walkthrough call",
+                "notes": "Requires purchase of any template package. Service delivered within 3 business days.",
+                "status": "available",
+                "packOptions": [
+                    { "size": "Setup Service", "regularPrice": 99, "salePrice": null }
+                ]
+            }
+        }
     },
     "navigation": [
         { "name": "Packages", "url": "#products" },
         { "name": "Features", "url": "features.html" },
-        { "name": "Setup", "url": "setup.html" },
+        { "name": "Setup Wizard", "url": "setup.html" },
         { "name": "About", "url": "#about" }
     ],
     "friendLinks": [
-        { "name": "Rev's Genetics", "url": "https://revsgeneticslab.com/", "image": "", "description": "" },
-        { "name": "StrainNavigator", "url": "https://www.strainnavigator.com/", "image": "", "description": "" }
+        { "name": "Rev's Genetics", "url": "https://revsgeneticslab.com/", "image": "", "description": "Premium cannabis genetics" },
+        { "name": "StrainNavigator", "url": "https://www.strainnavigator.com/", "image": "", "description": "Strain discovery platform" }
     ],
     "friendLinksShowcase": {
-        "enabled": false,
+        "enabled": true,
         "style": "cards",
-        "title": "Friends and Sponsors"
+        "title": "Built With SITEPACKAGES"
     },
     "showFooterFriendLinks": true,
     "advanced": {

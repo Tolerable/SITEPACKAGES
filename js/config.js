@@ -1,27 +1,28 @@
-// Seed Collective - Configuration File
-				// Edit this file to customize your site
+// SITEPACKAGES - Configuration File
+// This powers sitepackages.net - the store that sells itself
 
-				window.siteConfig = {
+window.siteConfig = {
     "site": {
-        "name": "Bean Farm ",
-        "tagline": "Unique Collectible Beans from Around the World ",
-        "logo": "logo.jpg",
-        "heroBackground": "hero-bg.jpg",
-        "email": "contact@example.com",
+        "name": "SITEPACKAGES",
+        "tagline": "Launch your professional storefront in minutes",
+        "logo": "img/logo.png",
+        "heroBackground": "img/hero-bg.jpg",
+        "email": "support@sitepackages.net",
         "socialLinks": {
-            "discord": "https://discord.gg/yourcollective",
-            "youtube": "https://youtube.com/@yourchannel",
-            "tiktok": "https://tiktok.com/@yourhandle"
+            "discord": "",
+            "youtube": "",
+            "tiktok": "",
+            "github": "https://github.com/wetwi"
         },
-        "copyright": "© 2025 Bean Farm. All rights reserved."
+        "copyright": "2025 SITEPACKAGES. All rights reserved."
     },
     "colors": {
-        "primary": "#ff5722",
-        "secondary": "#ffc107",
-        "tertiary": "#9c27b0",
-        "highlight": "#ffeb3b",
-        "alert": "#f44336",
-        "background": "#1f1414",
+        "primary": "#667eea",
+        "secondary": "#764ba2",
+        "tertiary": "#f093fb",
+        "highlight": "#4facfe",
+        "alert": "#f5576c",
+        "background": "#0a0a1a",
         "text": "#ffffff"
     },
     "fonts": {
@@ -29,13 +30,13 @@
         "body": "'Exo 2', sans-serif"
     },
     "terminology": {
-        "category1": "Premium ",
-        "category2": "Signature ",
-        "category3": "Hybrid ",
-        "productTerm": "Bean",
-        "productPluralTerm": "Beans",
-        "packTerm": "Bean Pack",
-        "cartTerm": "Beans Pack",
+        "category1": "Package",
+        "category2": "Add-on",
+        "category3": "Service",
+        "productTerm": "Package",
+        "productPluralTerm": "Packages",
+        "packTerm": "License",
+        "cartTerm": "Cart",
         "soldOutLabel": "UNAVAILABLE",
         "comingSoonLabel": "COMING SOON"
     },
@@ -43,264 +44,71 @@
         "backgroundEffect": {
             "enabled": true,
             "type": "stars",
-            "intensity": "high"
+            "intensity": "medium"
         },
         "specialFeature": {
-            "enabled": true,
-            "type": "floatingObject",
-            "image": "img/floating-object.png",
-            "behavior": "float"
+            "enabled": false,
+            "type": "none",
+            "image": "",
+            "behavior": ""
         }
     },
     "about": {
-        "title": "About Bean Farm",
-        "subtitle": "Our Story and Mission",
-        "image": "about.jpg",
-        "description": "Founded in 2025, Bean Farm is dedicated to bringing unique collectible beans to enthusiasts around the world. We carefully curate our collections to ensure only the highest quality items reach our customers.",
-        "teamMembers": [
-            {
-                "name": "ᵗʰᵉ Rev™",
-                "title": "Founder & CEO",
-                "bio": "ᵗʰᵉ Rev™ has spent 40 years searching for magic beans.",
-                "image": "team1.jpg"
-            }
-        ],
+        "title": "About SITEPACKAGES",
+        "subtitle": "Professional Store Templates",
+        "image": "img/about.jpg",
+        "description": "SITEPACKAGES provides complete, ready-to-deploy store templates for creators and businesses. Built with modern web technologies, our templates include visual effects, product management, user authentication, and seamless checkout integration. Launch your professional storefront in minutes, not months.",
+        "teamMembers": [],
         "historyItems": [
             {
                 "year": "2025",
-                "title": "Company Founded",
-                "description": "Proof of concept and founding of the domain completed with great success!"
+                "title": "Launch",
+                "description": "SITEPACKAGES launches with full-featured store templates including Supabase integration, visual effects, and setup wizard."
             }
         ],
         "additionalSections": [
             {
-                "title": "The Story...",
-                "content": "...Once upon a time... it was rumored magic beans could be found that would grow plants to the clouds. Only problem with this fantastic tale is that no one ever returned from climbing these super tall plants. If no one ever returned, how can anyone know if it is true? Obviously magic beans have to be grown to be experienced! Start your magic journey today!"
+                "title": "Why SITEPACKAGES?",
+                "content": "Building a professional e-commerce site from scratch takes weeks or months. With SITEPACKAGES, you get a complete store template with product grids, detail modals, shopping cart, user accounts, and beautiful visual effects - all configurable through our setup wizard. No coding required."
             }
         ]
     },
     "products": {
         "defaultStatus": "available",
-        "enableRatings": true,
+        "enableRatings": false,
         "showPackOptions": true,
         "defaultPackOptions": [
             {
-                "size": "3 Pack",
-                "regularPrice": 35,
-                "salePrice": 30
-            },
-            {
-                "size": "5 Pack",
-                "regularPrice": 50,
-                "salePrice": 45
-            },
-            {
-                "size": "10 Pack",
-                "regularPrice": 95,
-                "salePrice": 80
+                "size": "License",
+                "regularPrice": 29,
+                "salePrice": null
             }
         ],
-        "items": {
-            "product-1": {
-                "id": "product-1",
-                "name": "FROST FINGERS",
-                "type": "Premium Collection",
-                "status": "available",
-                "image": "product1.jpg",
-                "additionalImages": [
-                    "product1-detail1.jpg"
-                ],
-                "description": "This is a premium collectible with exceptional qualities.",
-                "variety": "FEM PHOTO",
-                "rating": "4.5/5",
-                "origin": "Imported",
-                "details": "Detailed information about this premium collectible.",
-                "notes": "Special notes about this premium collectible.",
-                "packOptions": [
-                    {
-                        "size": "3 Pack",
-                        "regularPrice": 35,
-                        "salePrice": 30
-                    },
-                    {
-                        "size": "5 Pack",
-                        "regularPrice": 50,
-                        "salePrice": 45
-                    },
-                    {
-                        "size": "10 Pack",
-                        "regularPrice": 100,
-                        "salePrice": 90
-                    }
-                ]
-            },
-            "product-1744435310737": {
-                "id": "product-1744435310737",
-                "name": "jACK'S MAGIC",
-                "type": "Signature Series",
-                "status": "coming-soon",
-                "image": "product2.jpg",
-                "additionalImages": [],
-                "description": "Jack's Magic is stunning and will elevate your mood to the clouds!",
-                "variety": "REG PHOTO",
-                "rating": "4.6/5",
-                "origin": "Inhouse",
-                "details": "Easy to collect and enjoyable to own.",
-                "notes": "FEMINIZED",
-                "packOptions": [
-                    {
-                        "size": "3",
-                        "regularPrice": 45,
-                        "salePrice": 30
-                    }
-                ]
-            },
-            "product-1744439696089": {
-                "id": "product-1744439696089",
-                "name": "HIGH OCTANE",
-                "type": "Hybrid Collection",
-                "status": "sold-out",
-                "image": "product3.jpg",
-                "additionalImages": [],
-                "description": "Fuel up and take off! You don't need gas when you have HIGH OCTANE!",
-                "variety": "REG AUTO",
-                "rating": "4.9/5",
-                "origin": "Inhouse",
-                "details": "Hydroponic Indoor Heritage Strain",
-                "notes": "REGULAR",
-                "packOptions": [
-                    {
-                        "size": "3",
-                        "regularPrice": 45,
-                        "salePrice": 30
-                    }
-                ]
-            },
-            "product-1744471903073": {
-                "id": "product-1744471903073",
-                "name": "HERMIE",
-                "type": "Signature Series",
-                "status": "coming-soon",
-                "image": "product4.jpg",
-                "additionalImages": [],
-                "description": "Confused? SO is this plant!",
-                "variety": "FEM PHOTO",
-                "rating": "4.2/5",
-                "origin": "Imported",
-                "details": "It does not know if it is a flower or a bud and it doesn't care!",
-                "notes": "Fun to grow!",
-                "packOptions": [
-                    {
-                        "size": "5",
-                        "regularPrice": 75,
-                        "salePrice": 50
-                    }
-                ]
-            },
-            "product-1744472357729": {
-                "id": "product-1744472357729",
-                "name": "WATERMELON BLISS",
-                "type": "Hybrid Collection",
-                "status": "sold-out",
-                "image": "product5.jpg",
-                "additionalImages": [],
-                "description": "Summertime fun is here with the flavor of Watermelon! ",
-                "variety": "FEM AUTO",
-                "rating": "4.8/5",
-                "origin": "Inhouse",
-                "details": "Crazy insane flavor notes! ",
-                "notes": "One to remember!",
-                "packOptions": [
-                    {
-                        "size": "10",
-                        "regularPrice": 150,
-                        "salePrice": 90
-                    }
-                ]
-            },
-            "product-1744472767126": {
-                "id": "product-1744472767126",
-                "name": "CB CBD",
-                "type": "Premium Collection",
-                "status": "coming-soon",
-                "image": "product6.jpg",
-                "additionalImages": [],
-                "description": "Breaker, Breaker! CB CBD is calling you!",
-                "variety": "REG  PHOTO",
-                "rating": "4.6/5",
-                "origin": "Imported",
-                "details": "Watch out for Smokey!",
-                "notes": "Up one channel and keep on all night.",
-                "packOptions": [
-                    {
-                        "size": "3",
-                        "regularPrice": 45,
-                        "salePrice": 30
-                    },
-                    {
-                        "size": "5",
-                        "regularPrice": 75,
-                        "salePrice": 50
-                    }
-                ]
-            },
-            "product-1744473923930": {
-                "id": "product-1744473923930",
-                "name": "SMOKELESS KUSH",
-                "type": "Signature Series",
-                "status": "available",
-                "delivery": "physical",
-                "digitalContent": "https://www.strainnavigator.com/index.html",
-                "image": "product7.jpg",
-                "additionalImages": [],
-                "description": "Smokeless is the new thing! Did you inhale?",
-                "variety": "REG AUTO",
-                "rating": "4.7/5",
-                "origin": "Inhouse",
-                "details": "Easy to grow, only needs food, water and light!",
-                "notes": "Crazy world!",
-                "packOptions": [
-                    {
-                        "size": "3",
-                        "regularPrice": 45,
-                        "salePrice": 30
-                    }
-                ]
-            },
-            "product-1744523693093": {
-                "id": "product-1744523693093",
-                "name": "STRAINNAVIGATOR.COM",
-                "type": "Premium Collection",
-                "status": "available",
-                "delivery": "digital",
-                "digitalContent": "https://www.strainnavigator.com/index.html",
-                "image": "digital1.jpg",
-                "additionalImages": [],
-                "description": "FREE Web Tools to assist  Growers and Breeders",
-                "variety": "DIGITAL",
-                "rating": "5/5",
-                "origin": "ONLINE",
-                "details": "",
-                "notes": "",
-                "packOptions": []
-            }
-        }
+        "items": {}
     },
     "navigation": [
         {
-            "name": "Our Beans",
+            "name": "Packages",
             "url": "#products"
+        },
+        {
+            "name": "Features",
+            "url": "features.html"
+        },
+        {
+            "name": "Setup",
+            "url": "setup.html"
         },
         {
             "name": "About",
             "url": "#about"
-        },
-        {
-            "name": "Contact",
-            "url": "#contact"
         }
     ],
     "friendLinks": [
+        {
+            "name": "Rev's Genetics",
+            "url": "https://revsgeneticslab.com/"
+        },
         {
             "name": "StrainNavigator",
             "url": "https://www.strainnavigator.com/"
@@ -308,8 +116,11 @@
     ],
     "advanced": {
         "enableLocalStorage": true,
-        "checkoutMethod": "email",
+        "checkoutMethod": "external",
         "externalCheckoutUrl": "",
-        "analyticsId": ""
+        "analyticsId": "",
+        "enableAgeVerification": false,
+        "ageVerificationMinAge": 18,
+        "enableCart": false
     }
 };

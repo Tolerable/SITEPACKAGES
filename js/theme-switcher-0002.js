@@ -358,24 +358,10 @@
         if (heroTitle) heroTitle.textContent = config.site.name;
         if (heroDescription) heroDescription.textContent = config.site.tagline;
 
-        // Update hero background on hero-section (matching main.js logic)
-        const heroSection = document.querySelector('.hero-section');
-        if (heroSection && config.site.heroBackground) {
-            let heroImagePath = config.site.heroBackground;
-            if (!heroImagePath.startsWith('img/') && !heroImagePath.startsWith('/') && !heroImagePath.startsWith('http')) {
-                heroImagePath = 'img/' + heroImagePath;
-            }
-
-            // Apply background based on showHeroText setting
-            if (config.site.showHeroText === false) {
-                heroSection.classList.add('full-image');
-                heroSection.style.background = `url('${heroImagePath}')`;
-                heroSection.style.backgroundSize = 'cover';
-                heroSection.style.backgroundPosition = 'center';
-            } else {
-                heroSection.classList.remove('full-image');
-                heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${heroImagePath}')`;
-            }
+        // Update hero background
+        const background = document.querySelector('.background');
+        if (background && config.site.heroBackground) {
+            background.style.backgroundImage = `url('${config.site.heroBackground}')`;
         }
 
         // Update navigation

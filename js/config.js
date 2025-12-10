@@ -7,7 +7,7 @@ window.siteConfig = {
         "name": "SITEPACKAGES",
         "tagline": "Launch your professional storefront in minutes",
         "logo": "https://image.pollinations.ai/prompt/SITEPACKAGES%20modern%20tech%20logo%20purple%20blue%20gradient%20minimalist%20geometric?width=200&height=200&nologo=true",
-        "heroBackground": "img/social-preview.jpg",
+        "heroBackground": "img/hero-bg.jpg",
         "socialPreview": "img/social-preview.jpg",
         "showHeroText": true,
         "email": "support@sitepackages.net",
@@ -447,7 +447,7 @@ window.siteConfig = {
     ],
     "friendLinks": [
         { "name": "Rev's Genetics", "url": "https://revsgeneticslab.com/", "image": "img/friends/revs-genetics.jpg", "description": "Premium cannabis genetics" },
-        { "name": "Dwarven Forged", "url": "https://www.dwarvenforged.club/", "image": "img/friends/dwarven-forged.jpg", "description": "Built with SITEPACKAGES" }
+        { "name": "Dwarven Forged", "url": "https://www.dwarvenforged.club/", "image": "img/friends/dwarvenforged.jpg", "description": "Built with SITEPACKAGES" }
     ],
     "friendLinksShowcase": {
         "enabled": true,

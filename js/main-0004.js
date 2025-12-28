@@ -2023,53 +2023,43 @@ function setupPackOptions(product) {
     // Find the packOptionsTitle element and update its text directly
     const packOptionsTitle = document.getElementById('packOptionsTitle');
     
-    // Check if this is a digital product OR a YouTube video
-    if ((product.delivery === 'digital' || product.delivery === 'youtube') && product.digitalContent) {
-        // Determine if this is a YouTube video
-        const isYouTube = product.delivery === 'youtube';
-        const contentUrl = isYouTube
-            ? `https://www.youtube.com/watch?v=${product.digitalContent}`
-            : product.digitalContent;
-
-        // IMPORTANT: Change title for digital/video products
+    // Check if this is a digital product
+    if (product.delivery === 'digital' && product.digitalContent) {
+        // IMPORTANT: Change title for digital products - this is what was missing
         if (packOptionsTitle) {
-            packOptionsTitle.textContent = isYouTube ? 'Watch Video:' : 'Access Digital Content:';
+            packOptionsTitle.textContent = 'Access Digital Content:';
             packOptionsTitle.style.color = siteConfig.colors.highlight || '#FFD700';
         }
-
+        
         // Create a styled access button for digital content
         const accessButton = document.createElement('button');
         accessButton.className = 'cta-button digital-access-btn';
-        accessButton.innerHTML = isYouTube
-            ? `<i class="play-icon"></i> Watch on YouTube`
-            : `<i class="download-icon"></i> Access Digital Content`;
+        accessButton.innerHTML = `<i class="download-icon"></i> Access Digital Content`;
         accessButton.style.width = '100%';
         accessButton.style.marginTop = '10px';
         accessButton.style.padding = '12px 20px';
         accessButton.style.display = 'flex';
         accessButton.style.alignItems = 'center';
         accessButton.style.justifyContent = 'center';
-
+        
         // Add access info text
         const accessInfo = document.createElement('div');
         accessInfo.className = 'digital-access-info';
-        accessInfo.innerHTML = isYouTube
-            ? `<p>Click the button below to watch this video on YouTube.</p>`
-            : `<p>Digital product. Click the button below to access content.</p>`;
+        accessInfo.innerHTML = `<p>Digital product. Click the button below to access content.</p>`;
         accessInfo.style.marginBottom = '15px';
         accessInfo.style.padding = '10px';
         accessInfo.style.borderRadius = '5px';
         accessInfo.style.backgroundColor = 'rgba(0,0,0,0.1)';
-
+        
         // Add to container
         packOptionsContainer.appendChild(accessInfo);
         packOptionsContainer.appendChild(accessButton);
-
+        
         // Add click handler to open the URL
         accessButton.addEventListener('click', function() {
-            // Open the content URL in a new tab
-            window.open(contentUrl, '_blank');
-
+            // Open the digital content URL in a new tab
+            window.open(product.digitalContent, '_blank');
+            
             // Close the modal
             document.getElementById('productModal').style.display = 'none';
         });

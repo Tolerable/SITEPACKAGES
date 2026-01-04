@@ -62,7 +62,7 @@ exports.handler = async (event, context) => {
 
 	const adminClient = createClient(
 		process.env.SUPABASE_URL,
-		process.env.SUPABASE_SERVICE_ROLE_KEY,
+		process.env.SUPABASE_SERVICE_KEY,
 		{
 			auth: {
 				autoRefreshToken: false,
@@ -71,7 +71,7 @@ exports.handler = async (event, context) => {
 			},
 			global: {
 				headers: {
-					'apikey': process.env.SUPABASE_SERVICE_ROLE_KEY
+					'apikey': process.env.SUPABASE_SERVICE_KEY
 				}
 			}
 		}
@@ -115,7 +115,7 @@ exports.handler = async (event, context) => {
       case 'adminListUsers':
         const adminSupabase = createClient(
           process.env.SUPABASE_URL,
-          process.env.SUPABASE_SERVICE_ROLE_KEY
+          process.env.SUPABASE_SERVICE_KEY
         );
 
         // Get requester from session (you'll need to pass this)
@@ -1455,7 +1455,7 @@ exports.handler = async (event, context) => {
 	    // Use service role to read profiles display_name safely under RLS
 	    const db = createClient(
 	  	process.env.SUPABASE_URL,
-	  	process.env.SUPABASE_SERVICE_ROLE_KEY
+	  	process.env.SUPABASE_SERVICE_KEY
 	    );
 	  
 	    const { search = '', limit = 24, offset = 0 } = (payload || {});
@@ -1544,7 +1544,7 @@ exports.handler = async (event, context) => {
 	  	return { statusCode: 400, headers, body: JSON.stringify({ error: 'title and image_url are required' }) };
 	    }
 	  
-	    const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+	    const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 	  
 	    const { data: inserted, error: insErr } = await db
 	  	.from('community_listings')
@@ -1580,7 +1580,7 @@ exports.handler = async (event, context) => {
 	  	return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) };
 	    }
 	  
-	    const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+	    const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 	  
 	    const { id: listingId, ...updates } = payload || {};
 	    if (!listingId) {
@@ -1649,7 +1649,7 @@ exports.handler = async (event, context) => {
 	  	return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) };
 	    }
 	  
-	    const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+	    const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 	  
 	    const { id: listingId } = payload || {};
 	    if (!listingId) {
